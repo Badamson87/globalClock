@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View_Controller.LoginController">
+   <children>
+      <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <Pane minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0">
+         <children>
+            <Label layoutX="809.0" layoutY="112.0" text="Global Clock" underline="true">
+               <font>
+                  <Font size="64.0" />
+               </font>
+            </Label>
+            <TextField layoutX="526.0" layoutY="420.0" text="Pass Word" />
+            <TextField layoutX="526.0" layoutY="375.0" text="User Name" />
+            <Text layoutX="494.0" layoutY="714.0" strokeType="OUTSIDE" strokeWidth="0.0" text="A universal appointment manager" wrappingWidth="212.814453125">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Text>
+            <Button fx:id="loginButton" onAction="#attemptLogin" layoutX="576.0" layoutY="464.0" mnemonicParsing="false" text="Login" />
+         </children>
+      </Pane>
+   </children>
+   <columnConstraints>
+      <ColumnConstraints />
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
+</GridPane>
