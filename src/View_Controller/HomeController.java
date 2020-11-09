@@ -24,6 +24,9 @@ public class HomeController implements Initializable {
     public void setAboutPane() throws IOException {
         borderPane.setCenter(FXMLLoader.load(getClass().getResource("about.fxml")));
     }
+    public void setReportPane() throws IOException {
+        borderPane.setCenter(FXMLLoader.load(getClass().getResource("reports.fxml")));
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

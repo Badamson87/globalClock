@@ -15,8 +15,9 @@
             <ButtonBar prefHeight="58.0" prefWidth="1102.0" BorderPane.alignment="CENTER">
               <buttons>
                 <Button mnemonicParsing="false" onAction="#setAboutPane" text="About" />
-                  <Button mnemonicParsing="false" onAction="#setCustomerPane" text="Customer's" />
-                  <Button mnemonicParsing="false" onAction="#setAppPane" text="Appointments" />
+                  <Button mnemonicParsing="false" onAction="#setCustomerPane" text="Customer" />
+                  <Button mnemonicParsing="false" onAction="#setAppPane" text="Appointment" />
+                  <Button mnemonicParsing="false" onAction="#setReportPane" text="Report" />
                   <ComboBox prefWidth="150.0" />
               </buttons>
                <contextMenu>
