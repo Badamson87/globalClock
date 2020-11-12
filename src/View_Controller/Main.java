@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import java.sql.*;
 
 import java.io.IOException;
 
@@ -18,13 +19,6 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root, 1200, 800));
         primaryStage.show();
     }
-
-    public void setWindow(String sceneName) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("home.fxml"));
-        Scene newScene = new Scene(root);
-        window.setScene(newScene);
-    }
-
 
     public static void main(String[] args) {
         launch(args);
