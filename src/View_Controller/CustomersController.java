@@ -43,7 +43,6 @@ public class CustomersController implements Initializable {
         String query = "SELECT * FROM customers";
         Statement st = conn.createStatement();
         ResultSet rs = st.executeQuery(query);
-        System.out.print(rs);
         while (rs.next())
         {
             int id = rs.getInt("Customer_ID");
@@ -80,6 +79,5 @@ public class CustomersController implements Initializable {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
     }
 }

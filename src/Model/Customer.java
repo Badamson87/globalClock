@@ -1,6 +1,5 @@
 package Model;
 
-import java.net.InetAddress;
 import java.util.Date;
 
 public class Customer {
@@ -32,6 +31,8 @@ public class Customer {
         this.Last_Update_By = Last_Update_By;
         this.Division_ID = Division_ID;
     }
+
+
 
     public int getId() {
         return this.Customer_ID;

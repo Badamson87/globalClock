@@ -18,7 +18,7 @@
                   <Button mnemonicParsing="false" onAction="#setCustomerPane" text="Customer" />
                   <Button mnemonicParsing="false" onAction="#setAppPane" text="Appointment" />
                   <Button mnemonicParsing="false" onAction="#setReportPane" text="Report" />
-                  <ComboBox prefWidth="150.0" />
+                  <ComboBox prefWidth="150.0" fx:id="locationCombo"/>
               </buttons>
                <contextMenu>
                   <ContextMenu>

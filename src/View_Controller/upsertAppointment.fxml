@@ -22,16 +22,16 @@
             <Label layoutX="401.0" layoutY="46.0" text="User ID" />
             <Label layoutX="401.0" layoutY="14.0" text="Customer ID" />
             <Label layoutX="2.0" layoutY="143.0" text="Location" />
-            <TextField layoutX="93.0" layoutY="10.0" />
-            <TextField layoutX="93.0" layoutY="42.0" />
-            <TextField layoutX="93.0" layoutY="179.0" prefHeight="141.0" prefWidth="557.0" />
-            <TextField layoutX="93.0" layoutY="75.0" prefHeight="0.0" prefWidth="149.0" />
-            <TextField layoutX="500.0" layoutY="10.0" />
-            <TextField layoutX="500.0" layoutY="42.0" />
-            <ComboBox layoutX="92.0" layoutY="139.0" prefWidth="150.0" />
-            <DatePicker layoutX="93.0" layoutY="108.0" />
-            <DatePicker layoutX="500.0" layoutY="108.0" />
-            <TextField layoutX="500.0" layoutY="75.0" />
+            <TextField fx:id="appointmentId" disable="true" layoutX="93.0" layoutY="10.0" />
+            <TextField fx:id="title" layoutX="93.0" layoutY="42.0" />
+            <TextField fx:id="description" layoutX="93.0" layoutY="179.0" prefHeight="141.0" prefWidth="557.0" />
+            <TextField fx:id="contact" layoutX="93.0" layoutY="75.0" prefHeight="0.0" prefWidth="149.0" />
+            <TextField fx:id="customerId" layoutX="500.0" layoutY="10.0" />
+            <TextField fx:id="userId" layoutX="500.0" layoutY="42.0" />
+            <ComboBox fx:id="locationComboBox" layoutX="92.0" layoutY="139.0" prefWidth="150.0" />
+            <DatePicker fx:id="start" layoutX="93.0" layoutY="108.0" />
+            <DatePicker fx:id="end" layoutX="500.0" layoutY="108.0" />
+            <TextField fx:id="type" layoutX="500.0" layoutY="75.0" />
             <Button layoutX="598.0" layoutY="336.0" mnemonicParsing="false" onAction="#close" text="Close" />
             <Button layoutX="546.0" layoutY="336.0" mnemonicParsing="false" text="Save" />
          </children>

@@ -7,26 +7,27 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
+<?import javafx.scene.Group?>
 <AnchorPane prefHeight="735.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View_Controller.AppointmentsController">
    <children>
-      <TableView layoutX="25.0" layoutY="65.0" prefHeight="618.0" prefWidth="1150.0">
+      <TableView fx:id="appointmentTable" layoutX="25.0" layoutY="65.0" prefHeight="618.0" prefWidth="1150.0">
          <columns>
-            <TableColumn prefWidth="109.0" text="Appointment_ID" />
-            <TableColumn prefWidth="146.0" text="Title" />
-            <TableColumn prefWidth="148.0" text="Description" />
-            <TableColumn prefWidth="145.0" text="Location" />
-            <TableColumn prefWidth="149.0" text="Contact" />
-            <TableColumn prefWidth="147.0" text="Type" />
-            <TableColumn prefWidth="107.0" text="Start" />
-            <TableColumn prefWidth="108.0" text="End" />
-            <TableColumn prefWidth="90.0" text="Customer_ID" />
+            <TableColumn prefWidth="109.0" fx:id="appointmentIdCol" text="Appointment_ID" />
+            <TableColumn prefWidth="146.0" fx:id="titleCol" text="Title" />
+            <TableColumn prefWidth="148.0" fx:id="descriptionCol" text="Description" />
+            <TableColumn prefWidth="145.0" fx:id="locationCol" text="Location" />
+            <TableColumn prefWidth="149.0" fx:id="contactCol" text="Contact" />
+            <TableColumn prefWidth="147.0" fx:id="typeCol" text="Type" />
+            <TableColumn prefWidth="107.0" fx:id="startCol" text="Start" />
+            <TableColumn prefWidth="108.0" fx:id="endCol" text="End" />
+            <TableColumn prefWidth="90.0" fx:id="customerIdCol" text="Customer_ID" />
          </columns>
       </TableView>
       <TextField alignment="CENTER_RIGHT" layoutX="992.0" layoutY="24.0" prefHeight="25.0" prefWidth="183.0" text="Search" />
       <Button layoutX="992.0" layoutY="699.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="52.0" text="New" onAction="#newAppointment"/>
       <Button layoutX="1123.0" layoutY="699.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="52.0" text="Delete" />
-      <Button layoutX="1058.0" layoutY="699.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="52.0" text="Edit" />
-      <RadioButton layoutX="909.0" layoutY="28.0" mnemonicParsing="false" text="Week" />
-      <RadioButton layoutX="826.0" layoutY="28.0" mnemonicParsing="false" text="Month" />
+      <Button layoutX="1058.0" layoutY="699.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="52.0" text="Edit" onAction="#editAppointment" />
+      <RadioButton layoutX="826.0" layoutY="28.0" mnemonicParsing="false" text="Month" fx:id="monthToggle" />
+      <RadioButton layoutX="909.0" layoutY="28.0" mnemonicParsing="false" text="Week"  fx:id="weekToggle"/>
    </children>
 </AnchorPane>
