@@ -20,10 +20,11 @@ public class Appointment {
 
     private String CustomerName;
     private String ContactName;
+    private String UserName;
 
     public Appointment(){}
 
-    public Appointment(int Appointment_ID, String title, String description, String location, String contactName, String type, Date start, Date end, String customerName ){
+    public Appointment(int Appointment_ID, String title, String description, String location, String contactName, String type, Date start, Date end, String customerName, String userName ){
      this.Appointment_ID = Appointment_ID;
      this.Title = title;
      this.Description = description;
@@ -33,7 +34,7 @@ public class Appointment {
      this.Start = start;
      this.End = end;
      this.CustomerName = customerName;
-
+     this.UserName = userName;
     }
 
     public Appointment(int Appointment_ID, int Contact_ID, Date Create_Date, String Created_By, int Customer_ID, String Description, Date End, Date Start, Date Last_Update, String Last_Updated_By, String Location, String Title, String Type, int User_ID ){
@@ -59,6 +60,7 @@ public class Appointment {
     public String getContactName() {
         return this.ContactName;
     }
+    public String getUserName() {return this.UserName;}
 
     public int getAppointment_ID() {
         return Appointment_ID;

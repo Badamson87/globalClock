@@ -25,7 +25,7 @@
     <show-object-properties value="true" />
     <loaded-nodes>
       <connection connection-id="13081482-934b-46cc-a43e-3e49ad505147">
-        <schema name="WJ05gTi" object-types="view, table, procedure, function" />
+        <schema name="WJ05gTi" object-types="table, function, view, procedure" />
       </connection>
     </loaded-nodes>
   </component>

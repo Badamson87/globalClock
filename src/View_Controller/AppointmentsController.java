@@ -78,9 +78,7 @@ public class AppointmentsController implements Initializable {
         } else {
             System.out.print("Week");
         }
-
-
-        String query = "select * from appointments inner join customers on appointments.Customer_ID = customers.Customer_ID inner join contacts on appointments.Contact_ID = contacts.Contact_ID;";
+        String query = "select * from appointments inner join customers on appointments.Customer_ID = customers.Customer_ID inner join contacts on appointments.Contact_ID = contacts.Contact_ID inner join users on appointments.User_ID = users.User_ID;";
         Statement st = conn.createStatement();
         ResultSet rs = st.executeQuery(query);
         while (rs.next())
@@ -94,7 +92,8 @@ public class AppointmentsController implements Initializable {
             Date start = rs.getDate("Start");
             Date end = rs.getDate("End");
             String customer = rs.getString("Customer_Name");
-            Appointment newApp = new Appointment(id, title, description, location, contact, type, start, end, customer);
+            String userName = rs.getString("User_Name");
+            Appointment newApp = new Appointment(id, title, description, location, contact, type, start, end, customer, userName);
             appointments.add(newApp);
         }
     }
