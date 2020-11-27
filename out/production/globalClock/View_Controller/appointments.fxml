@@ -13,14 +13,15 @@
       <TableView fx:id="appointmentTable" layoutX="25.0" layoutY="65.0" prefHeight="618.0" prefWidth="1150.0">
          <columns>
             <TableColumn prefWidth="109.0" fx:id="appointmentIdCol" text="Appointment_ID" />
-            <TableColumn prefWidth="146.0" fx:id="titleCol" text="Title" />
-            <TableColumn prefWidth="148.0" fx:id="descriptionCol" text="Description" />
-            <TableColumn prefWidth="145.0" fx:id="locationCol" text="Location" />
-            <TableColumn prefWidth="149.0" fx:id="contactCol" text="Contact" />
-            <TableColumn prefWidth="147.0" fx:id="typeCol" text="Type" />
-            <TableColumn prefWidth="107.0" fx:id="startCol" text="Start" />
-            <TableColumn prefWidth="108.0" fx:id="endCol" text="End" />
+            <TableColumn prefWidth="126.0" fx:id="titleCol" text="Title" />
             <TableColumn prefWidth="90.0" fx:id="customerIdCol" text="Customer_ID" />
+            <TableColumn prefWidth="126.0" fx:id="customerCol" text="Customer" />
+            <TableColumn prefWidth="126.0" fx:id="descriptionCol" text="Description" />
+            <TableColumn prefWidth="125.0" fx:id="locationCol" text="Location" />
+            <TableColumn prefWidth="126.0" fx:id="contactCol" text="Contact" />
+            <TableColumn prefWidth="126.0" fx:id="typeCol" text="Type" />
+            <TableColumn prefWidth="97.0" fx:id="startCol" text="Start" />
+            <TableColumn prefWidth="98.0" fx:id="endCol" text="End" />
          </columns>
       </TableView>
       <TextField alignment="CENTER_RIGHT" layoutX="992.0" layoutY="24.0" prefHeight="25.0" prefWidth="183.0" text="Search" />

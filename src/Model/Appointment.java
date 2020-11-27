@@ -1,5 +1,6 @@
 package Model;
 
+import java.time.ZoneId;
 import java.util.Date;
 
 public class Appointment {
@@ -9,8 +10,8 @@ public class Appointment {
     private String Created_By;
     private int Customer_ID;
     private String Description;
-    private Date End;
-    private Date Start;
+    private String End;
+    private String Start;
     private Date Last_Update;
     private String Last_Updated_By;
     private String Location;
@@ -24,7 +25,7 @@ public class Appointment {
 
     public Appointment(){}
 
-    public Appointment(int Appointment_ID, String title, String description, String location, String contactName, String type, Date start, Date end, String customerName, String userName ){
+    public Appointment(int Appointment_ID, String title, String description, String location, String contactName, String type, String start, String end, String customerName, String userName, int cusID ){
      this.Appointment_ID = Appointment_ID;
      this.Title = title;
      this.Description = description;
@@ -35,9 +36,10 @@ public class Appointment {
      this.End = end;
      this.CustomerName = customerName;
      this.UserName = userName;
+     this.Customer_ID = cusID;
     }
 
-    public Appointment(int Appointment_ID, int Contact_ID, Date Create_Date, String Created_By, int Customer_ID, String Description, Date End, Date Start, Date Last_Update, String Last_Updated_By, String Location, String Title, String Type, int User_ID ){
+    public Appointment(int Appointment_ID, int Contact_ID, Date Create_Date, String Created_By, int Customer_ID, String Description, String End, String Start, Date Last_Update, String Last_Updated_By, String Location, String Title, String Type, int User_ID ){
         this.Appointment_ID = Appointment_ID;
         this.Contact_ID = Contact_ID;
         this.Create_Date = Create_Date;
@@ -110,21 +112,19 @@ public class Appointment {
         Description = description;
     }
 
-    public Date getEnd() {
+    public String getEnd() {
         return End;
     }
 
-    public void setEnd(Date end) {
+    public void setEnd(String end) {
         End = end;
     }
 
-    public Date getStart() {
-        return Start;
-    }
+    public String getStart() { return Start; }
 
-    public void setStart(Date start) {
-        Start = start;
-    }
+    //public void setStart(Date start) {
+      //  Start = start;
+    //}
 
     public Date getLast_Update() {
         return Last_Update;

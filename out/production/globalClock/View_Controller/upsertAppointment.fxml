@@ -12,28 +12,32 @@
     <children>
       <Pane layoutX="13.0" layoutY="13.0" prefHeight="375.0" prefWidth="675.0">
          <children>
-            <Label layoutX="-1.0" layoutY="14.0" text="Appointment ID" />
-            <Label layoutX="3.0" layoutY="46.0" text="Title" />
-            <Label layoutX="2.0" layoutY="179.0" text="Description" />
-            <Label layoutX="378.0" layoutY="46.0" text="Type" />
+            <Label layoutX="2.0" layoutY="14.0" text="Appointment ID" />
+            <Label layoutX="2.0" layoutY="46.0" text="Title" />
+            <Label layoutX="2.0" layoutY="213.0" text="Description" />
+            <Label layoutX="380.0" layoutY="79.0" text="Type" />
             <Label layoutX="2.0" layoutY="79.0" prefHeight="17.0" prefWidth="60.0" text="Contact" />
-            <Label layoutX="2.0" layoutY="143.0" text="Start" />
-            <Label layoutX="381.0" layoutY="144.0" prefHeight="17.0" prefWidth="39.0" text="End" />
+            <Label layoutX="2.0" layoutY="143.0" prefHeight="17.0" prefWidth="77.0" text="Start Date" />
+            <Label layoutX="380.0" layoutY="144.0" prefHeight="17.0" prefWidth="71.0" text="End Date" />
             <Label layoutX="2.0" layoutY="112.0" text="User" />
-            <Label layoutX="381.0" layoutY="79.0" text="Customer" />
-            <Label layoutX="378.0" layoutY="14.0" text="Location" />
+            <Label layoutX="380.0" layoutY="112.0" text="Customer" />
+            <Label layoutX="380.0" layoutY="46.0" text="Location" />
             <TextField fx:id="appointmentId" disable="true" layoutX="93.0" layoutY="10.0" />
             <TextField fx:id="title" layoutX="93.0" layoutY="42.0" />
-            <TextField fx:id="description" layoutX="93.0" layoutY="179.0" prefHeight="141.0" prefWidth="557.0" />
-            <TextField fx:id="location" layoutX="480.0" layoutY="10.0" />
-            <TextField fx:id="type" layoutX="480.0" layoutY="42.0" />
-            <ComboBox fx:id="contactComboBox" layoutX="92.0" layoutY="75.0" prefWidth="150.0" />
+            <TextField fx:id="description" layoutX="93.0" layoutY="213.0" prefHeight="107.0" prefWidth="557.0" />
+            <TextField fx:id="location" layoutX="480.0" layoutY="42.0" />
+            <TextField fx:id="type" layoutX="480.0" layoutY="75.0" />
+            <ComboBox fx:id="contactComboBox" layoutX="93.0" layoutY="75.0" prefWidth="150.0" />
             <DatePicker fx:id="start" layoutX="93.0" layoutY="140.0" />
-            <DatePicker fx:id="end" layoutX="479.0" layoutY="140.0" />
+            <DatePicker fx:id="end" layoutX="480.0" layoutY="140.0" />
             <Button layoutX="598.0" layoutY="336.0" mnemonicParsing="false" onAction="#close" text="Close" />
             <Button layoutX="546.0" layoutY="336.0" mnemonicParsing="false" text="Save" />
-            <ComboBox fx:id="customerComboBox" layoutX="479.0" layoutY="75.0" prefWidth="150.0" />
-            <ComboBox fx:id="userComboBox" layoutX="92.0" layoutY="108.0" prefWidth="150.0" />
+            <ComboBox fx:id="customerComboBox" layoutX="480.0" layoutY="108.0" prefWidth="150.0" />
+            <ComboBox fx:id="userComboBox" layoutX="93.0" layoutY="108.0" prefWidth="150.0" />
+            <Label layoutX="2.0" layoutY="179.0" prefHeight="17.0" prefWidth="85.0" text="Start Time" />
+            <ComboBox fx:id="startTime" layoutX="93.0" layoutY="175.0" prefWidth="150.0" />
+            <Label layoutX="380.0" layoutY="179.0" prefHeight="17.0" prefWidth="85.0" text="End Time" />
+            <ComboBox fx:id="endTime" layoutX="480.0" layoutY="175.0" prefWidth="150.0" />
          </children>
       </Pane>
     </children>

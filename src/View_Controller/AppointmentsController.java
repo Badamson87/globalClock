@@ -12,6 +12,7 @@ import javafx.scene.control.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 public class AppointmentsController implements Initializable {
@@ -36,7 +37,9 @@ public class AppointmentsController implements Initializable {
     @FXML
     private TableColumn<Appointment, String> endCol;
     @FXML
-    private TableColumn<Appointment, String> customerIdCol;
+    private TableColumn<Appointment, Integer> customerIdCol;
+    @FXML
+    private TableColumn<Appointment, String> customerCol;
     @FXML
     private ToggleGroup timeToggle;
     @FXML
@@ -52,6 +55,10 @@ public class AppointmentsController implements Initializable {
     }
 
     public void editAppointment() throws IOException {
+        if (appointmentTable.getSelectionModel().getSelectedItem() == null){
+            MessageModal.display("No Appointment", "Please select an appointment to update");
+            return;
+        }
         selectedAppointment = appointmentTable.getSelectionModel().getSelectedItem();
         UpsertAppointmentController upsertAppointmentController = new UpsertAppointmentController();
         upsertAppointmentController.show("Update Appointment");
@@ -59,14 +66,15 @@ public class AppointmentsController implements Initializable {
 
     private void initAppointmentTable() {
         appointmentIdCol.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getAppointment_ID()).asObject());
+        customerIdCol.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getCustomer_ID()).asObject());
         titleCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTitle()));
         descriptionCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDescription()));
         locationCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getLocation()));
         contactCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getContactName()));
         typeCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getType()));
-        startCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getStart().toString()));
-        endCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEnd().toString()));
-        customerIdCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCustomerName()));
+        startCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getStart()));
+        endCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEnd()));
+        customerCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCustomerName()));
         appointmentTable.setItems(appointments);
     }
 
@@ -84,16 +92,17 @@ public class AppointmentsController implements Initializable {
         while (rs.next())
         {
             int id = rs.getInt("Appointment_ID");
+            int cusId = rs.getInt("Customer_ID");
             String title = rs.getString("Title");
             String description = rs.getString("Description");
             String location = rs.getString("Location");
             String contact = rs.getString("Contact_Name");
             String type = rs.getString("Type");
-            Date start = rs.getDate("Start");
-            Date end = rs.getDate("End");
+            String start = rs.getString("Start");
+            String end = rs.getString("End");
             String customer = rs.getString("Customer_Name");
             String userName = rs.getString("User_Name");
-            Appointment newApp = new Appointment(id, title, description, location, contact, type, start, end, customer, userName);
+            Appointment newApp = new Appointment(id, title, description, location, contact, type, start, end, customer, userName, cusId);
             appointments.add(newApp);
         }
     }

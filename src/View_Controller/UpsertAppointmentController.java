@@ -1,6 +1,7 @@
 package View_Controller;
 
 import Helper.DBConnect;
+import Helper.TimeController;
 import Model.Appointment;
 import Model.Contact;
 import Model.Customer;
@@ -18,6 +19,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -32,8 +36,10 @@ public class UpsertAppointmentController implements Initializable {
     @FXML ComboBox<String> userComboBox;
     @FXML ComboBox<String> customerComboBox;
     @FXML ComboBox<String> contactComboBox;
+    @FXML ComboBox<String> startTime;
+    @FXML ComboBox<String> endTime;
     @FXML private DatePicker start;
-    @FXML private DatePicker end;
+    @FXML private DatePicker end; // todo specify no weekends
     private Connection conn;
     private ObservableList<Customer> Customers = FXCollections.observableArrayList();
     private ObservableList<User> Users = FXCollections.observableArrayList();
@@ -57,12 +63,17 @@ public class UpsertAppointmentController implements Initializable {
            location.setText(app.getLocation());
            type.setText(app.getType());
            description.setText(app.getDescription());
-           // todo set combo boxes and dates
            customerComboBox.setValue(app.getCustomerName());
            userComboBox.setValue(app.getUserName());
            contactComboBox.setValue(app.getContactName());
+           startTime.setValue(TimeController.splitDateTimeReturnTime(app.getStart()));
+           endTime.setValue(TimeController.splitDateTimeReturnTime(app.getEnd()));
+           start.setValue(TimeController.splitDateTimeReturnDate(app.getStart()));
+           end.setValue(TimeController.splitDateTimeReturnDate(app.getEnd()));
        }
     }
+
+
 
     private void getUserOptions() throws SQLException {
         String query = "select * from users";
@@ -126,6 +137,11 @@ public class UpsertAppointmentController implements Initializable {
         }
     }
 
+    private void getTimeOptions(){
+        startTime.getItems().setAll(TimeController.getTOptions());
+        endTime.getItems().setAll(TimeController.getTOptions());
+    }
+
     public void close(){
         upsertWindow.close();
     }
@@ -133,10 +149,11 @@ public class UpsertAppointmentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.conn = DBConnect.connection;
+        this.getTimeOptions();
         try {
             this.getCustomerOptions();
             this.getUserOptions();
-            this.getCustomerOptions();
+            this.getContactOptions();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
