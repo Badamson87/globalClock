@@ -16,15 +16,15 @@
             <Label layoutX="5.0" layoutY="71.0" text="Address" />
             <Label layoutX="355.0" layoutY="71.0" text="Postal Code" />
             <Label layoutX="5.0" layoutY="107.0" text="Phone Number" />
-            <TextField layoutX="128.0" layoutY="28.0" />
-            <TextField layoutX="450.0" layoutY="28.0" />
-            <TextField layoutX="450.0" layoutY="67.0" />
-            <TextField layoutX="128.0" layoutY="103.0" />
-            <TextField layoutX="128.0" layoutY="67.0" />
-            <Label layoutX="3.0" layoutY="148.0" text="1st Division" />
-            <Label layoutX="355.0" layoutY="148.0" text="Country" />
-            <ComboBox layoutX="127.0" layoutY="144.0" prefWidth="150.0" />
-            <ComboBox layoutX="449.0" layoutY="144.0" prefWidth="150.0" />
+            <TextField layoutX="128.0" layoutY="28.0" fx:id="id" disable="true"/>
+            <TextField layoutX="450.0" layoutY="28.0" fx:id="name"/>
+            <TextField layoutX="450.0" layoutY="67.0" fx:id="zip"/>
+            <TextField layoutX="128.0" layoutY="103.0" fx:id="phone"/>
+            <TextField layoutX="128.0" layoutY="67.0" fx:id="address"/>
+            <Label layoutX="3.0" layoutY="148.0" text="Country" />
+            <Label layoutX="355.0" layoutY="148.0" text="1st Division" />
+            <ComboBox layoutX="127.0" layoutY="144.0" prefWidth="150.0" fx:id="CountryCombo" onAction="#setDivisions"/>
+            <ComboBox layoutX="449.0" layoutY="144.0" prefWidth="150.0" fx:id="DivisionCombo"/>
             <Button layoutX="492.0" layoutY="219.0" mnemonicParsing="false" text="Save" />
             <Button layoutX="547.0" layoutY="219.0" mnemonicParsing="false" text="Close" onAction="#close" />
          </children>

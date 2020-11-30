@@ -1,6 +1,7 @@
 package View_Controller;
 
 import Helper.DBConnect;
+import Model.Country;
 import Model.Customer;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -33,14 +34,20 @@ public class CustomersController implements Initializable {
     @FXML
     private TableColumn<Customer, Integer> Division_ID;
     @FXML
-    private TableColumn<Customer, Integer> Country;
+    private TableColumn<Customer, String> DivisionCol;
+    @FXML
+    private TableColumn<Customer, Integer> Country_ID;
+    @FXML
+    private TableColumn<Customer, String> CountryCol;
+    public static Customer selectedCustomer;
 
     public void newCustomer() throws IOException {
-        UpsertCustomerController.displayNew();
+        UpsertCustomerController upsertCustomerController = new UpsertCustomerController();
+        upsertCustomerController.show("Create Customer");
     }
 
     private void getAllCustomers() throws SQLException {
-        String query = "SELECT * FROM customers";
+        String query = "select * from customers join first_level_divisions on customers.Division_ID = first_level_divisions.Division_ID join countries on first_level_divisions.Country_ID = countries.Country_ID;";
         Statement st = conn.createStatement();
         ResultSet rs = st.executeQuery(query);
         while (rs.next())
@@ -55,9 +62,26 @@ public class CustomersController implements Initializable {
             Date lastUpdate = rs.getDate("Last_Update");
             String updatedBy = rs.getString("Last_Updated_By");
             int divisionId = rs.getInt("Division_ID");
-            Customer newCus = new Customer(id, name, address, zip, phone, create_date, createdBy, lastUpdate, updatedBy, divisionId);
+            String division = rs.getString("Division");
+            int countryId = rs.getInt("Country_ID");
+            String country = rs.getString("Country");
+            Customer newCus = new Customer(id, name, address, phone, zip, create_date, createdBy, lastUpdate, updatedBy, divisionId, division, countryId, country);
             customers.add(newCus);
         }
+    }
+
+    public void editCustomer() throws IOException {
+        if (customerTable.getSelectionModel().getSelectedItem() == null){
+            MessageModal.display("No Customer", "Please select a customer to update");
+            return;
+        }
+        selectedCustomer = customerTable.getSelectionModel().getSelectedItem();
+        UpsertCustomerController upsertCustomerController = new UpsertCustomerController();
+        upsertCustomerController.show("Update Customer");
+    }
+
+    public void deleteCustomer(){
+        // todo
     }
 
     private void initCustomerTable(){
@@ -66,7 +90,10 @@ public class CustomersController implements Initializable {
         Address.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAddress()));
         Postal_Code.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPostalCode()));
         Phone.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPhone()));
-        // todo first division and country
+        Division_ID.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getDivisionID()).asObject());
+        DivisionCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDivision()));
+        Country_ID.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getCountry_ID()).asObject());
+        CountryCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCountry()));
         customerTable.setItems(customers);
     }
 

@@ -13,13 +13,16 @@ public class Customer {
     private Date Last_Update;
     private String Last_Update_By;
     private int Division_ID;
+    private String Division;
+    private int Country_ID;
+    private String Country;
 
 
     public Customer(){
-
     }
+
     public Customer(int Customer_ID, String Customer_Name, String Address, String phone, String Postal_Code, Date Create_Date,
-    String Created_By, Date LastUpdate, String Last_Update_By, int Division_ID){
+                    String Created_By, Date LastUpdate, String Last_Update_By, int Division_ID){
         this.Customer_ID = Customer_ID;
         this.Customer_Name = Customer_Name;
         this.Address = Address;
@@ -30,6 +33,22 @@ public class Customer {
         this.Last_Update = LastUpdate;
         this.Last_Update_By = Last_Update_By;
         this.Division_ID = Division_ID;
+    }
+    public Customer(int Customer_ID, String Customer_Name, String Address, String phone, String Postal_Code, Date Create_Date,
+    String Created_By, Date LastUpdate, String Last_Update_By, int Division_ID, String division, int Country_ID, String Country){
+        this.Customer_ID = Customer_ID;
+        this.Customer_Name = Customer_Name;
+        this.Address = Address;
+        this.Phone = phone;
+        this.Postal_Code = Postal_Code;
+        this.Create_Date = Create_Date;
+        this.Created_By = Created_By;
+        this.Last_Update = LastUpdate;
+        this.Last_Update_By = Last_Update_By;
+        this.Division_ID = Division_ID;
+        this.Division = division;
+        this.Country_ID = Country_ID;
+        this.Country = Country;
     }
 
 
@@ -64,6 +83,9 @@ public class Customer {
     public int getDivisionID() {
         return this.Division_ID;
     }
+    public String getDivision() { return this.Division;}
+    public int getCountry_ID() {return this.Country_ID;}
+    public String getCountry() {return this.Country;}
 
 
 

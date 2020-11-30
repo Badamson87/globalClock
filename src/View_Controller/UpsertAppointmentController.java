@@ -19,11 +19,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
-import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class UpsertAppointmentController implements Initializable {
@@ -72,8 +68,6 @@ public class UpsertAppointmentController implements Initializable {
            end.setValue(TimeController.splitDateTimeReturnDate(app.getEnd()));
        }
     }
-
-
 
     private void getUserOptions() throws SQLException {
         String query = "select * from users";

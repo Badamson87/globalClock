@@ -1,5 +1,7 @@
 package Helper;
 
+import Model.Country;
+
 import java.sql.*;
 
 public class DBConnect {
@@ -13,15 +15,8 @@ public class DBConnect {
 
     public static void establishConnection() throws ClassNotFoundException, SQLException {
         Class.forName(driver);
-      connection = DriverManager.getConnection(DB_URL, username, password);
-      System.out.print("Connected");
-        String query = "SELECT * FROM customers";
-        Statement st = connection.createStatement();
-        ResultSet rs = st.executeQuery(query);
-        System.out.print(rs);
-
-
-
-
+         connection = DriverManager.getConnection(DB_URL, username, password);
+        System.out.print("Connected");
+        Country.setAllCountries();
     }
 }

@@ -107,11 +107,14 @@ public class AppointmentsController implements Initializable {
         }
     }
 
+    public void deleteAppointment(){
+        // todo
+    }
+
     private void initTimeToggle(){
         timeToggle = new ToggleGroup();
         monthToggle.setSelected(true);
         timeToggle.getToggles().addAll(monthToggle, weekToggle);
-
     }
 
     @Override

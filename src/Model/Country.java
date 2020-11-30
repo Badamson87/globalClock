@@ -1,5 +1,13 @@
 package Model;
 
+import Helper.DBConnect;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Date;
 
 public class Country {
@@ -9,6 +17,8 @@ public class Country {
     private String Created_By;
     private Date Last_Update;
     private String Last_Update_By;
+    private static ObservableList<Country> allCountries = FXCollections.observableArrayList();
+
     public Country(){
     }
 
@@ -67,6 +77,27 @@ public class Country {
         this.Created_By = createBy;
         this.Last_Update = lastUpdate;
         this.Last_Update_By = lastUpdateBy;
+    }
+
+    public static ObservableList<Country> getAllCountries() {
+        return allCountries;
+    }
+
+    public static void setAllCountries() throws SQLException {
+        Connection con = DBConnect.connection;
+        String query = "SELECT * FROM countries";
+        Statement st = con.createStatement();
+        ResultSet rs = st.executeQuery(query);
+        while (rs.next()){
+            int id = rs.getInt("Country_ID");
+            String country = rs.getString("Country");
+            Date create = rs.getDate("Create_Date");
+            String createBy = rs.getString("Created_By");
+            Date lastUpdate = rs.getDate("Last_Update");
+            String updateBy = rs.getString("Last_Updated_By");
+            Country newCountry = new Country(id, country, create, createBy, lastUpdate, updateBy);
+            allCountries.add(newCountry);
+        }
     }
 
 }
