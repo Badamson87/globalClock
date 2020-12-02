@@ -53,7 +53,7 @@ public class UpsertAppointmentController implements Initializable {
 
     public void setAppointment(){
        Appointment app = AppointmentsController.selectedAppointment;
-       if (app != null){
+       if (app != null && AppointmentsController.editMode) {
            appointmentId.setText(String.valueOf(app.getAppointment_ID()));
            title.setText(app.getTitle());
            location.setText(app.getLocation());

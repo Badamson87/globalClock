@@ -1,7 +1,6 @@
 package View_Controller;
 
 import Helper.DBConnect;
-import Model.Country;
 import Model.Customer;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -40,8 +39,10 @@ public class CustomersController implements Initializable {
     @FXML
     private TableColumn<Customer, String> CountryCol;
     public static Customer selectedCustomer;
+    public static boolean editMode;
 
-    public void newCustomer() throws IOException {
+    public void newCustomer() throws IOException, SQLException {
+        editMode = false;
         UpsertCustomerController upsertCustomerController = new UpsertCustomerController();
         upsertCustomerController.show("Create Customer");
     }
@@ -70,11 +71,12 @@ public class CustomersController implements Initializable {
         }
     }
 
-    public void editCustomer() throws IOException {
+    public void editCustomer() throws IOException, SQLException {
         if (customerTable.getSelectionModel().getSelectedItem() == null){
             MessageModal.display("No Customer", "Please select a customer to update");
             return;
         }
+        editMode = true;
         selectedCustomer = customerTable.getSelectionModel().getSelectedItem();
         UpsertCustomerController upsertCustomerController = new UpsertCustomerController();
         upsertCustomerController.show("Update Customer");

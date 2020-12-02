@@ -25,7 +25,7 @@
             <Label layoutX="355.0" layoutY="148.0" text="1st Division" />
             <ComboBox layoutX="127.0" layoutY="144.0" prefWidth="150.0" fx:id="CountryCombo" onAction="#setDivisions"/>
             <ComboBox layoutX="449.0" layoutY="144.0" prefWidth="150.0" fx:id="DivisionCombo"/>
-            <Button layoutX="492.0" layoutY="219.0" mnemonicParsing="false" text="Save" />
+            <Button layoutX="492.0" layoutY="219.0" mnemonicParsing="false" text="Save" onAction="#save" />
             <Button layoutX="547.0" layoutY="219.0" mnemonicParsing="false" text="Close" onAction="#close" />
          </children>
       </Pane>

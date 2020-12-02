@@ -3,6 +3,7 @@ package View_Controller;
 import Helper.DBConnect;
 import Model.Country;
 import Model.Customer;
+import Model.Division;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,6 +22,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -53,6 +55,13 @@ public class UpsertCustomerController implements Initializable {
     }
 
     public void close() {
+        id.clear();
+        name.clear();
+        zip.clear();
+        phone.clear();
+        address.clear();
+        CountryCombo.getItems().removeAll();
+        DivisionCombo.getItems().removeAll();
         upsertWindow.close();
     }
 
@@ -65,23 +74,76 @@ public class UpsertCustomerController implements Initializable {
             ResultSet rs = st.executeQuery(query);
             AtomicInteger counter = new AtomicInteger();
             while (rs.next()) {
-             String division = rs.getString("Division");
-             DivisionCombo.getItems().add(counter.get(), division);
+                int divisionId = rs.getInt("Division_ID");
+                String name = rs.getString("Division");
+                Date created = rs.getDate("Create_Date");
+                String createdBy = rs.getString("Created_By");
+                Date lastUpdate = rs.getDate("Last_Update");
+                String lastUpdateBy = rs.getString("Last_Updated_By");
+                int countryID = rs.getInt("Country_ID");
+             Division division = new Division(divisionId, name, created, createdBy, lastUpdate, lastUpdateBy, countryID);
+             DivisionCombo.getItems().add(counter.get(), division.getDivision());
              counter.getAndIncrement();
             }
         }
     }
 
+    public void save() throws SQLException {
+        if (fieldsCheck() == true){
+            if (id.getText().equals("")){
+                saveNewCustomer();
+            }
+            else {
+                saveEditCustomer();
+            }
+        }
+        else {
+            MessageModal.display("Unable To Save", "Please Complete Entire Form");
+        }
+    }
+
+    private void saveNewCustomer() throws SQLException {
+        // todo
+        String n = name.getText();
+        String a = address.getText();
+        String z = zip.getText();
+        String p = phone.getText();
+        Date cd = new Date();
+        //String cb =
+        Date lu = new Date();
+        //String lub =
+        //int d =
+        // String query = "Insert into customers ('Customer_Name', 'Address', 'Postal_Code', 'Phone', 'Create_Date', 'Create_By', 'Last_Update', 'Last_Update_By', 'Division_ID') " +
+        //        "Values (" + n + a + z + p + cd + cb + lu + lub + d + ")";
+        // Statement st = conn.createStatement();
+        // ResultSet rs = st.executeQuery(query);
+
+    }
+
+    private void saveEditCustomer() {
+        // todo
+    }
+
+    private boolean fieldsCheck(){
+        if (name.getText().equals("")) { return false;}
+        if (zip.getText().equals("")) {return false;}
+        if (phone.getText().equals("")) {return false;}
+        if (address.getText().equals("")) {return false;}
+        if (CountryCombo.getSelectionModel().getSelectedItem() == null) {return false;}
+        if (DivisionCombo.getSelectionModel().getSelectedItem() == null) {return false;}
+        return true;
+    }
+
     private void setCustomer() throws SQLException {
         Customer cus = CustomersController.selectedCustomer;
-        if (cus != null) {
+        if (cus != null && CustomersController.editMode) {
             id.setText(String.valueOf(cus.getId()));
             name.setText(cus.getCustomerName());
             address.setText(cus.getAddress());
             zip.setText(cus.getPostalCode());
             phone.setText(cus.getPhone());
             CountryCombo.setValue(cus.getCountry());
-            DivisionCombo.setValue(cus.getDivision());
+           DivisionCombo.setValue(cus.getDivision());
         }
         this.setDivisions();
     }

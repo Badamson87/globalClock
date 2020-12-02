@@ -1,5 +1,6 @@
 package View_Controller;
 
+import Model.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -15,6 +16,7 @@ public class HomeController implements Initializable {
     BorderPane borderPane;
     @FXML
     ComboBox<String> locationCombo;
+    public static User loggedInUser;
 
     public void setCustomerPane() throws IOException {
         borderPane.setCenter(FXMLLoader.load(getClass().getResource("customers.fxml")));

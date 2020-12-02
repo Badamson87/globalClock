@@ -13,10 +13,11 @@ public class DBConnect {
     private static final String driver = "com.mysql.jdbc.Driver";
     public static Connection connection;
 
-    public static void establishConnection() throws ClassNotFoundException, SQLException {
+    public static Connection establishConnection() throws ClassNotFoundException, SQLException {
         Class.forName(driver);
          connection = DriverManager.getConnection(DB_URL, username, password);
         System.out.print("Connected");
         Country.setAllCountries();
+        return  connection;
     }
 }

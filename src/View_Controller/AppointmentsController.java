@@ -47,9 +47,11 @@ public class AppointmentsController implements Initializable {
     @FXML
     private RadioButton weekToggle;
     public static Appointment selectedAppointment;
+    public static boolean editMode;
 
 
     public void newAppointment() throws IOException {
+        editMode = false;
         UpsertAppointmentController upsertAppointmentController = new UpsertAppointmentController();
         upsertAppointmentController.show("Create Appointment");
     }
@@ -59,6 +61,7 @@ public class AppointmentsController implements Initializable {
             MessageModal.display("No Appointment", "Please select an appointment to update");
             return;
         }
+        editMode = true;
         selectedAppointment = appointmentTable.getSelectionModel().getSelectedItem();
         UpsertAppointmentController upsertAppointmentController = new UpsertAppointmentController();
         upsertAppointmentController.show("Update Appointment");
