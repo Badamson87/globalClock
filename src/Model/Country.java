@@ -9,8 +9,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class Country {
+    public String name;
     private int Country_ID;
     private String Country;
     private Date Create_Date;
@@ -70,6 +73,24 @@ public class Country {
         Last_Update_By = last_Update_By;
     }
 
+    public static Country getCountryById(int Id) throws SQLException {
+        Connection con = DBConnect.connection;
+        String query = "SELECT * FROM countries where Country_Id = '" + Id + "'";
+        Statement st = con.createStatement();
+        ResultSet rs = st.executeQuery(query);
+        Country newCountry = new Country();
+        while (rs.next()){
+            int id = rs.getInt("Country_ID");
+            String country = rs.getString("Country");
+            Date create = rs.getDate("Create_Date");
+            String createBy = rs.getString("Created_By");
+            Date lastUpdate = rs.getDate("Last_Update");
+            String updateBy = rs.getString("Last_Updated_By");
+            newCountry = new Country(id, country, create, createBy, lastUpdate, updateBy);
+        }
+            return newCountry;
+    }
+
     public Country(int countryId, String country, Date createDate, String createBy, Date lastUpdate, String lastUpdateBy) {
         this.Country_ID = countryId;
         this.Country = country;
@@ -77,10 +98,20 @@ public class Country {
         this.Created_By = createBy;
         this.Last_Update = lastUpdate;
         this.Last_Update_By = lastUpdateBy;
+        this.name = country;
     }
 
     public static ObservableList<Country> getAllCountries() {
         return allCountries;
+    }
+
+    @Override
+    public String toString(){
+        return this.getName();
+    }
+
+    public String getName(){
+        return this.name;
     }
 
     public static void setAllCountries() throws SQLException {

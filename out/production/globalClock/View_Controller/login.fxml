@@ -20,14 +20,16 @@
                   <Font size="64.0" />
                </font>
             </Label>
-            <TextField layoutX="526.0" layoutY="420.0" text="Pass Word" />
-            <TextField layoutX="526.0" layoutY="375.0" text="User Name" />
+            <TextField fx:id="Password" layoutX="576.0" layoutY="417.0" />
+            <TextField fx:id="UserName" layoutX="576.0" layoutY="375.0" />
             <Text layoutX="494.0" layoutY="714.0" strokeType="OUTSIDE" strokeWidth="0.0" text="A universal appointment manager" wrappingWidth="212.814453125">
                <font>
                   <Font size="14.0" />
                </font>
             </Text>
-            <Button fx:id="loginButton" onAction="#attemptLogin" layoutX="576.0" layoutY="464.0" mnemonicParsing="false" text="Login" />
+            <Button fx:id="loginButton" layoutX="576.0" layoutY="464.0" mnemonicParsing="false" onAction="#attemptLogin" text="Login" />
+            <Label layoutX="480.0" layoutY="379.0" prefHeight="17.0" prefWidth="81.0" text="User Name" />
+            <Label layoutX="480.0" layoutY="421.0" prefHeight="17.0" prefWidth="81.0" text="Password" />
          </children>
       </Pane>
    </children>

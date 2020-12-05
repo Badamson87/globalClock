@@ -1,8 +1,17 @@
 package Model;
 
+import Helper.DBConnect;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Date;
 
 public class Division {
+    public String name;
     private int Division_ID;
     private String Division;
     private Date Create_Date;
@@ -10,6 +19,7 @@ public class Division {
     private Date Last_Update;
     private String Last_Updated_By;
     private int Country_ID;
+    private static ObservableList<Division> allDivisions = FXCollections.observableArrayList();
 
     public int getDivision_ID() {
         return Division_ID;
@@ -67,8 +77,58 @@ public class Division {
         Country_ID = country_ID;
     }
 
+    public static ObservableList<Division> getAllDivisions(){
+        return  allDivisions;
+    }
+
+    public static Division getDivisionById(int Id) throws SQLException {
+        Connection con = DBConnect.connection;
+        String query = "SELECT * FROM first_level_divisions where Division_Id = '" + Id + "'";
+        Statement st = con.createStatement();
+        ResultSet rs = st.executeQuery(query);
+        Division newDivision = new Division();
+        while (rs.next()){
+            int divisionId = rs.getInt("Division_ID");
+            String name = rs.getString("Division");
+            Date created = rs.getDate("Create_Date");
+            String createdBy = rs.getString("Created_By");
+            Date lastUpdate = rs.getDate("Last_Update");
+            String lastUpdateBy = rs.getString("Last_Updated_By");
+            int countryID = rs.getInt("Country_ID");
+           newDivision = new Division(divisionId, name, created, createdBy, lastUpdate, lastUpdateBy, countryID);
+        }
+        return newDivision;
+    }
+
+    public static void setAllDivisions() throws SQLException {
+        Connection con = DBConnect.connection;
+        String query = "SELECT * FROM first_level_divisions";
+        Statement st = con.createStatement();
+        ResultSet rs = st.executeQuery(query);
+        while (rs.next()){
+            int divisionId = rs.getInt("Division_ID");
+            String name = rs.getString("Division");
+            Date created = rs.getDate("Create_Date");
+            String createdBy = rs.getString("Created_By");
+            Date lastUpdate = rs.getDate("Last_Update");
+            String lastUpdateBy = rs.getString("Last_Updated_By");
+            int countryID = rs.getInt("Country_ID");
+            Division division = new Division(divisionId, name, created, createdBy, lastUpdate, lastUpdateBy, countryID);
+            allDivisions.add(division);
+        }
+    }
+
     public Division(){
 
+    }
+
+    @Override
+    public String toString(){
+        return this.getName();
+    }
+
+    public String getName(){
+        return this.name;
     }
 
     public Division(int divisionID, String division, Date create_Date, String created_By, Date last_Update, String last_Updated_By, int country_ID){
@@ -79,6 +139,7 @@ public class Division {
         this.Last_Update = last_Update;
         this.Last_Updated_By = last_Updated_By;
         this.Country_ID = country_ID;
+        this.name = division;
     }
 
 }

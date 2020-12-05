@@ -5,7 +5,6 @@ import Model.Country;
 import Model.Customer;
 import Model.Division;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -18,10 +17,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -39,9 +35,9 @@ public class UpsertCustomerController implements Initializable {
     @FXML
     private TextField address;
     @FXML
-    private ComboBox<String> CountryCombo;
+    private ComboBox<Country> CountryCombo;
     @FXML
-    private ComboBox<String> DivisionCombo;
+    private ComboBox<Division> DivisionCombo;
     private Connection conn;
 
     public void show(String title) throws IOException {
@@ -65,27 +61,19 @@ public class UpsertCustomerController implements Initializable {
         upsertWindow.close();
     }
 
-    public void setDivisions() throws SQLException {
-        String countryName = CountryCombo.getSelectionModel().getSelectedItem();
-        if (countryName != null){
+    public void setDivisions() {
+   Country country = CountryCombo.getSelectionModel().getSelectedItem();
+       if (country != null){
             DivisionCombo.getItems().clear();
-            String query = "select * from countries join first_level_divisions on countries.Country_ID = first_level_divisions.COUNTRY_ID where Country = '" + countryName + "'";
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery(query);
-            AtomicInteger counter = new AtomicInteger();
-            while (rs.next()) {
-                int divisionId = rs.getInt("Division_ID");
-                String name = rs.getString("Division");
-                Date created = rs.getDate("Create_Date");
-                String createdBy = rs.getString("Created_By");
-                Date lastUpdate = rs.getDate("Last_Update");
-                String lastUpdateBy = rs.getString("Last_Updated_By");
-                int countryID = rs.getInt("Country_ID");
-             Division division = new Division(divisionId, name, created, createdBy, lastUpdate, lastUpdateBy, countryID);
-             DivisionCombo.getItems().add(counter.get(), division.getDivision());
-             counter.getAndIncrement();
-            }
-        }
+          AtomicInteger counter = new AtomicInteger() ;
+           Division.getAllDivisions().forEach((division -> {
+               if(division.getCountry_ID() == country.getCountry_ID()){
+                   DivisionCombo.getItems().add(counter.get(), division);
+                   counter.getAndIncrement();
+               }
+           }
+        ));
+       }
     }
 
     public void save() throws SQLException {
@@ -108,15 +96,21 @@ public class UpsertCustomerController implements Initializable {
         String a = address.getText();
         String z = zip.getText();
         String p = phone.getText();
-        Date cd = new Date();
-        //String cb =
-        Date lu = new Date();
-        //String lub =
-        //int d =
-        // String query = "Insert into customers ('Customer_Name', 'Address', 'Postal_Code', 'Phone', 'Create_Date', 'Create_By', 'Last_Update', 'Last_Update_By', 'Division_ID') " +
-        //        "Values (" + n + a + z + p + cd + cb + lu + lub + d + ")";
-        // Statement st = conn.createStatement();
-        // ResultSet rs = st.executeQuery(query);
+        Date cd = new Timestamp(System.currentTimeMillis());
+        String cb = HomeController.loggedInUser.getUser_Name();
+        Date lu = new Timestamp(System.currentTimeMillis());
+        String lub = HomeController.loggedInUser.getUser_Name();
+         int d = DivisionCombo.getSelectionModel().getSelectedItem().getDivision_ID();
+         String query = "Insert into customers (Customer_Name, Address, Postal_Code, Phone, Create_Date, Created_By, Last_Update, Last_Updated_By, Division_ID) " +
+                "Values ('" + n + "', '" + a + "', '" + z + "', '" + p + "', '" + cd + "', '" + cb + "', '" + lu + "', '" + lub + "', " + d + ")";
+         Statement st = conn.createStatement();
+         int save = st.executeUpdate(query);
+         if (save == 1){
+             // todo need to update the list of customers but the save works!
+             this.close();
+         } else {
+             MessageModal.display("Something went wrong", "Unable to save customer");
+        }
 
     }
 
@@ -142,8 +136,8 @@ public class UpsertCustomerController implements Initializable {
             address.setText(cus.getAddress());
             zip.setText(cus.getPostalCode());
             phone.setText(cus.getPhone());
-            CountryCombo.setValue(cus.getCountry());
-           DivisionCombo.setValue(cus.getDivision());
+            CountryCombo.setValue(Country.getCountryById(cus.getCountry_ID()));
+            DivisionCombo.setValue(Division.getDivisionById(cus.getDivisionID()));
         }
         this.setDivisions();
     }
@@ -152,7 +146,7 @@ public class UpsertCustomerController implements Initializable {
         AtomicInteger counter = new AtomicInteger();
         ObservableList<Country> countries = Country.getAllCountries();
         countries.forEach( (country) -> {
-            CountryCombo.getItems().add(counter.get(), country.getCountry());
+            CountryCombo.getItems().add(counter.get(), country);
             counter.getAndIncrement();
         });
     }

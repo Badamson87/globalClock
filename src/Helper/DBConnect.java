@@ -1,6 +1,7 @@
 package Helper;
 
 import Model.Country;
+import Model.Division;
 
 import java.sql.*;
 
@@ -18,6 +19,7 @@ public class DBConnect {
          connection = DriverManager.getConnection(DB_URL, username, password);
         System.out.print("Connected");
         Country.setAllCountries();
+        Division.setAllDivisions();
         return  connection;
     }
 }
