@@ -50,7 +50,7 @@ public class UpsertCustomerController implements Initializable {
         window.show();
     }
 
-    public void close() {
+    public void close() throws SQLException {
         id.clear();
         name.clear();
         zip.clear();
@@ -58,6 +58,7 @@ public class UpsertCustomerController implements Initializable {
         address.clear();
         CountryCombo.getItems().removeAll();
         DivisionCombo.getItems().removeAll();
+        CustomersController.getAllCustomers();
         upsertWindow.close();
     }
 
@@ -91,7 +92,6 @@ public class UpsertCustomerController implements Initializable {
     }
 
     private void saveNewCustomer() throws SQLException {
-        // todo
         String n = name.getText();
         String a = address.getText();
         String z = zip.getText();
@@ -106,16 +106,31 @@ public class UpsertCustomerController implements Initializable {
          Statement st = conn.createStatement();
          int save = st.executeUpdate(query);
          if (save == 1){
-             // todo need to update the list of customers but the save works!
              this.close();
          } else {
              MessageModal.display("Something went wrong", "Unable to save customer");
         }
-
     }
 
-    private void saveEditCustomer() {
-        // todo
+    private void saveEditCustomer() throws SQLException {
+        String cusId = id.getText();
+        String n = name.getText();
+        String a = address.getText();
+        String z = zip.getText();
+        String p = phone.getText();
+        Date lu = new Timestamp(System.currentTimeMillis());
+        String lub = HomeController.loggedInUser.getUser_Name();
+        int d = DivisionCombo.getSelectionModel().getSelectedItem().getDivision_ID();
+        String query = "Update customers set Customer_Name = '" + n + "', Address = '" + a + "', Postal_Code = '" + z + "', Phone = '" + p + "',  Last_Update = '" + lu + "', Last_Updated_By = '" + lub + "', Division_ID = " + d +
+                " WHERE Customer_ID = " + cusId;
+        System.out.println(query);
+        Statement st = conn.createStatement();
+        int save = st.executeUpdate(query);
+        if (save == 1){
+            this.close();
+        } else {
+            MessageModal.display("Something went wrong", "Unable to save customer");
+        }
     }
 
     private boolean fieldsCheck(){

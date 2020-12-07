@@ -16,8 +16,8 @@ import java.sql.*;
 import java.util.ResourceBundle;
 
 public class CustomersController implements Initializable {
-    private Connection conn;
-    private final ObservableList<Customer> customers = FXCollections.observableArrayList();
+    private static Connection conn;
+    private static final ObservableList<Customer> customers = FXCollections.observableArrayList();
     @FXML
     private TableView<Customer> customerTable;
     @FXML
@@ -47,7 +47,8 @@ public class CustomersController implements Initializable {
         upsertCustomerController.show("Create Customer");
     }
 
-    private void getAllCustomers() throws SQLException {
+    public static void getAllCustomers() throws SQLException {
+        customers.clear();
         String query = "select * from customers join first_level_divisions on customers.Division_ID = first_level_divisions.Division_ID join countries on first_level_divisions.Country_ID = countries.Country_ID;";
         Statement st = conn.createStatement();
         ResultSet rs = st.executeQuery(query);
