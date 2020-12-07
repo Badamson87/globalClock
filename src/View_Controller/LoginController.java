@@ -26,6 +26,7 @@ public class LoginController  implements Initializable {
     public void attemptLogin() throws IOException, SQLException {
         if (UserName.getText().equals("") || Password.getText().equals("")){
             MessageModal.display("Unable to login", "Please enter user name and password");
+        // Im a test
         } else {
             String un = UserName.getText();
             String pw = Password.getText();
