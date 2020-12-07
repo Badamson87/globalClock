@@ -42,12 +42,13 @@ public class Appointment {
         this.Customer_ID = cusID;
     }
 
-    public Appointment(int Appointment_ID, String title, String description, String location, String contactName, String type, String start, String end, String customerName, String userName, int cusID ){
+    public Appointment(int Appointment_ID, String title, String description, String location, String contactName, int contactId, String type, String start, String end, String customerName, String userName, int cusID ){
      this.Appointment_ID = Appointment_ID;
      this.Title = title;
      this.Description = description;
      this.Location = location;
      this.ContactName = contactName;
+     this.Contact_ID = contactId;
      this.Type = type;
      this.Start = start;
      this.End = end;

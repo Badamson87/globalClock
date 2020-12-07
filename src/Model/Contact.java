@@ -1,6 +1,14 @@
 package Model;
 
+import Helper.DBConnect;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 public class Contact {
+    public String name;
     private int Contact_ID;
     private String Contact_Name;
     private String Email;
@@ -11,6 +19,7 @@ public class Contact {
         this.Contact_ID = id;
         this.Contact_Name = name;
         this.Email = email;
+        this.name = name;
     }
 
     public int getContact_ID() {
@@ -35,5 +44,29 @@ public class Contact {
 
     public void setEmail(String email) {
         Email = email;
+    }
+
+    @Override
+    public String toString(){
+        return this.getName();
+    }
+
+    public String getName(){
+        return this.name;
+    }
+
+    public static Contact getContactById(int Id) throws SQLException {
+        Connection con = DBConnect.connection;
+        String query = "SELECT * FROM contacts where Contact_ID = '" + Id + "'";
+        Statement st = con.createStatement();
+        ResultSet rs = st.executeQuery(query);
+        Contact newContact = new Contact();
+        while (rs.next()){
+            int id = rs.getInt("Contact_ID");
+            String name = rs.getString("Contact_Name");
+            String email = rs.getString("Email");
+            newContact = new Contact(id, name, email);
+        }
+        return newContact;
     }
 }

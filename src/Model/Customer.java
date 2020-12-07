@@ -1,8 +1,15 @@
 package Model;
 
+import Helper.DBConnect;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Date;
 
 public class Customer {
+    public String name;
     private int Customer_ID;
     private String Customer_Name;
     private String Address;
@@ -33,6 +40,7 @@ public class Customer {
         this.Last_Update = LastUpdate;
         this.Last_Update_By = Last_Update_By;
         this.Division_ID = Division_ID;
+        this.name = Customer_Name;
     }
     public Customer(int Customer_ID, String Customer_Name, String Address, String phone, String Postal_Code, Date Create_Date,
     String Created_By, Date LastUpdate, String Last_Update_By, int Division_ID, String division, int Country_ID, String Country){
@@ -49,9 +57,40 @@ public class Customer {
         this.Division = division;
         this.Country_ID = Country_ID;
         this.Country = Country;
+        this.name = Customer_Name;
     }
 
+    public static Customer getCustomerById(int Id) throws SQLException {
+        Connection con = DBConnect.connection;
+        String query = "SELECT * FROM customers where Customer_Id = '" + Id + "'";
+        Statement st = con.createStatement();
+        ResultSet rs = st.executeQuery(query);
+        Customer newCustomer = new Customer();
+        while (rs.next()){
+            int id = rs.getInt("Customer_ID");
+            String name = rs.getString("Customer_Name");
+            String address = rs.getString("Address");
+            String zip = rs.getString("Postal_Code");
+            String phone = rs.getString("Phone");
+            java.sql.Date create_date = rs.getDate("Create_Date");
+            String createdBy = rs.getString("Created_By");
+            java.sql.Date lastUpdate = rs.getDate("Last_Update");
+            String updatedBy = rs.getString("Last_Updated_By");
+            int divisionId = rs.getInt("Division_ID");
+            newCustomer = new Customer(id, name, address, phone, zip, create_date, createdBy, lastUpdate, updatedBy, divisionId);
 
+        }
+        return newCustomer;
+    }
+
+    @Override
+    public String toString(){
+        return this.getName();
+    }
+
+    public String getName(){
+        return this.name;
+    }
 
     public int getId() {
         return this.Customer_ID;

@@ -96,6 +96,7 @@ public class AppointmentsController implements Initializable {
         {
             int id = rs.getInt("Appointment_ID");
             int cusId = rs.getInt("Customer_ID");
+            int contactId = rs.getInt("Contact_ID");
             String title = rs.getString("Title");
             String description = rs.getString("Description");
             String location = rs.getString("Location");
@@ -105,7 +106,7 @@ public class AppointmentsController implements Initializable {
             String end = rs.getString("End");
             String customer = rs.getString("Customer_Name");
             String userName = rs.getString("User_Name");
-            Appointment newApp = new Appointment(id, title, description, location, contact, type, start, end, customer, userName, cusId);
+            Appointment newApp = new Appointment(id, title, description, location, contact, contactId, type, start, end, customer, userName, cusId);
             appointments.add(newApp);
         }
     }

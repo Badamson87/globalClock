@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class UpsertAppointmentController implements Initializable {
@@ -29,9 +30,8 @@ public class UpsertAppointmentController implements Initializable {
     @FXML private TextField description;
     @FXML private TextField location;
     @FXML private TextField type;
-    @FXML ComboBox<String> userComboBox;
-    @FXML ComboBox<String> customerComboBox;
-    @FXML ComboBox<String> contactComboBox;
+    @FXML ComboBox<Customer> customerComboBox;
+    @FXML ComboBox<Contact> contactComboBox;
     @FXML ComboBox<String> startTime;
     @FXML ComboBox<String> endTime;
     @FXML private DatePicker start;
@@ -51,7 +51,7 @@ public class UpsertAppointmentController implements Initializable {
         window.show();
     }
 
-    public void setAppointment(){
+    public void setAppointment() throws SQLException {
        Appointment app = AppointmentsController.selectedAppointment;
        if (app != null && AppointmentsController.editMode) {
            appointmentId.setText(String.valueOf(app.getAppointment_ID()));
@@ -59,35 +59,13 @@ public class UpsertAppointmentController implements Initializable {
            location.setText(app.getLocation());
            type.setText(app.getType());
            description.setText(app.getDescription());
-           customerComboBox.setValue(app.getCustomerName());
-           userComboBox.setValue(app.getUserName());
-           contactComboBox.setValue(app.getContactName());
+           customerComboBox.setValue(Customer.getCustomerById(app.getCustomer_ID()));
+           contactComboBox.setValue(Contact.getContactById(app.getContact_ID()));
            startTime.setValue(TimeController.splitDateTimeReturnTime(app.getStart()));
            endTime.setValue(TimeController.splitDateTimeReturnTime(app.getEnd()));
            start.setValue(TimeController.splitDateTimeReturnDate(app.getStart()));
            end.setValue(TimeController.splitDateTimeReturnDate(app.getEnd()));
        }
-    }
-
-    private void getUserOptions() throws SQLException {
-        String query = "select * from users";
-        Statement st = conn.createStatement();
-        ResultSet rs = st.executeQuery(query);
-        while (rs.next()){
-            int id = rs.getInt("User_ID");
-            String name = rs.getString("User_Name");
-            String pw = rs.getString("Password");
-            Date createDate = rs.getDate("create_Date");
-            String createBy = rs.getString("Created_By");
-            Date lastUpdate = rs.getDate("last_Update");
-            String lastUpdateBy = rs.getString("Last_Updated_By");
-            User newUser = new User(id, name, pw, createDate, createBy, lastUpdate, lastUpdateBy);
-            this.Users.add(newUser);
-        }
-        for (int i = 0; i < this.Users.size(); i++){
-            String name = this.Users.get(i).getUser_Name();
-            userComboBox.getItems().add(i, name);
-        }
     }
 
     private void getContactOptions() throws SQLException{
@@ -101,10 +79,11 @@ public class UpsertAppointmentController implements Initializable {
             Contact newCon = new Contact(id, name, email);
             this.contacts.add(newCon);
         }
-        for (int i = 0; i < this.contacts.size(); i++){
-            String name = this.contacts.get(i).getContact_Name();
-            contactComboBox.getItems().add(i, name);
-        }
+        AtomicInteger counter = new AtomicInteger();
+        this.contacts.forEach((contact) -> {
+            contactComboBox.getItems().add(counter.get(), contact);
+            counter.getAndIncrement();
+        });
     }
 
     private void getCustomerOptions() throws SQLException {
@@ -125,10 +104,11 @@ public class UpsertAppointmentController implements Initializable {
             Customer newCus = new Customer(id, customerName, address, phone, zip, createDate, createBy, lastUpdate, lastUpdateBy, divisionId);
             this.Customers.add(newCus);
         }
-        for (int i = 0; i < this.Customers.size(); i++){
-            String name = this.Customers.get(i).getCustomerName();
-            customerComboBox.getItems().add(i, name);
-        }
+        AtomicInteger counter = new AtomicInteger();
+        this.Customers.forEach((customer) -> {
+            customerComboBox.getItems().add(counter.get(), customer);
+            counter.getAndIncrement();
+        });
     }
 
     private void getTimeOptions(){
@@ -146,11 +126,14 @@ public class UpsertAppointmentController implements Initializable {
         this.getTimeOptions();
         try {
             this.getCustomerOptions();
-            this.getUserOptions();
             this.getContactOptions();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        this.setAppointment();
+        try {
+            this.setAppointment();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 }
