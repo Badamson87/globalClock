@@ -110,7 +110,7 @@ public class AppointmentsController implements Initializable {
         }
     }
 
-    public void deleteAppointment(){
+    public void deleteAppointment() {
         // todo
     }
 

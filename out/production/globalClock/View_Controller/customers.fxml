@@ -23,7 +23,7 @@
       </TableView>
       <TextField alignment="CENTER_RIGHT" layoutX="992.0" layoutY="24.0" prefHeight="25.0" prefWidth="183.0" text="Search" />
       <Button layoutX="992.0" layoutY="699.0" mnemonicParsing="false" onAction="#newCustomer" prefHeight="25.0" prefWidth="52.0" text="New" />
-      <Button layoutX="1123.0" layoutY="699.0" mnemonicParsing="false" onAction="#deleteCustomer" prefHeight="25.0" prefWidth="52.0" text="Delete" />
+      <Button layoutX="1123.0" layoutY="699.0" mnemonicParsing="false" onAction="#checkDeleteCustomer" prefHeight="25.0" prefWidth="52.0" text="Delete" />
       <Button layoutX="1058.0" layoutY="699.0" mnemonicParsing="false" onAction="#editCustomer" prefHeight="25.0" prefWidth="52.0" text="Edit" />
    </children>
 </AnchorPane>

@@ -1,6 +1,12 @@
 package Model;
 
-import java.time.ZoneId;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Date;
 
 public class Appointment {
@@ -24,6 +30,17 @@ public class Appointment {
     private String UserName;
 
     public Appointment(){}
+
+    public Appointment(int Appointment_ID, String title, String description, String location, String type, String start, String end, int cusID ){
+        this.Appointment_ID = Appointment_ID;
+        this.Title = title;
+        this.Description = description;
+        this.Location = location;
+        this.Type = type;
+        this.Start = start;
+        this.End = end;
+        this.Customer_ID = cusID;
+    }
 
     public Appointment(int Appointment_ID, String title, String description, String location, String contactName, String type, String start, String end, String customerName, String userName, int cusID ){
      this.Appointment_ID = Appointment_ID;
@@ -122,10 +139,6 @@ public class Appointment {
 
     public String getStart() { return Start; }
 
-    //public void setStart(Date start) {
-      //  Start = start;
-    //}
-
     public Date getLast_Update() {
         return Last_Update;
     }
@@ -173,4 +186,26 @@ public class Appointment {
     public void setUser_ID(int user_ID) {
         User_ID = user_ID;
     }
+
+    public static ObservableList<Appointment> getAllAppointmentsByCustomerId(int customerId, Connection conn) throws SQLException {
+        ObservableList<Appointment> appointments = FXCollections.observableArrayList();
+        String query = "select * from appointments where Customer_ID = " + customerId;
+        Statement st = conn.createStatement();
+        ResultSet rs = st.executeQuery(query);
+        while (rs.next())
+        {
+            int id = rs.getInt("Appointment_ID");
+            int cusId = rs.getInt("Customer_ID");
+            String title = rs.getString("Title");
+            String description = rs.getString("Description");
+            String location = rs.getString("Location");
+            String type = rs.getString("Type");
+            String start = rs.getString("Start");
+            String end = rs.getString("End");
+            Appointment newApp = new Appointment(id, title, description, location, type, start, end, cusId);
+            appointments.add(newApp);
+        }
+        return appointments;
+    }
+
 }

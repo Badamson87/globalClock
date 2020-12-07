@@ -1,6 +1,7 @@
 package View_Controller;
 
 import Helper.DBConnect;
+import Model.Appointment;
 import Model.Customer;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -83,8 +84,31 @@ public class CustomersController implements Initializable {
         upsertCustomerController.show("Update Customer");
     }
 
-    public void deleteCustomer(){
-        // todo
+    public void checkDeleteCustomer() throws SQLException {
+        if (customerTable.getSelectionModel().getSelectedItem() == null){
+            MessageModal.display("No Customer", "Please select a customer to delete");
+            return;
+        }
+        int customerId = customerTable.getSelectionModel().getSelectedItem().getId();
+        ObservableList<Appointment> appointments = Appointment.getAllAppointmentsByCustomerId(customerId, conn);
+        if (appointments.isEmpty()){
+            this.deleteCustomer(customerId);
+        }
+        else{
+            MessageModal.display("Unable to delete customer", "Can not delete a customer with appointments");
+        }
+    }
+
+    private void deleteCustomer(int customerId) throws SQLException {
+        String query = "DELETE FROM customers WHERE Customer_ID = " + customerId;
+        Statement st = conn.createStatement();
+        int res = st.executeUpdate(query);
+        if (res == 1){
+            getAllCustomers();
+            MessageModal.display("Success", "Customer Deleted");
+        } else {
+            MessageModal.display("Unable to delete customer", "Something went wrong");
+        }
     }
 
     private void initCustomerTable(){
