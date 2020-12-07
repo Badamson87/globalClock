@@ -30,7 +30,7 @@
             <DatePicker fx:id="start" layoutX="93.0" layoutY="113.0" />
             <DatePicker fx:id="end" layoutX="479.0" layoutY="113.0" />
             <Button layoutX="598.0" layoutY="336.0" mnemonicParsing="false" onAction="#close" text="Close" />
-            <Button layoutX="546.0" layoutY="336.0" mnemonicParsing="false" text="Save" />
+            <Button layoutX="546.0" layoutY="336.0" mnemonicParsing="false" text="Save" onAction="#save"/>
             <ComboBox fx:id="customerComboBox" layoutX="479.0" layoutY="75.0" prefWidth="150.0" />
             <Label layoutX="2.0" layoutY="153.0" prefHeight="17.0" prefWidth="85.0" text="Start Time" />
             <ComboBox fx:id="startTime" layoutX="92.0" layoutY="149.0" prefWidth="150.0" />

@@ -16,9 +16,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Callback;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -49,6 +53,42 @@ public class UpsertAppointmentController implements Initializable {
         window.setTitle(title);
         window.setScene(new Scene(root, 700, 400));
         window.show();
+    }
+
+    public void save(){
+        if (fieldsCheck() == true){
+            if (appointmentId.getText().equals("")){
+                saveNewAppointment();
+            }
+            else {
+                saveEditAppointment();
+            }
+        }
+        else {
+            MessageModal.display("Unable To Save", "Please Complete Entire Form");
+        }
+    }
+
+    private void saveNewAppointment(){
+        System.out.println("Save");
+    }
+
+    private void saveEditAppointment(){
+        System.out.println("Edit");
+    }
+
+    private boolean fieldsCheck(){
+        if (title.getText().equals("")) {return false;}
+        if (description.getText().equals("")) {return false;}
+        if (location.getText().equals("")) {return false;}
+        if (type.getText().equals("")) {return false;}
+        if (customerComboBox.getSelectionModel().getSelectedItem() == null) {return false;}
+        if (contactComboBox.getSelectionModel().getSelectedItem() == null) {return false;}
+        if (startTime.getSelectionModel().getSelectedItem() == null) {return false;}
+        if (endTime.getSelectionModel().getSelectedItem() == null) {return false;}
+        if (start.getValue() == null) {return false;}
+        if (end.getValue() == null) {return false;}
+        return true;
     }
 
     public void setAppointment() throws SQLException {
@@ -120,10 +160,35 @@ public class UpsertAppointmentController implements Initializable {
         upsertWindow.close();
     }
 
+    private Callback<DatePicker, DateCell> setDatePickerOptions() {
+        final Callback<DatePicker, DateCell> dayCellFactory = new Callback<DatePicker, DateCell>() {
+            @Override
+            public DateCell call(final DatePicker datePicker) {
+                return new DateCell() {
+                    @Override
+                    public void updateItem(LocalDate date, boolean empty) {
+                        super.updateItem(date, empty);
+                        if (date.getDayOfWeek() == DayOfWeek.SATURDAY //
+                                || date.getDayOfWeek() == DayOfWeek.SUNDAY
+                                || date.isBefore(LocalDate.now())) {
+                            setDisable(true);
+                            setStyle("-fx-background-color: #FFFFFF;");
+                        }
+                    }
+                };
+            }
+        };
+        return dayCellFactory;
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.conn = DBConnect.connection;
         this.getTimeOptions();
+        Callback<DatePicker, DateCell> dayCellFactory = this.setDatePickerOptions();
+        start.setDayCellFactory(dayCellFactory);
+        end.setDayCellFactory(dayCellFactory);
+
         try {
             this.getCustomerOptions();
             this.getContactOptions();
