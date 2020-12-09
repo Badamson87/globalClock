@@ -18,6 +18,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
@@ -39,7 +42,7 @@ public class UpsertAppointmentController implements Initializable {
     @FXML ComboBox<String> startTime;
     @FXML ComboBox<String> endTime;
     @FXML private DatePicker start;
-    @FXML private DatePicker end; // todo specify no weekends
+    @FXML private DatePicker end;
     private Connection conn;
     private ObservableList<Customer> Customers = FXCollections.observableArrayList();
     private ObservableList<User> Users = FXCollections.observableArrayList();
@@ -55,7 +58,7 @@ public class UpsertAppointmentController implements Initializable {
         window.show();
     }
 
-    public void save(){
+    public void save() throws SQLException {
         if (fieldsCheck() == true){
             if (appointmentId.getText().equals("")){
                 saveNewAppointment();
@@ -69,8 +72,30 @@ public class UpsertAppointmentController implements Initializable {
         }
     }
 
-    private void saveNewAppointment(){
-        System.out.println("Save");
+    private void saveNewAppointment() throws SQLException {
+        String newTitle = title.getText();
+        String newDescription = description.getText();
+        String newLocation = location.getText();
+        String newType = type.getText();
+        int newCustomerId = customerComboBox.getSelectionModel().getSelectedItem().getId();
+        int newContactId = contactComboBox.getSelectionModel().getSelectedItem().getContact_ID();
+        int newUserId = HomeController.loggedInUser.getUser_ID();
+        String newCreatedBy = HomeController.loggedInUser.getUser_Name();
+        String newLastUpdatedBY = HomeController.loggedInUser.getUser_Name();
+        Date newCreateDate = new Timestamp(System.currentTimeMillis());
+        Date newUpdateDate = new Timestamp(System.currentTimeMillis());
+        String newStart = start.getValue() + ", " + startTime.getSelectionModel().getSelectedItem();
+        String newEnd = end.getValue() + ", " + endTime.getSelectionModel().getSelectedItem();
+        String query = "INSERT INTO appointments (Title, Description, Location, Type, Start, End, Create_Date, Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID) "
+                + "VALUES ('" + newTitle + "', '" + newDescription + "', '" + newLocation + "', '" + newType + "', '" + newStart + "', '" + newEnd + "', '" + newCreateDate + "', '" + newCreatedBy + "', '" + newUpdateDate + "', '" + newLastUpdatedBY + "', '" + newCustomerId + "', '" + newUserId + "', '" + newContactId + "')";
+        System.out.println(query);
+        Statement st = conn.createStatement();
+        int save = st.executeUpdate(query);
+        if (save == 1){
+            this.close();
+        } else {
+            MessageModal.display("Something went wrong", "Unable to save Appointment");
+        }
     }
 
     private void saveEditAppointment(){

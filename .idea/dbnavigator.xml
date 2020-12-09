@@ -25,13 +25,14 @@
     <show-object-properties value="true" />
     <loaded-nodes>
       <connection connection-id="13081482-934b-46cc-a43e-3e49ad505147">
-        <schema name="WJ05gTi" object-types="procedure, table, function, view" />
+        <schema name="WJ05gTi" object-types="constraint, index, column, function, view, dataset trigger, table, procedure" />
       </connection>
     </loaded-nodes>
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="13081482-934b-46cc-a43e-3e49ad505147">
-      <console name="Connection" type="STANDARD" schema="WJ05gTi" session="Main" />
+      <console name="Connection" type="STANDARD" schema="WJ05gTi" session="Main"><![CDATA[INSERT INTO appointments (Title, Description, Location, Type, Start, End, Create_Date, Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID) 
+VALUES ('test, test, test, test, 2020-12-08, 9:00 AM, 2020-12-16, 11:00 AM, 2020-12-08 20:35:47.239, test, 2020-12-08 20:35:47.239, test, 2, 1, 1, );]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
