@@ -28,7 +28,7 @@
       <Button layoutX="992.0" layoutY="699.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="52.0" text="New" onAction="#newAppointment"/>
       <Button layoutX="1123.0" layoutY="699.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="52.0" text="Delete" onAction="#deleteAppointment" />
       <Button layoutX="1058.0" layoutY="699.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="52.0" text="Edit" onAction="#editAppointment" />
-      <RadioButton layoutX="826.0" layoutY="28.0" mnemonicParsing="false" text="Month" fx:id="monthToggle" />
-      <RadioButton layoutX="909.0" layoutY="28.0" mnemonicParsing="false" text="Week"  fx:id="weekToggle"/>
+      <RadioButton layoutX="826.0" layoutY="28.0" mnemonicParsing="false" text="Month" fx:id="monthToggle" onAction="#toggleTime" />
+      <RadioButton layoutX="909.0" layoutY="28.0" mnemonicParsing="false" text="Week"  fx:id="weekToggle" onAction="#toggleTime"/>
    </children>
 </AnchorPane>

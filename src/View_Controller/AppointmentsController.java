@@ -41,13 +41,15 @@ public class AppointmentsController implements Initializable {
     @FXML
     private TableColumn<Appointment, String> customerCol;
     @FXML
-    private static ToggleGroup timeToggle;
+    private ToggleGroup timeToggle;
     @FXML
-    private static RadioButton monthToggle;
+    private RadioButton monthToggle;
     @FXML
     private RadioButton weekToggle;
+    @FXML
     public static Appointment selectedAppointment;
     public static boolean editMode;
+     public static boolean monthSearch = true;
 
 
     public void newAppointment() throws IOException {
@@ -83,13 +85,11 @@ public class AppointmentsController implements Initializable {
 
     public static void getAllAppointments() throws SQLException {
         appointments.clear();
-        String where;
-        // todo need to know how the time limiter works, can it be one month forward or back? or one week forward of back?
-//        if (timeToggle.getSelectedToggle() == monthToggle) {
-//            System.out.print("month");
-//        } else {
-//            System.out.print("Week");
-//        }
+        if (monthSearch) {
+            System.out.println("month");
+        } else {
+            System.out.println("week");
+        }
         String query = "select * from appointments inner join customers on appointments.Customer_ID = customers.Customer_ID inner join contacts on appointments.Contact_ID = contacts.Contact_ID inner join users on appointments.User_ID = users.User_ID;";
         Statement st = conn.createStatement();
         ResultSet rs = st.executeQuery(query);
@@ -117,9 +117,13 @@ public class AppointmentsController implements Initializable {
     }
 
     private void initTimeToggle(){
-//        timeToggle = new ToggleGroup();
-//        monthToggle.setSelected(true);
-//        timeToggle.getToggles().addAll(monthToggle, weekToggle);
+        timeToggle = new ToggleGroup();
+        monthToggle.setSelected(true);
+        timeToggle.getToggles().addAll(monthToggle, weekToggle);
+    }
+
+    public void toggleTime(){
+        monthSearch = !monthSearch;
     }
 
     @Override
