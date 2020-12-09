@@ -112,8 +112,22 @@ public class AppointmentsController implements Initializable {
         }
     }
 
-    public void deleteAppointment() {
-        // todo
+    public void deleteAppointment() throws SQLException {
+        if (appointmentTable.getSelectionModel().getSelectedItem() == null)
+        {
+            MessageModal.display("No Appointments", "Please select a appointment to delete");
+            return;
+        }
+        int appointmentId = appointmentTable.getSelectionModel().getSelectedItem().getAppointment_ID();
+        String query = "DELETE FROM appointments WHERE Appointment_ID = " + appointmentId;
+        Statement st = conn.createStatement();
+        int res = st.executeUpdate(query);
+        if (res == 1){
+            getAllAppointments();
+            MessageModal.display("Success", "Appointment Deleted");
+        } else {
+            MessageModal.display("Unable to delete appointment", "Something went wrong");
+        }
     }
 
     private void initTimeToggle(){

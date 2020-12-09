@@ -25,13 +25,13 @@
     <show-object-properties value="true" />
     <loaded-nodes>
       <connection connection-id="13081482-934b-46cc-a43e-3e49ad505147">
-        <schema name="WJ05gTi" object-types="constraint, index, column, function, view, dataset trigger, table, procedure" />
+        <schema name="WJ05gTi" object-types="view, table" />
       </connection>
     </loaded-nodes>
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="13081482-934b-46cc-a43e-3e49ad505147">
-      <console name="Connection" type="STANDARD" schema="WJ05gTi" session="Main"><![CDATA[UPDATE appointments set Title = 'test1', Description = 'test1', Location = 'test1', Type = 'test1',  Start = '2020-12-14T11:00', End = '2020-12-14T13:00', Last_Update = '2020-12-09 08:56:51.129',  Last_Updated_By = 'test', Customer_ID = 1', User_ID = '1', Contact_ID = '2' WHERE Appointment_ID  = 3]]></console>
+      <console name="Connection" type="STANDARD" schema="WJ05gTi" session="Main"><![CDATA[Select * from appointments;]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
