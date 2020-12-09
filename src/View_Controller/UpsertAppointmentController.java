@@ -18,7 +18,10 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import java.io.IOException;
@@ -58,7 +61,7 @@ public class UpsertAppointmentController implements Initializable {
         window.show();
     }
 
-    public void save() throws SQLException {
+    public void save() throws SQLException, ParseException {
         if (fieldsCheck() == true){
             if (appointmentId.getText().equals("")){
                 saveNewAppointment();
@@ -72,7 +75,7 @@ public class UpsertAppointmentController implements Initializable {
         }
     }
 
-    private void saveNewAppointment() throws SQLException {
+    private void saveNewAppointment() throws SQLException, ParseException {
         String newTitle = title.getText();
         String newDescription = description.getText();
         String newLocation = location.getText();
@@ -84,10 +87,25 @@ public class UpsertAppointmentController implements Initializable {
         String newLastUpdatedBY = HomeController.loggedInUser.getUser_Name();
         Date newCreateDate = new Timestamp(System.currentTimeMillis());
         Date newUpdateDate = new Timestamp(System.currentTimeMillis());
-        String newStart = start.getValue() + ", " + startTime.getSelectionModel().getSelectedItem();
-        String newEnd = end.getValue() + ", " + endTime.getSelectionModel().getSelectedItem();
+        // Date Time Format setup
+        SimpleDateFormat date12Format = new SimpleDateFormat("hh:mm a");
+        SimpleDateFormat date24Format = new SimpleDateFormat("HH:mm:ss");
+        String start24 = date24Format.format(date12Format.parse(startTime.getSelectionModel().getSelectedItem()));
+        String end24 = date24Format.format(date12Format.parse(endTime.getSelectionModel().getSelectedItem()));
+        // Format Start Time
+        LocalDate startDate = start.getValue();;
+        String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+        String startDateTimeString = startDate + " " + start24;
+        LocalDateTime startDateTime = LocalDateTime.parse(startDateTimeString, DateTimeFormatter.ofPattern(DATE_FORMAT));
+        System.out.println(startDateTime);
+        // Format End time
+        LocalDate endDate = start.getValue();;
+        String endDateTimeString = endDate + " " + end24;
+        LocalDateTime endDateTime = LocalDateTime.parse(endDateTimeString, DateTimeFormatter.ofPattern(DATE_FORMAT));
+        System.out.println(endDateTime);
+        // Sql Start
         String query = "INSERT INTO appointments (Title, Description, Location, Type, Start, End, Create_Date, Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID) "
-                + "VALUES ('" + newTitle + "', '" + newDescription + "', '" + newLocation + "', '" + newType + "', '" + newStart + "', '" + newEnd + "', '" + newCreateDate + "', '" + newCreatedBy + "', '" + newUpdateDate + "', '" + newLastUpdatedBY + "', '" + newCustomerId + "', '" + newUserId + "', '" + newContactId + "')";
+                + "VALUES ('" + newTitle + "', '" + newDescription + "', '" + newLocation + "', '" + newType + "', '" + startDateTime + "', '" + endDateTime + "', '" + newCreateDate + "', '" + newCreatedBy + "', '" + newUpdateDate + "', '" + newLastUpdatedBY + "', '" + newCustomerId + "', '" + newUserId + "', '" + newContactId + "')";
         System.out.println(query);
         Statement st = conn.createStatement();
         int save = st.executeUpdate(query);
