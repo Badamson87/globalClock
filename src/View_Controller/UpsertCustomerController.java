@@ -123,7 +123,6 @@ public class UpsertCustomerController implements Initializable {
         int d = DivisionCombo.getSelectionModel().getSelectedItem().getDivision_ID();
         String query = "Update customers set Customer_Name = '" + n + "', Address = '" + a + "', Postal_Code = '" + z + "', Phone = '" + p + "',  Last_Update = '" + lu + "', Last_Updated_By = '" + lub + "', Division_ID = " + d +
                 " WHERE Customer_ID = " + cusId;
-        System.out.println(query);
         Statement st = conn.createStatement();
         int save = st.executeUpdate(query);
         if (save == 1){

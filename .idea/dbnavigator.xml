@@ -31,8 +31,7 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="13081482-934b-46cc-a43e-3e49ad505147">
-      <console name="Connection" type="STANDARD" schema="WJ05gTi" session="Main"><![CDATA[INSERT INTO appointments (Title, Description, Location, Type, Start, End, Create_Date, Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID) 
-VALUES ('test, test, test, test, 2020-12-08, 9:00 AM, 2020-12-16, 11:00 AM, 2020-12-08 20:35:47.239, test, 2020-12-08 20:35:47.239, test, 2, 1, 1, );]]></console>
+      <console name="Connection" type="STANDARD" schema="WJ05gTi" session="Main"><![CDATA[UPDATE appointments set Title = 'test1', Description = 'test1', Location = 'test1', Type = 'test1',  Start = '2020-12-14T11:00', End = '2020-12-14T13:00', Last_Update = '2020-12-09 08:56:51.129',  Last_Updated_By = 'test', Customer_ID = 1', User_ID = '1', Contact_ID = '2' WHERE Appointment_ID  = 3]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">

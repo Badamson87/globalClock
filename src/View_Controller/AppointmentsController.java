@@ -16,8 +16,8 @@ import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 public class AppointmentsController implements Initializable {
-    private Connection conn;
-    private final ObservableList<Appointment> appointments = FXCollections.observableArrayList();
+    private static Connection conn;
+    private static final ObservableList<Appointment> appointments = FXCollections.observableArrayList();
     @FXML
     private TableView<Appointment> appointmentTable;
     @FXML
@@ -41,9 +41,9 @@ public class AppointmentsController implements Initializable {
     @FXML
     private TableColumn<Appointment, String> customerCol;
     @FXML
-    private ToggleGroup timeToggle;
+    private static ToggleGroup timeToggle;
     @FXML
-    private RadioButton monthToggle;
+    private static RadioButton monthToggle;
     @FXML
     private RadioButton weekToggle;
     public static Appointment selectedAppointment;
@@ -81,14 +81,15 @@ public class AppointmentsController implements Initializable {
         appointmentTable.setItems(appointments);
     }
 
-    private void getAllAppointments() throws SQLException {
+    public static void getAllAppointments() throws SQLException {
+        appointments.clear();
         String where;
         // todo need to know how the time limiter works, can it be one month forward or back? or one week forward of back?
-        if (timeToggle.getSelectedToggle() == monthToggle) {
-            System.out.print("month");
-        } else {
-            System.out.print("Week");
-        }
+//        if (timeToggle.getSelectedToggle() == monthToggle) {
+//            System.out.print("month");
+//        } else {
+//            System.out.print("Week");
+//        }
         String query = "select * from appointments inner join customers on appointments.Customer_ID = customers.Customer_ID inner join contacts on appointments.Contact_ID = contacts.Contact_ID inner join users on appointments.User_ID = users.User_ID;";
         Statement st = conn.createStatement();
         ResultSet rs = st.executeQuery(query);
@@ -116,9 +117,9 @@ public class AppointmentsController implements Initializable {
     }
 
     private void initTimeToggle(){
-        timeToggle = new ToggleGroup();
-        monthToggle.setSelected(true);
-        timeToggle.getToggles().addAll(monthToggle, weekToggle);
+//        timeToggle = new ToggleGroup();
+//        monthToggle.setSelected(true);
+//        timeToggle.getToggles().addAll(monthToggle, weekToggle);
     }
 
     @Override

@@ -116,8 +116,47 @@ public class UpsertAppointmentController implements Initializable {
         }
     }
 
-    private void saveEditAppointment(){
-        System.out.println("Edit");
+    private void saveEditAppointment() throws ParseException, SQLException {
+        String newId = appointmentId.getText();
+        String newTitle = title.getText();
+        String newDescription = description.getText();
+        String newLocation = location.getText();
+        String newType = type.getText();
+        int newCustomerId = customerComboBox.getSelectionModel().getSelectedItem().getId();
+        int newContactId = contactComboBox.getSelectionModel().getSelectedItem().getContact_ID();
+        int newUserId = HomeController.loggedInUser.getUser_ID();
+        String newCreatedBy = HomeController.loggedInUser.getUser_Name();
+        String newLastUpdatedBY = HomeController.loggedInUser.getUser_Name();
+        Date newCreateDate = new Timestamp(System.currentTimeMillis());
+        Date newUpdateDate = new Timestamp(System.currentTimeMillis());
+        // Date Time Format setup
+        SimpleDateFormat date12Format = new SimpleDateFormat("hh:mm a");
+        SimpleDateFormat date24Format = new SimpleDateFormat("HH:mm:ss");
+        String start24 = date24Format.format(date12Format.parse(startTime.getSelectionModel().getSelectedItem()));
+        String end24 = date24Format.format(date12Format.parse(endTime.getSelectionModel().getSelectedItem()));
+        // Format Start Time
+        LocalDate startDate = start.getValue();;
+        String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+        String startDateTimeString = startDate + " " + start24;
+        LocalDateTime startDateTime = LocalDateTime.parse(startDateTimeString, DateTimeFormatter.ofPattern(DATE_FORMAT));
+        System.out.println(startDateTime);
+        // Format End time
+        LocalDate endDate = start.getValue();;
+        String endDateTimeString = endDate + " " + end24;
+        LocalDateTime endDateTime = LocalDateTime.parse(endDateTimeString, DateTimeFormatter.ofPattern(DATE_FORMAT));
+        System.out.println(endDateTime);
+        // Sql Start
+        String query = "UPDATE appointments set Title = '" + newTitle + "', Description = '" + newDescription + "', Location = '" + newLocation + "', Type = '" + newType + "',  Start = '" + startDateTime + "', End = '" + endDateTime + "', Last_Update = '" + newUpdateDate + "',  Last_Updated_By = '" + newLastUpdatedBY + "', Customer_ID = " + newCustomerId + ", User_ID = " + newUserId + ", Contact_ID = " + newContactId +
+        " WHERE Appointment_ID  = " + newId;
+        Statement st = conn.createStatement();
+        int save = st.executeUpdate(query);
+        if (save == 1){
+            this.close();
+        } else {
+            MessageModal.display("Something went wrong", "Unable to save Appointment");
+        }
+
+
     }
 
     private boolean fieldsCheck(){
@@ -199,7 +238,17 @@ public class UpsertAppointmentController implements Initializable {
         endTime.getItems().setAll(TimeController.getTOptions());
     }
 
-    public void close(){
+    public void close() throws SQLException {
+        appointmentId.clear();
+        title.clear();
+        description.clear();
+        location.clear();
+        type.clear();
+        customerComboBox.getItems().removeAll();
+        contactComboBox.getItems().removeAll();
+        startTime.getItems().removeAll();
+        endTime.getItems().removeAll();
+        AppointmentsController.getAllAppointments();
         upsertWindow.close();
     }
 
