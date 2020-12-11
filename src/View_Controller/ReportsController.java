@@ -80,15 +80,17 @@ public class ReportsController implements Initializable {
     }
 
     public void submitAppointment(){
-        // todo
+        // todo total number of customer appointments by type and month
     }
 
     public void submitContact(){
         // todo
+        // schedule for each contact in your organization that includes appointment ID, title, type and description, start date and time, end date and time, and customer ID
     }
 
     public void submitCountry(){
         // todo
+        // total number of appointments for a specific country broke down by division?
     }
 
     private void hideCountry(){
