@@ -30,6 +30,7 @@ import java.sql.*;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
@@ -63,6 +64,10 @@ public class UpsertAppointmentController implements Initializable {
 
     public void save() throws SQLException, ParseException {
         if (fieldsCheck() == true){
+            if (appointmentsCheck().get() == true) {
+                MessageModal.display("Unable To Save", "Conflicting scheduled appointment");
+                return;
+            }
             if (appointmentId.getText().equals("")){
                 saveNewAppointment();
             }
@@ -73,6 +78,40 @@ public class UpsertAppointmentController implements Initializable {
         else {
             MessageModal.display("Unable To Save", "Please Complete Entire Form");
         }
+    }
+
+    private AtomicBoolean appointmentsCheck() throws SQLException {
+        AtomicBoolean retVal = new AtomicBoolean(false);
+        int newCustomerId = customerComboBox.getSelectionModel().getSelectedItem().getId();
+        ObservableList<Appointment> appointments = Appointment.getAllAppointmentsByCustomerId(newCustomerId, conn);
+        appointments.forEach((appointment -> {
+            try {
+                if (appointmentTimeCheck(appointment) == true){
+                    retVal.set(true);
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }));
+        return retVal;
+    }
+
+    private boolean appointmentTimeCheck(Appointment appointment) throws ParseException { SimpleDateFormat date12Format = new SimpleDateFormat("hh:mm a");
+        SimpleDateFormat date24Format = new SimpleDateFormat("HH:mm:ss");
+        String start24 = date24Format.format(date12Format.parse(startTime.getSelectionModel().getSelectedItem()));
+        // Format Start Time
+        LocalDate startDate = start.getValue();;
+        String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+        String startDateTimeString = startDate + " " + start24;
+        LocalDateTime proposedNewDateTime = LocalDateTime.parse(startDateTimeString, DateTimeFormatter.ofPattern(DATE_FORMAT));
+
+        LocalDateTime savedStartDate = LocalDateTime.parse(appointment.getStart().replaceAll(" ", "T"));
+        LocalDateTime savedEndDate = LocalDateTime.parse(appointment.getEnd().replaceAll(" ", "T"));
+
+        if (savedStartDate.isBefore(proposedNewDateTime) && savedEndDate.isAfter(proposedNewDateTime)) {
+            return true;
+        }
+        return false;
     }
 
     private void saveNewAppointment() throws SQLException, ParseException {
@@ -97,12 +136,10 @@ public class UpsertAppointmentController implements Initializable {
         String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
         String startDateTimeString = startDate + " " + start24;
         LocalDateTime startDateTime = LocalDateTime.parse(startDateTimeString, DateTimeFormatter.ofPattern(DATE_FORMAT));
-        System.out.println(startDateTime);
         // Format End time
         LocalDate endDate = start.getValue();;
         String endDateTimeString = endDate + " " + end24;
         LocalDateTime endDateTime = LocalDateTime.parse(endDateTimeString, DateTimeFormatter.ofPattern(DATE_FORMAT));
-        System.out.println(endDateTime);
         // Sql Start
         String query = "INSERT INTO appointments (Title, Description, Location, Type, Start, End, Create_Date, Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID) "
                 + "VALUES ('" + newTitle + "', '" + newDescription + "', '" + newLocation + "', '" + newType + "', '" + startDateTime + "', '" + endDateTime + "', '" + newCreateDate + "', '" + newCreatedBy + "', '" + newUpdateDate + "', '" + newLastUpdatedBY + "', '" + newCustomerId + "', '" + newUserId + "', '" + newContactId + "')";
