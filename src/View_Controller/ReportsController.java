@@ -40,6 +40,9 @@ public class ReportsController implements Initializable {
     @FXML TableView<Contact> contactsTable;
     @FXML Label contactTableLabel;
 
+    @FXML TableView<Contact> countryTable;
+    @FXML Label countryTableLabel;
+
     private Connection conn;
 
     public void selectType() {
@@ -91,6 +94,7 @@ public class ReportsController implements Initializable {
     }
 
     public void submitAppointment(){
+        this.hideTables();
         this.appointmentsTable.setVisible(true);
         this.appointmentLabel.setVisible(true);
         // todo total number of customer appointments by type and month
@@ -99,6 +103,7 @@ public class ReportsController implements Initializable {
     }
 
     public void submitContact(){
+        this.hideTables();
         this.contactTableLabel.setVisible(true);
         this.contactsTable.setVisible(true);
         // todo
@@ -106,6 +111,9 @@ public class ReportsController implements Initializable {
     }
 
     public void submitCountry(){
+        this.hideTables();
+        this.countryTable.setVisible(true);
+        this.countryTableLabel.setVisible(true);
         // todo
         // total number of appointments for a specific country broke down by division?
     }
@@ -131,6 +139,8 @@ public class ReportsController implements Initializable {
         this.appointmentsTable.setVisible(false);
         this.contactTableLabel.setVisible(false);
         this.contactsTable.setVisible(false);
+        this.countryTableLabel.setVisible(false);
+        this.countryTable.setVisible(false);
     }
 
     @Override

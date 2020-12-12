@@ -49,6 +49,14 @@
                    </TableView>
                    <Label fx:id="contactTableLabel" layoutX="38.0" layoutY="45.0" prefHeight="18.0" prefWidth="185.0" text="Schedule for Contact" />
 
+                   <TableView fx:id="countryTable" layoutX="28.0" layoutY="93.0" prefHeight="601.0" prefWidth="852.0">
+                       <columns>
+                           <TableColumn prefWidth="75.0" text="C1" />
+                           <TableColumn prefWidth="75.0" text="C2" />
+                       </columns>
+                   </TableView>
+                   <Label fx:id="countryTableLabel" layoutX="38.0" layoutY="45.0" prefHeight="18.0" prefWidth="250.0" text="Number of Appointments based on country" />
+
 
 
                </children>
