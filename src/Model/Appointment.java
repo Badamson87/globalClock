@@ -209,4 +209,25 @@ public class Appointment {
         return appointments;
     }
 
+    public static ObservableList<Appointment> getAllAppointments(Connection conn) throws SQLException {
+        ObservableList<Appointment> appointments = FXCollections.observableArrayList();
+        String query = "select * from appointments";
+        Statement st = conn.createStatement();
+        ResultSet rs = st.executeQuery(query);
+        while (rs.next())
+        {
+            int id = rs.getInt("Appointment_ID");
+            int cusId = rs.getInt("Customer_ID");
+            String title = rs.getString("Title");
+            String description = rs.getString("Description");
+            String location = rs.getString("Location");
+            String type = rs.getString("Type");
+            String start = rs.getString("Start");
+            String end = rs.getString("End");
+            Appointment newApp = new Appointment(id, title, description, location, type, start, end, cusId);
+            appointments.add(newApp);
+        }
+        return appointments;
+    }
+
 }

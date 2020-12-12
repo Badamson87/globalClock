@@ -2,8 +2,11 @@ package View_Controller;
 
 import Helper.DBConnect;
 import Model.Appointment;
+import Model.AppointmentType;
 import Model.Contact;
 import Model.Country;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -17,6 +20,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class ReportsController implements Initializable {
@@ -35,7 +39,21 @@ public class ReportsController implements Initializable {
     @FXML Label contactLabel;
 
     @FXML Label appointmentLabel;
-    @FXML TableView<Appointment> appointmentsTable;
+    @FXML TableView<AppointmentType> appointmentsTable;
+    @FXML private TableColumn<AppointmentType, String> AppointmentType;
+    @FXML private TableColumn<AppointmentType, Integer> Jan;
+    @FXML private TableColumn<AppointmentType, Integer> Feb;
+    @FXML private TableColumn<AppointmentType, Integer> Mar;
+    @FXML private TableColumn<AppointmentType, Integer> Apr;
+    @FXML private TableColumn<AppointmentType, Integer> May;
+    @FXML private TableColumn<AppointmentType, Integer> Jun;
+    @FXML private TableColumn<AppointmentType, Integer> Jul;
+    @FXML private TableColumn<AppointmentType, Integer> Aug;
+    @FXML private TableColumn<AppointmentType, Integer> Sep;
+    @FXML private TableColumn<AppointmentType, Integer> Oct;
+    @FXML private TableColumn<AppointmentType, Integer> Nov;
+    @FXML private TableColumn<AppointmentType, Integer> Dec;
+
 
     @FXML TableView<Contact> contactsTable;
     @FXML Label contactTableLabel;
@@ -93,11 +111,86 @@ public class ReportsController implements Initializable {
         });
     }
 
-    public void submitAppointment(){
+    public void submitAppointment() throws SQLException {
         this.hideTables();
         this.appointmentsTable.setVisible(true);
         this.appointmentLabel.setVisible(true);
         // todo total number of customer appointments by type and month
+        ObservableList<Appointment> appointments = Appointment.getAllAppointments(conn);
+        ObservableList<AppointmentType> appointmentTypes = FXCollections.observableArrayList();
+        appointments.forEach((appointment -> {
+            AtomicBoolean found = new AtomicBoolean(false);
+           appointmentTypes.forEach((type -> {
+               if (appointment.getType().equals(type.getType())){
+                   found.set(true);
+                   this.incrementAppointment(type, appointment);
+               }
+           }));
+            if (found.get() == false){
+                AppointmentType appointmentType = new AppointmentType(appointment.getType());
+                this.incrementAppointment(appointmentType, appointment );
+                appointmentTypes.add(appointmentType);
+            }
+        }));
+        AppointmentType.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getType()));
+        Jan.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getJan()).asObject());
+        Feb.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getFeb()).asObject());
+        Mar.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getMar()).asObject());
+        Apr.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getApr()).asObject());
+        May.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getMay()).asObject());
+        Jun.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getJun()).asObject());
+        Jul.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getJul()).asObject());
+        Aug.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getAug()).asObject());
+        Sep.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getSep()).asObject());
+        Oct.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getOct()).asObject());
+        Nov.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getNov()).asObject());
+        Dec.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getDec()).asObject());
+        appointmentsTable.setItems(appointmentTypes);
+    }
+
+    public void incrementAppointment(AppointmentType appointmentType, Appointment appointment){
+        String start = appointment.getStart();
+        String month = start.substring(5, 7);
+        switch(month) {
+            case "01":
+                appointmentType.incrementJan();
+                break;
+            case "02":
+                appointmentType.incrementFeb();
+                break;
+            case "03":
+                appointmentType.incrementMar();
+                break;
+            case "04":
+                appointmentType.incrementApr();
+                break;
+            case "05":
+                appointmentType.incrementMay();
+                break;
+            case "06":
+                appointmentType.incrementJun();
+                break;
+            case "07":
+                appointmentType.incrementJul();
+                break;
+            case "08":
+                appointmentType.incrementAug();
+                break;
+            case "09":
+                appointmentType.incrementSep();
+                break;
+            case "10":
+                appointmentType.incrementOct();
+                break;
+            case "11":
+                appointmentType.incrementNov();
+                break;
+            case "12":
+                appointmentType.incrementDec();
+                break;
+            default:
+                return;
+        }
 
 
     }

@@ -35,11 +35,22 @@
 
                    <TableView fx:id="appointmentsTable" layoutX="28.0" layoutY="93.0" prefHeight="601.0" prefWidth="852.0">
                     <columns>
-                      <TableColumn prefWidth="75.0" text="C1" />
-                      <TableColumn prefWidth="75.0" text="C2" />
+                        <TableColumn prefWidth="66.0" text="Type" fx:id="AppointmentType"/>
+                        <TableColumn prefWidth="66.0" text="Jan" fx:id="Jan"/>
+                        <TableColumn prefWidth="66.0" text="Feb" fx:id="Feb"/>
+                        <TableColumn prefWidth="66.0" text="Mar" fx:id="Mar" />
+                        <TableColumn prefWidth="66.0" text="Apr" fx:id="Apr" />
+                        <TableColumn prefWidth="66.0" text="May" fx:id="May" />
+                        <TableColumn prefWidth="66.0" text="Jun" fx:id="Jun" />
+                        <TableColumn prefWidth="66.0" text="Jul" fx:id="Jul" />
+                        <TableColumn prefWidth="65.0" text="Aug" fx:id="Aug" />
+                        <TableColumn prefWidth="65.0" text="Sep" fx:id="Sep" />
+                        <TableColumn prefWidth="65.0" text="Oct" fx:id="Oct" />
+                        <TableColumn prefWidth="65.0" text="Nov" fx:id="Nov" />
+                        <TableColumn prefWidth="65.0" text="Dec" fx:id="Dec" />
                     </columns>
                   </TableView>
-                  <Label fx:id="appointmentLabel" layoutX="38.0" layoutY="45.0" prefHeight="18.0" prefWidth="185.0" text="Appointment By Type and Month" />
+                  <Label fx:id="appointmentLabel" layoutX="38.0" layoutY="45.0" prefHeight="18.0" prefWidth="185.0" text="Appointments By Type and Month" />
 
                    <TableView fx:id="contactsTable" layoutX="28.0" layoutY="93.0" prefHeight="601.0" prefWidth="852.0">
                        <columns>
