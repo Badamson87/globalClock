@@ -1,6 +1,7 @@
 package View_Controller;
 
 import Helper.DBConnect;
+import Model.Appointment;
 import Model.Contact;
 import Model.Country;
 import javafx.collections.FXCollections;
@@ -8,6 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -24,11 +26,20 @@ public class ReportsController implements Initializable {
     ComboBox<Contact> contactComboBox;
     @FXML
     ComboBox<Country> countryComboBox;
+    @FXML SplitPane splitPane;
+    @FXML AnchorPane rightPane;
     @FXML Button submitAppointment;
     @FXML Button submitContact;
     @FXML Button submitCountry;
     @FXML Label countryLabel;
     @FXML Label contactLabel;
+
+    @FXML Label appointmentLabel;
+    @FXML TableView<Appointment> appointmentsTable;
+
+    @FXML TableView<Contact> contactsTable;
+    @FXML Label contactTableLabel;
+
     private Connection conn;
 
     public void selectType() {
@@ -80,10 +91,16 @@ public class ReportsController implements Initializable {
     }
 
     public void submitAppointment(){
+        this.appointmentsTable.setVisible(true);
+        this.appointmentLabel.setVisible(true);
         // todo total number of customer appointments by type and month
+
+
     }
 
     public void submitContact(){
+        this.contactTableLabel.setVisible(true);
+        this.contactsTable.setVisible(true);
         // todo
         // schedule for each contact in your organization that includes appointment ID, title, type and description, start date and time, end date and time, and customer ID
     }
@@ -109,9 +126,17 @@ public class ReportsController implements Initializable {
         this.submitCountry.setVisible(false);
     }
 
+    private void hideTables() {
+        this.appointmentLabel.setVisible(false);
+        this.appointmentsTable.setVisible(false);
+        this.contactTableLabel.setVisible(false);
+        this.contactsTable.setVisible(false);
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.conn = DBConnect.connection;
+        this.hideTables();
         this.hideCountry();
         this.hideContact();
         this.hideButtons();
