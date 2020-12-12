@@ -54,8 +54,14 @@
 
                    <TableView fx:id="contactsTable" layoutX="28.0" layoutY="93.0" prefHeight="601.0" prefWidth="852.0">
                        <columns>
-                           <TableColumn prefWidth="75.0" text="C1" />
-                           <TableColumn prefWidth="75.0" text="C2" />
+                           <TableColumn prefWidth="106.25" text="Contact" fx:id="ContactCol"/>
+                           <TableColumn prefWidth="106.25" text="App ID" fx:id="AppIDCol"/>
+                           <TableColumn prefWidth="106.25" text="Title" fx:id="TitleCol"/>
+                           <TableColumn prefWidth="106.25" text="Type" fx:id="TypeCol"/>
+                           <TableColumn prefWidth="106.25" text="Description" fx:id="DescriptionCol"/>
+                           <TableColumn prefWidth="106.25" text="Start" fx:id="StartCol"/>
+                           <TableColumn prefWidth="106.25" text="End" fx:id="EndCol"/>
+                           <TableColumn prefWidth="106.25" text="Cus ID" fx:id="CusIDCol"/>
                        </columns>
                    </TableView>
                    <Label fx:id="contactTableLabel" layoutX="38.0" layoutY="45.0" prefHeight="18.0" prefWidth="185.0" text="Schedule for Contact" />

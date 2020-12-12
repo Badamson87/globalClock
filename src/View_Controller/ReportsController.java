@@ -57,6 +57,14 @@ public class ReportsController implements Initializable {
 
     @FXML TableView<Contact> contactsTable;
     @FXML Label contactTableLabel;
+    @FXML private TableColumn<Appointment, String> ContactCol;
+    @FXML private TableColumn<Appointment, String> AppIDCol;
+    @FXML private TableColumn<Appointment, String> TitleCol;
+    @FXML private TableColumn<Appointment, String> TypeCol;
+    @FXML private TableColumn<Appointment, String> DescriptionCol;
+    @FXML private TableColumn<Appointment, String> StartCol;
+    @FXML private TableColumn<Appointment, String> EndCol;
+    @FXML private TableColumn<Appointment, String> CusIDCol;
 
     @FXML TableView<Contact> countryTable;
     @FXML Label countryTableLabel;
@@ -115,7 +123,6 @@ public class ReportsController implements Initializable {
         this.hideTables();
         this.appointmentsTable.setVisible(true);
         this.appointmentLabel.setVisible(true);
-        // todo total number of customer appointments by type and month
         ObservableList<Appointment> appointments = Appointment.getAllAppointments(conn);
         ObservableList<AppointmentType> appointmentTypes = FXCollections.observableArrayList();
         appointments.forEach((appointment -> {
@@ -201,6 +208,8 @@ public class ReportsController implements Initializable {
         this.contactsTable.setVisible(true);
         // todo
         // schedule for each contact in your organization that includes appointment ID, title, type and description, start date and time, end date and time, and customer ID
+
+
     }
 
     public void submitCountry(){
