@@ -54,7 +54,7 @@
 
                    <TableView fx:id="contactsTable" layoutX="28.0" layoutY="93.0" prefHeight="601.0" prefWidth="852.0">
                        <columns>
-                           <TableColumn prefWidth="106.25" text="Contact" fx:id="ContactCol"/>
+                           <TableColumn prefWidth="106.25" text="Contact ID" fx:id="ContactCol"/>
                            <TableColumn prefWidth="106.25" text="App ID" fx:id="AppIDCol"/>
                            <TableColumn prefWidth="106.25" text="Title" fx:id="TitleCol"/>
                            <TableColumn prefWidth="106.25" text="Type" fx:id="TypeCol"/>

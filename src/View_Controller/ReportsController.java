@@ -55,16 +55,16 @@ public class ReportsController implements Initializable {
     @FXML private TableColumn<AppointmentType, Integer> Dec;
 
 
-    @FXML TableView<Contact> contactsTable;
+    @FXML TableView<Appointment> contactsTable;
     @FXML Label contactTableLabel;
-    @FXML private TableColumn<Appointment, String> ContactCol;
-    @FXML private TableColumn<Appointment, String> AppIDCol;
+    @FXML private TableColumn<Appointment, Integer> ContactCol;
+    @FXML private TableColumn<Appointment, Integer> AppIDCol;
     @FXML private TableColumn<Appointment, String> TitleCol;
     @FXML private TableColumn<Appointment, String> TypeCol;
     @FXML private TableColumn<Appointment, String> DescriptionCol;
     @FXML private TableColumn<Appointment, String> StartCol;
     @FXML private TableColumn<Appointment, String> EndCol;
-    @FXML private TableColumn<Appointment, String> CusIDCol;
+    @FXML private TableColumn<Appointment, Integer> CusIDCol;
 
     @FXML TableView<Contact> countryTable;
     @FXML Label countryTableLabel;
@@ -202,14 +202,25 @@ public class ReportsController implements Initializable {
 
     }
 
-    public void submitContact(){
+    public void submitContact() throws SQLException {
+        Contact selectedContact = this.contactComboBox.getSelectionModel().getSelectedItem();
+        if (selectedContact == null){
+            MessageModal.display("Unable to report", "Please select a contact");
+            return;
+        }
         this.hideTables();
         this.contactTableLabel.setVisible(true);
         this.contactsTable.setVisible(true);
-        // todo
-        // schedule for each contact in your organization that includes appointment ID, title, type and description, start date and time, end date and time, and customer ID
-
-
+        ObservableList<Appointment> appointments = Appointment.getAllAppointmentsByContactID(selectedContact.getContact_ID(), conn);
+        ContactCol.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getContact_ID()).asObject());
+        AppIDCol.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getAppointment_ID()).asObject());
+        CusIDCol.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getCustomer_ID()).asObject());
+        TypeCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getType()));
+        TitleCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTitle()));
+        DescriptionCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDescription()));
+        StartCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getStart()));
+        EndCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEnd()));
+        this.contactsTable.setItems(appointments);
     }
 
     public void submitCountry(){

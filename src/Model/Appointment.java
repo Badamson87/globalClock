@@ -42,6 +42,18 @@ public class Appointment {
         this.Customer_ID = cusID;
     }
 
+    public Appointment(int Appointment_ID, String title, String description, String location, String type, String start, String end, int cusID, int contID ){
+        this.Appointment_ID = Appointment_ID;
+        this.Title = title;
+        this.Description = description;
+        this.Location = location;
+        this.Type = type;
+        this.Start = start;
+        this.End = end;
+        this.Customer_ID = cusID;
+        this.Contact_ID = contID;
+    }
+
     public Appointment(int Appointment_ID, String title, String description, String location, String contactName, int contactId, String type, String start, String end, String customerName, String userName, int cusID ){
      this.Appointment_ID = Appointment_ID;
      this.Title = title;
@@ -204,6 +216,27 @@ public class Appointment {
             String start = rs.getString("Start");
             String end = rs.getString("End");
             Appointment newApp = new Appointment(id, title, description, location, type, start, end, cusId);
+            appointments.add(newApp);
+        }
+        return appointments;
+    }
+    public static ObservableList<Appointment> getAllAppointmentsByContactID(int contactId, Connection conn) throws SQLException {
+        ObservableList<Appointment> appointments = FXCollections.observableArrayList();
+        String query = "select * from appointments where Contact_ID = " + contactId;
+        Statement st = conn.createStatement();
+        ResultSet rs = st.executeQuery(query);
+        while (rs.next())
+        {
+            int id = rs.getInt("Appointment_ID");
+            int cusId = rs.getInt("Customer_ID");
+            int contId = rs.getInt("Contact_ID");
+            String title = rs.getString("Title");
+            String description = rs.getString("Description");
+            String location = rs.getString("Location");
+            String type = rs.getString("Type");
+            String start = rs.getString("Start");
+            String end = rs.getString("End");
+            Appointment newApp = new Appointment(id, title, description, location, type, start, end, cusId, contId);
             appointments.add(newApp);
         }
         return appointments;
