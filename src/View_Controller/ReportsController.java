@@ -235,7 +235,7 @@ public class ReportsController implements Initializable {
         // todo
         // total number of appointments for a specific country broke down by division?
        // Select * from first_level_divisions join customers on first_level_divisions.Division_ID = customers.Division_ID  join appointments on customers.Customer_ID = appointments.Customer_ID COUNTRY_ID= 2;
-
+// Select F.Division_ID, F.Division, F.COUNTRY_ID, C.Customer_ID, A.Appointment_ID  COUNT(A.Appointment_ID) from first_level_divisions as F join customers AS C on F.Division_ID = C.Division_ID  join appointments as A on C.Customer_ID = A.Customer_ID COUNTRY_ID= 2;
     }
 
     private void hideCountry(){
