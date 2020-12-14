@@ -25,13 +25,21 @@
     <show-object-properties value="true" />
     <loaded-nodes>
       <connection connection-id="13081482-934b-46cc-a43e-3e49ad505147">
-        <schema name="WJ05gTi" object-types="table, view" />
+        <schema name="WJ05gTi" object-types="table, constraint, column, view, function, dataset trigger" />
       </connection>
     </loaded-nodes>
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="13081482-934b-46cc-a43e-3e49ad505147">
-      <console name="Connection" type="STANDARD" schema="WJ05gTi" session="Main"><![CDATA[Select * from appointments;]]></console>
+      <console name="Connection" type="STANDARD" schema="WJ05gTi" session="Main"><![CDATA[Select F.Division_ID, F.Division, F.COUNTRY_ID, C.Customer_ID, A.Appointment_ID  COUNT(A.Appointment_ID) from first_level_divisions as F join customers AS C on F.Division_ID = C.Division_ID  join appointments as A on C.Customer_ID = A.Customer_ID COUNTRY_ID= 2;
+
+select COUNT(Appointment_ID) from appointments;
+ 
+select * from appointments;
+
+select * from first_level_divisions;
+
+select * from customers;]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">

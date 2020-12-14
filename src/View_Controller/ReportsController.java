@@ -224,11 +224,18 @@ public class ReportsController implements Initializable {
     }
 
     public void submitCountry(){
+        Country selectedCountry = this.countryComboBox.getSelectionModel().getSelectedItem();
+        if (selectedCountry == null){
+            MessageModal.display("Unable to report", "Please Select A Country");
+            return;
+        }
         this.hideTables();
         this.countryTable.setVisible(true);
         this.countryTableLabel.setVisible(true);
         // todo
         // total number of appointments for a specific country broke down by division?
+       // Select * from first_level_divisions join customers on first_level_divisions.Division_ID = customers.Division_ID  join appointments on customers.Customer_ID = appointments.Customer_ID COUNTRY_ID= 2;
+
     }
 
     private void hideCountry(){
