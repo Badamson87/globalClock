@@ -1,6 +1,5 @@
 package View_Controller;
 
-import Helper.DBConnect;
 import Model.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

@@ -26,9 +26,9 @@
       <Button layoutX="992.0" layoutY="699.0" mnemonicParsing="false" onAction="#newAppointment" prefHeight="25.0" prefWidth="52.0" text="New" />
       <Button layoutX="1123.0" layoutY="699.0" mnemonicParsing="false" onAction="#deleteAppointment" prefHeight="25.0" prefWidth="52.0" text="Delete" />
       <Button layoutX="1058.0" layoutY="699.0" mnemonicParsing="false" onAction="#editAppointment" prefHeight="25.0" prefWidth="52.0" text="Edit" />
-      <RadioButton fx:id="monthToggle" layoutX="1015.0" layoutY="28.0" mnemonicParsing="false" onAction="#toggleTime" text="Month" />
-      <RadioButton fx:id="noneToggle" layoutX="920.0" layoutY="28.0" mnemonicParsing="false" onAction="#toggleTime" text="None" />
-      <RadioButton fx:id="weekToggle1" layoutX="1110.0" layoutY="28.0" mnemonicParsing="false" onAction="#toggleTime" text="Week" />
-      <Label layoutX="826.0" layoutY="27.0" prefHeight="18.0" prefWidth="58.0" text="Filter By:" />
+      <RadioButton fx:id="monthToggle" layoutX="1038.0" layoutY="26.0" mnemonicParsing="false" onAction="#toggleTime" text="Month" />
+      <RadioButton fx:id="noneToggle" layoutX="959.0" layoutY="26.0" mnemonicParsing="false" onAction="#toggleTime" text="None" />
+      <RadioButton fx:id="weekToggle" layoutX="1123.0" layoutY="26.0" mnemonicParsing="false" onAction="#toggleTime" text="Week" />
+      <Label layoutX="884.0" layoutY="25.0" prefHeight="18.0" prefWidth="58.0" text="Filter By:" />
    </children>
 </AnchorPane>

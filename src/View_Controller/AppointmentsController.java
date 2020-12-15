@@ -88,12 +88,12 @@ public class AppointmentsController implements Initializable {
     public static void getAllAppointments() throws SQLException {
         appointments.clear();
         String whereClause = "";
-        if (monthSearch.equals("month")) {
-            // todo update where clause for 30 days
-        }
-        if (monthSearch.equals("week")) {
-            // todo update where clause for 7 days
-        }
+//        if (monthSearch.equals("month")) {
+//            // todo update where clause for 30 days
+//        }
+//        if (monthSearch.equals("week")) {
+//            // todo update where clause for 7 days
+//        }
 
         String query = "select * from appointments inner join customers on appointments.Customer_ID = customers.Customer_ID inner join contacts on appointments.Contact_ID = contacts.Contact_ID inner join users on appointments.User_ID = users.User_ID" + whereClause + ";";
         Statement st = conn.createStatement();
@@ -141,9 +141,11 @@ public class AppointmentsController implements Initializable {
         timeToggle.getToggles().addAll(noneToggle, monthToggle, weekToggle);
     }
 
-    public void toggleTime(){
+    public void toggleTime() throws SQLException {
         // todo
         this.monthSearch = this.timeToggle.getSelectedToggle().toString();
+
+        getAllAppointments();
     }
 
     @Override

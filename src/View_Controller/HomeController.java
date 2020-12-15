@@ -14,8 +14,6 @@ import java.util.ResourceBundle;
 public class HomeController implements Initializable {
     @FXML
     BorderPane borderPane;
-    @FXML
-    ComboBox<String> locationCombo;
     public static User loggedInUser;
 
     public void setCustomerPane() throws IOException {
@@ -40,6 +38,5 @@ public class HomeController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        this.locationCombo.getItems().setAll("test", "Me");
     }
 }
