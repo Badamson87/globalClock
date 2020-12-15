@@ -40,6 +40,12 @@ public class UpsertCustomerController implements Initializable {
     private ComboBox<Division> DivisionCombo;
     private Connection conn;
 
+
+    /**
+     * Shows the modal of creation or edit of a customer
+     * @param title designates between and update and create of new customer
+     * @throws IOException
+     */
     public void show(String title) throws IOException {
         Stage window = new Stage();
         upsertWindow = window;
@@ -50,6 +56,10 @@ public class UpsertCustomerController implements Initializable {
         window.show();
     }
 
+    /**
+     * Close's the Customer update modal and calls to renew the list of customers.
+     * @throws SQLException
+     */
     public void close() throws SQLException {
         id.clear();
         name.clear();
@@ -62,6 +72,9 @@ public class UpsertCustomerController implements Initializable {
         upsertWindow.close();
     }
 
+    /**
+     * Sets the division on a previously selected Customer
+     */
     public void setDivisions() {
    Country country = CountryCombo.getSelectionModel().getSelectedItem();
        if (country != null){
@@ -77,6 +90,10 @@ public class UpsertCustomerController implements Initializable {
        }
     }
 
+    /**
+     * Calls to check that all customer fields have a value, then calls to update or create new customer.
+     * @throws SQLException
+     */
     public void save() throws SQLException {
         if (fieldsCheck() == true){
             if (id.getText().equals("")){
@@ -91,6 +108,10 @@ public class UpsertCustomerController implements Initializable {
         }
     }
 
+    /**
+     * Gathers field values and saves a new customer
+     * @throws SQLException
+     */
     private void saveNewCustomer() throws SQLException {
         String n = name.getText();
         String a = address.getText();
@@ -112,6 +133,10 @@ public class UpsertCustomerController implements Initializable {
         }
     }
 
+    /**
+     * Gathers field values and updated and existing customer
+     * @throws SQLException
+     */
     private void saveEditCustomer() throws SQLException {
         String cusId = id.getText();
         String n = name.getText();
@@ -132,6 +157,10 @@ public class UpsertCustomerController implements Initializable {
         }
     }
 
+    /**
+     * Checks that all fields have a value. Returned as a Boolean
+     * @return
+     */
     private boolean fieldsCheck(){
         if (name.getText().equals("")) { return false;}
         if (zip.getText().equals("")) {return false;}
@@ -142,6 +171,10 @@ public class UpsertCustomerController implements Initializable {
         return true;
     }
 
+    /**
+     * Sets the existing property of a customer on case of update.
+     * @throws SQLException
+     */
     private void setCustomer() throws SQLException {
         Customer cus = CustomersController.selectedCustomer;
         if (cus != null && CustomersController.editMode) {
@@ -156,6 +189,9 @@ public class UpsertCustomerController implements Initializable {
         this.setDivisions();
     }
 
+    /**
+     * Sets existing country on a customer on case of update.
+     */
     private void setCountryOptions(){
         AtomicInteger counter = new AtomicInteger();
         ObservableList<Country> countries = Country.getAllCountries();
@@ -165,6 +201,11 @@ public class UpsertCustomerController implements Initializable {
         });
     }
 
+    /**
+     * Get the dbConnection and starts the process of setting and existing customer on case of update.
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.conn = DBConnect.connection;

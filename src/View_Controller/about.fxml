@@ -8,7 +8,7 @@
    <children>
       <Pane layoutX="25.0" layoutY="65.0" prefHeight="618.0" prefWidth="1150.0">
          <children>
-            <Text layoutX="536.0" layoutY="313.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to world clock" wrappingWidth="127.37109375" />
+            <Text layoutX="536.0" layoutY="313.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to world clock, A global appointment scheduler that converts local time to UTC." wrappingWidth="127.37109375" />
          </children>
       </Pane>
    </children>

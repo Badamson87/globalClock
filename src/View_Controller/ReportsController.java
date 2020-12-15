@@ -68,9 +68,11 @@ public class ReportsController implements Initializable {
 
     @FXML TableView<Contact> countryTable;
     @FXML Label countryTableLabel;
-
     private Connection conn;
 
+    /**
+     * Sets the selected report type and shows the required table
+     */
     public void selectType() {
         Object choice = typeBox.getValue();
         this.hideButtons();

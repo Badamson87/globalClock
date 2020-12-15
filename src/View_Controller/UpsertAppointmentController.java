@@ -52,6 +52,11 @@ public class UpsertAppointmentController implements Initializable {
     private ObservableList<User> Users = FXCollections.observableArrayList();
     private ObservableList<Contact> contacts = FXCollections.observableArrayList();
 
+    /**
+     * Shows the appointment modal, sets the title as update or create.
+     * @param title
+     * @throws IOException
+     */
     public void show(String title) throws IOException {
         Stage window = new Stage();
         upsertWindow = window;
@@ -62,6 +67,11 @@ public class UpsertAppointmentController implements Initializable {
         window.show();
     }
 
+    /**
+     * Call to check field validity. Determines if save is an update or new Appointment
+     * @throws SQLException
+     * @throws ParseException
+     */
     public void save() throws SQLException, ParseException {
         if (fieldsCheck() == true){
             if (appointmentsCheck().get() == true) {
@@ -80,6 +90,11 @@ public class UpsertAppointmentController implements Initializable {
         }
     }
 
+    /**
+     * Gather all appointment for selected customer and call to check for overlap
+     * @return
+     * @throws SQLException
+     */
     private AtomicBoolean appointmentsCheck() throws SQLException {
         AtomicBoolean retVal = new AtomicBoolean(false);
         int newCustomerId = customerComboBox.getSelectionModel().getSelectedItem().getId();
@@ -96,6 +111,12 @@ public class UpsertAppointmentController implements Initializable {
         return retVal;
     }
 
+    /**
+     * Checks for appointment time overlap for selected customer
+     * @param appointment
+     * @return
+     * @throws ParseException
+     */
     private boolean appointmentTimeCheck(Appointment appointment) throws ParseException { SimpleDateFormat date12Format = new SimpleDateFormat("hh:mm a");
         SimpleDateFormat date24Format = new SimpleDateFormat("HH:mm:ss");
         String start24 = date24Format.format(date12Format.parse(startTime.getSelectionModel().getSelectedItem()));
@@ -114,6 +135,11 @@ public class UpsertAppointmentController implements Initializable {
         return false;
     }
 
+    /**
+     * Save a new Appointment
+     * @throws SQLException
+     * @throws ParseException
+     */
     private void saveNewAppointment() throws SQLException, ParseException {
         String newTitle = title.getText();
         String newDescription = description.getText();
@@ -153,6 +179,11 @@ public class UpsertAppointmentController implements Initializable {
         }
     }
 
+    /**
+     * Update an existing appointment;
+     * @throws ParseException
+     * @throws SQLException
+     */
     private void saveEditAppointment() throws ParseException, SQLException {
         String newId = appointmentId.getText();
         String newTitle = title.getText();
@@ -196,6 +227,10 @@ public class UpsertAppointmentController implements Initializable {
 
     }
 
+    /**
+     * Check that all Appointment fields have a value.
+     * @return
+     */
     private boolean fieldsCheck(){
         if (title.getText().equals("")) {return false;}
         if (description.getText().equals("")) {return false;}
@@ -210,6 +245,10 @@ public class UpsertAppointmentController implements Initializable {
         return true;
     }
 
+    /**
+     * Set and existing appointment on case of update
+     * @throws SQLException
+     */
     public void setAppointment() throws SQLException {
        Appointment app = AppointmentsController.selectedAppointment;
        if (app != null && AppointmentsController.editMode) {
@@ -227,6 +266,10 @@ public class UpsertAppointmentController implements Initializable {
        }
     }
 
+    /**
+     * Gather and display list of contact options.
+     * @throws SQLException
+     */
     private void getContactOptions() throws SQLException{
         String query = "select * from contacts";
         Statement st = conn.createStatement();
@@ -245,6 +288,10 @@ public class UpsertAppointmentController implements Initializable {
         });
     }
 
+    /**
+     * Gather and display a list of customer options
+     * @throws SQLException
+     */
     private void getCustomerOptions() throws SQLException {
         String query = "select * from customers";
         Statement st = conn.createStatement();
@@ -270,11 +317,18 @@ public class UpsertAppointmentController implements Initializable {
         });
     }
 
+    /**
+     * Get available options for start and end times
+     */
     private void getTimeOptions(){
         startTime.getItems().setAll(TimeController.getTOptions());
         endTime.getItems().setAll(TimeController.getTOptions());
     }
 
+    /**
+     * Close the Appointment modal and calls to update the list of appointments.
+     * @throws SQLException
+     */
     public void close() throws SQLException {
         appointmentId.clear();
         title.clear();
@@ -289,6 +343,10 @@ public class UpsertAppointmentController implements Initializable {
         upsertWindow.close();
     }
 
+    /**
+     * Sets Date pick options and eliminates the weekends as possibility
+     * @return
+     */
     private Callback<DatePicker, DateCell> setDatePickerOptions() {
         final Callback<DatePicker, DateCell> dayCellFactory = new Callback<DatePicker, DateCell>() {
             @Override
@@ -310,6 +368,11 @@ public class UpsertAppointmentController implements Initializable {
         return dayCellFactory;
     }
 
+    /**
+     * Sets the local dbConnection. Initializes the set of and existing Appointment in the case of update
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.conn = DBConnect.connection;

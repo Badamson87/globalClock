@@ -47,9 +47,11 @@ public class AppointmentsController implements Initializable {
     @FXML
     private RadioButton weekToggle;
     @FXML
+    private RadioButton noneToggle;
+    @FXML
     public static Appointment selectedAppointment;
     public static boolean editMode;
-     public static boolean monthSearch = true;
+    public static String monthSearch;
 
 
     public void newAppointment() throws IOException {
@@ -85,12 +87,15 @@ public class AppointmentsController implements Initializable {
 
     public static void getAllAppointments() throws SQLException {
         appointments.clear();
-        if (monthSearch) {
-            System.out.println("month");
-        } else {
-            System.out.println("week");
+        String whereClause = "";
+        if (monthSearch.equals("month")) {
+            // todo update where clause for 30 days
         }
-        String query = "select * from appointments inner join customers on appointments.Customer_ID = customers.Customer_ID inner join contacts on appointments.Contact_ID = contacts.Contact_ID inner join users on appointments.User_ID = users.User_ID;";
+        if (monthSearch.equals("week")) {
+            // todo update where clause for 7 days
+        }
+
+        String query = "select * from appointments inner join customers on appointments.Customer_ID = customers.Customer_ID inner join contacts on appointments.Contact_ID = contacts.Contact_ID inner join users on appointments.User_ID = users.User_ID" + whereClause + ";";
         Statement st = conn.createStatement();
         ResultSet rs = st.executeQuery(query);
         while (rs.next())
@@ -132,12 +137,13 @@ public class AppointmentsController implements Initializable {
 
     private void initTimeToggle(){
         timeToggle = new ToggleGroup();
-        monthToggle.setSelected(true);
-        timeToggle.getToggles().addAll(monthToggle, weekToggle);
+        noneToggle.setSelected(true);
+        timeToggle.getToggles().addAll(noneToggle, monthToggle, weekToggle);
     }
 
     public void toggleTime(){
-        monthSearch = !monthSearch;
+        // todo
+        this.monthSearch = this.timeToggle.getSelectedToggle().toString();
     }
 
     @Override
