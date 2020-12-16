@@ -35,46 +35,46 @@
 
                    <TableView fx:id="appointmentsTable" layoutX="28.0" layoutY="93.0" prefHeight="601.0" prefWidth="852.0">
                     <columns>
-                        <TableColumn prefWidth="66.0" text="Type" fx:id="AppointmentType"/>
-                        <TableColumn prefWidth="66.0" text="Jan" fx:id="Jan"/>
-                        <TableColumn prefWidth="66.0" text="Feb" fx:id="Feb"/>
-                        <TableColumn prefWidth="66.0" text="Mar" fx:id="Mar" />
-                        <TableColumn prefWidth="66.0" text="Apr" fx:id="Apr" />
-                        <TableColumn prefWidth="66.0" text="May" fx:id="May" />
-                        <TableColumn prefWidth="66.0" text="Jun" fx:id="Jun" />
-                        <TableColumn prefWidth="66.0" text="Jul" fx:id="Jul" />
-                        <TableColumn prefWidth="65.0" text="Aug" fx:id="Aug" />
-                        <TableColumn prefWidth="65.0" text="Sep" fx:id="Sep" />
-                        <TableColumn prefWidth="65.0" text="Oct" fx:id="Oct" />
-                        <TableColumn prefWidth="65.0" text="Nov" fx:id="Nov" />
-                        <TableColumn prefWidth="65.0" text="Dec" fx:id="Dec" />
+                        <TableColumn fx:id="AppointmentType" prefWidth="66.0" text="Type" />
+                        <TableColumn fx:id="Jan" prefWidth="66.0" text="Jan" />
+                        <TableColumn fx:id="Feb" prefWidth="66.0" text="Feb" />
+                        <TableColumn fx:id="Mar" prefWidth="66.0" text="Mar" />
+                        <TableColumn fx:id="Apr" prefWidth="66.0" text="Apr" />
+                        <TableColumn fx:id="May" prefWidth="66.0" text="May" />
+                        <TableColumn fx:id="Jun" prefWidth="66.0" text="Jun" />
+                        <TableColumn fx:id="Jul" prefWidth="66.0" text="Jul" />
+                        <TableColumn fx:id="Aug" prefWidth="65.0" text="Aug" />
+                        <TableColumn fx:id="Sep" prefWidth="65.0" text="Sep" />
+                        <TableColumn fx:id="Oct" prefWidth="65.0" text="Oct" />
+                        <TableColumn fx:id="Nov" prefWidth="65.0" text="Nov" />
+                        <TableColumn fx:id="Dec" prefWidth="65.0" text="Dec" />
                     </columns>
                   </TableView>
                   <Label fx:id="appointmentLabel" layoutX="38.0" layoutY="45.0" prefHeight="18.0" prefWidth="185.0" text="Appointments By Type and Month" />
 
                    <TableView fx:id="contactsTable" layoutX="28.0" layoutY="93.0" prefHeight="601.0" prefWidth="852.0">
                        <columns>
-                           <TableColumn prefWidth="106.25" text="Contact ID" fx:id="ContactCol"/>
-                           <TableColumn prefWidth="106.25" text="App ID" fx:id="AppIDCol"/>
-                           <TableColumn prefWidth="106.25" text="Title" fx:id="TitleCol"/>
-                           <TableColumn prefWidth="106.25" text="Type" fx:id="TypeCol"/>
-                           <TableColumn prefWidth="106.25" text="Description" fx:id="DescriptionCol"/>
-                           <TableColumn prefWidth="106.25" text="Start" fx:id="StartCol"/>
-                           <TableColumn prefWidth="106.25" text="End" fx:id="EndCol"/>
-                           <TableColumn prefWidth="106.25" text="Cus ID" fx:id="CusIDCol"/>
+                           <TableColumn fx:id="ContactCol" prefWidth="106.25" text="Contact ID" />
+                           <TableColumn fx:id="AppIDCol" prefWidth="106.25" text="App ID" />
+                           <TableColumn fx:id="TitleCol" prefWidth="106.25" text="Title" />
+                           <TableColumn fx:id="TypeCol" prefWidth="106.25" text="Type" />
+                           <TableColumn fx:id="DescriptionCol" prefWidth="106.25" text="Description" />
+                           <TableColumn fx:id="StartCol" prefWidth="106.25" text="Start" />
+                           <TableColumn fx:id="EndCol" prefWidth="106.25" text="End" />
+                           <TableColumn fx:id="CusIDCol" prefWidth="106.25" text="Cus ID" />
                        </columns>
                    </TableView>
                    <Label fx:id="contactTableLabel" layoutX="38.0" layoutY="45.0" prefHeight="18.0" prefWidth="185.0" text="Schedule for Contact" />
 
                    <TableView fx:id="countryTable" layoutX="28.0" layoutY="93.0" prefHeight="601.0" prefWidth="852.0">
                        <columns>
-                           <TableColumn prefWidth="213.0" text="Country" />
-                           <TableColumn prefWidth="213.0" text="Division" />
-                           <TableColumn prefWidth="213.0" text="Number of Customers" />
-                           <TableColumn prefWidth="213.0" text="Number of Appointments" />
+                           <TableColumn fx:id="CountryCol" prefWidth="213.0" text="Country" />
+                           <TableColumn fx:id="DivisionCol" prefWidth="213.0" text="Division" />
+                           <TableColumn fx:id="CustomerCol" prefWidth="213.0" text="Customers with Appointments." />
+                           <TableColumn fx:id="AppointmentCol" prefWidth="213.0" text="Number of Appointments" />
                        </columns>
                    </TableView>
-                   <Label fx:id="countryTableLabel" layoutX="38.0" layoutY="45.0" prefHeight="18.0" prefWidth="250.0" text="Number of Appointments based on country" />
+                   <Label fx:id="countryTableLabel" layoutX="38.0" layoutY="45.0" prefHeight="18.0" prefWidth="561.0" text="Number of Appointments based on Customers with appointments for each Division and Country" />
 
 
 

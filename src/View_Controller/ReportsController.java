@@ -1,10 +1,7 @@
 package View_Controller;
 
 import Helper.DBConnect;
-import Model.Appointment;
-import Model.AppointmentType;
-import Model.Contact;
-import Model.Country;
+import Model.*;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -54,7 +51,6 @@ public class ReportsController implements Initializable {
     @FXML private TableColumn<AppointmentType, Integer> Nov;
     @FXML private TableColumn<AppointmentType, Integer> Dec;
 
-
     @FXML TableView<Appointment> contactsTable;
     @FXML Label contactTableLabel;
     @FXML private TableColumn<Appointment, Integer> ContactCol;
@@ -66,8 +62,13 @@ public class ReportsController implements Initializable {
     @FXML private TableColumn<Appointment, String> EndCol;
     @FXML private TableColumn<Appointment, Integer> CusIDCol;
 
-    @FXML TableView<Contact> countryTable;
+    @FXML TableView<CountryReport> countryTable;
     @FXML Label countryTableLabel;
+    @FXML private TableColumn<CountryReport, String> CountryCol;
+    @FXML private TableColumn<CountryReport, String> DivisionCol;
+    @FXML private TableColumn<CountryReport, Integer> CustomerCol;
+    @FXML private TableColumn<CountryReport, Integer> AppointmentCol;
+
     private Connection conn;
 
     /**
@@ -225,7 +226,7 @@ public class ReportsController implements Initializable {
         this.contactsTable.setItems(appointments);
     }
 
-    public void submitCountry(){
+    public void submitCountry() throws SQLException {
         Country selectedCountry = this.countryComboBox.getSelectionModel().getSelectedItem();
         if (selectedCountry == null){
             MessageModal.display("Unable to report", "Please Select A Country");
@@ -234,15 +235,30 @@ public class ReportsController implements Initializable {
         this.hideTables();
         this.countryTable.setVisible(true);
         this.countryTableLabel.setVisible(true);
-        // todo
-    //        select countries.Country, fld.Division, COUNT(appointments.Appointment_ID) as numberOfAppointments, count(distinct customers.Customer_ID) as numberOfCustomers
-    //        from countries
-    //        join first_level_divisions as fld on fld.COUNTRY_ID = countries.Country_ID
-    //        join customers on customers.Division_ID = fld.Division_ID
-    //        join appointments on appointments.Customer_ID = customers.Customer_ID
-    //        where countries.Country_ID = 1 group by fld.Division_ID;
-
-     }
+        int countryID = selectedCountry.getCountry_ID();
+        ObservableList<CountryReport> countryReports = FXCollections.observableArrayList();
+        String query = "select countries.Country, fld.Division, COUNT(appointments.Appointment_ID) as numberOfAppointments, count(distinct customers.Customer_ID) as numberOfCustomers\n" +
+                "            from countries\n" +
+                "            join first_level_divisions as fld on fld.COUNTRY_ID = countries.Country_ID\n" +
+                "            join customers on customers.Division_ID = fld.Division_ID\n" +
+                "            join appointments on appointments.Customer_ID = customers.Customer_ID\n" +
+                "            where countries.Country_ID = " + countryID + " group by fld.Division_ID;";
+        Statement st = conn.createStatement();
+        ResultSet rs = st.executeQuery(query);
+        while (rs.next()){
+            String country = rs.getString("Country");
+            String division = rs.getString("Division");
+            int app = rs.getInt("numberOfAppointments");
+            int cus = rs.getInt("numberOfCustomers");
+           CountryReport countryReport = new CountryReport(country, division, app, cus);
+           countryReports.add(countryReport);
+        }
+        CountryCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCountry()));
+        DivisionCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDivision()));
+        CustomerCol.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getNumberOfCustomers()).asObject());
+        AppointmentCol.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getNumberOfAppointments()).asObject());
+        this.countryTable.setItems(countryReports);
+    }
 
     private void hideCountry(){
         countryComboBox.setVisible(false);
