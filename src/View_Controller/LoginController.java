@@ -22,6 +22,11 @@ public class LoginController  implements Initializable {
     @FXML TextField Password;
     private Connection conn;
 
+    /**
+     * Checks that fields are not null, Attempts to login
+     * @throws IOException
+     * @throws SQLException
+     */
     public void attemptLogin() throws IOException, SQLException {
         if (UserName.getText().equals("") || Password.getText().equals("")){
             MessageModal.display("Unable to login", "Please enter user name and password");
@@ -50,17 +55,30 @@ public class LoginController  implements Initializable {
         }
     }
 
+    /**
+     * sets the local logged in user
+     * @param user
+     * @throws IOException
+     */
     private void setUser(User user) throws IOException {
             HomeController.loggedInUser = user;
             this.navigateHome();
             // todo record logged in user file
     }
 
-
+    /**
+     * Navigates to the home screen on successful login
+     * @throws IOException
+     */
     private void navigateHome() throws IOException {
         loginButton.getScene().setRoot(FXMLLoader.load(getClass().getResource("home.fxml")));
     }
 
+    /**
+     * sets the local db Connection
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {

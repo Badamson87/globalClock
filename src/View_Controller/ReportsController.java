@@ -94,6 +94,9 @@ public class ReportsController implements Initializable {
         }
     }
 
+    /**
+     * set choices for country report
+     */
     public void setCountryComboBox(){
         ObservableList<Country> countries =Country.getAllCountries();
         AtomicInteger counter = new AtomicInteger();
@@ -103,6 +106,10 @@ public class ReportsController implements Initializable {
         });
     }
 
+    /**
+     * set choices for contact options
+     * @throws SQLException
+     */
     public void setContactOptions() throws SQLException {
         ObservableList<Contact> contacts = FXCollections.observableArrayList();
         String query = "select * from contacts";
@@ -122,6 +129,10 @@ public class ReportsController implements Initializable {
         });
     }
 
+    /**
+     * shows appointment table and displays all appointments with their type
+     * @throws SQLException
+     */
     public void submitAppointment() throws SQLException {
         this.hideTables();
         this.appointmentsTable.setVisible(true);
@@ -158,6 +169,11 @@ public class ReportsController implements Initializable {
         appointmentsTable.setItems(appointmentTypes);
     }
 
+    /**
+     * increments each appointment type by month
+     * @param appointmentType
+     * @param appointment
+     */
     public void incrementAppointment(AppointmentType appointmentType, Appointment appointment){
         String start = appointment.getStart();
         String month = start.substring(5, 7);
@@ -201,10 +217,12 @@ public class ReportsController implements Initializable {
             default:
                 return;
         }
-
-
     }
 
+    /**
+     * shows contact table and gathers all appointments
+     * @throws SQLException
+     */
     public void submitContact() throws SQLException {
         Contact selectedContact = this.contactComboBox.getSelectionModel().getSelectedItem();
         if (selectedContact == null){
@@ -226,6 +244,10 @@ public class ReportsController implements Initializable {
         this.contactsTable.setItems(appointments);
     }
 
+    /**
+     * shows country table and queries for all appointments by country and customer
+     * @throws SQLException
+     */
     public void submitCountry() throws SQLException {
         Country selectedCountry = this.countryComboBox.getSelectionModel().getSelectedItem();
         if (selectedCountry == null){
@@ -260,22 +282,34 @@ public class ReportsController implements Initializable {
         this.countryTable.setItems(countryReports);
     }
 
+    /**
+     * Hides the country comboBox and label
+     */
     private void hideCountry(){
         countryComboBox.setVisible(false);
         countryLabel.setVisible(false);
     }
 
+    /**
+     * Hides the contact comboBox and label
+     */
     private void hideContact(){
         this.contactComboBox.setVisible(false);
         this.contactLabel.setVisible(false);
     }
 
+    /**
+     * Hides report submit buttons
+     */
     private void hideButtons(){
         this.submitAppointment.setVisible(false);
         this.submitContact.setVisible(false);
         this.submitCountry.setVisible(false);
     }
 
+    /**
+     * Hides all tables and labels
+     */
     private void hideTables() {
         this.appointmentLabel.setVisible(false);
         this.appointmentsTable.setVisible(false);
@@ -285,6 +319,11 @@ public class ReportsController implements Initializable {
         this.countryTable.setVisible(false);
     }
 
+    /**
+     * Calls to hide combo box's and tables.
+     * Set initial report type options
+     * sets local db Connection
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.conn = DBConnect.connection;

@@ -42,12 +42,21 @@ public class CustomersController implements Initializable {
     public static Customer selectedCustomer;
     public static boolean editMode;
 
+    /**
+     * calls upsert customer modal in create mode
+     * @throws IOException
+     * @throws SQLException
+     */
     public void newCustomer() throws IOException, SQLException {
         editMode = false;
         UpsertCustomerController upsertCustomerController = new UpsertCustomerController();
         upsertCustomerController.show("Create Customer");
     }
 
+    /**
+     * populates the customer table with all customers.
+     * @throws SQLException
+     */
     public static void getAllCustomers() throws SQLException {
         customers.clear();
         String query = "select * from customers join first_level_divisions on customers.Division_ID = first_level_divisions.Division_ID join countries on first_level_divisions.Country_ID = countries.Country_ID;";
@@ -73,6 +82,11 @@ public class CustomersController implements Initializable {
         }
     }
 
+    /**
+     * calls customer upsert modal in edit mode.
+     * @throws IOException
+     * @throws SQLException
+     */
     public void editCustomer() throws IOException, SQLException {
         if (customerTable.getSelectionModel().getSelectedItem() == null){
             MessageModal.display("No Customer", "Please select a customer to update");
@@ -84,6 +98,10 @@ public class CustomersController implements Initializable {
         upsertCustomerController.show("Update Customer");
     }
 
+    /**
+     * Checks that a customer is selected and has no appointments before calling to deleting a customer from the DB.
+     * @throws SQLException
+     */
     public void checkDeleteCustomer() throws SQLException {
         if (customerTable.getSelectionModel().getSelectedItem() == null){
             MessageModal.display("No Customer", "Please select a customer to delete");
@@ -99,6 +117,11 @@ public class CustomersController implements Initializable {
         }
     }
 
+    /**
+     * Deletes a customer from the DB and shows a confirmation modal
+     * @param customerId
+     * @throws SQLException
+     */
     private void deleteCustomer(int customerId) throws SQLException {
         String query = "DELETE FROM customers WHERE Customer_ID = " + customerId;
         Statement st = conn.createStatement();
@@ -111,6 +134,9 @@ public class CustomersController implements Initializable {
         }
     }
 
+    /**
+     * Sets up the customer table and data and cell data values
+     */
     private void initCustomerTable(){
         Customer_ID.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getId()).asObject());
         Customer_Name.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCustomerName()));
@@ -124,6 +150,11 @@ public class CustomersController implements Initializable {
         customerTable.setItems(customers);
     }
 
+    /**
+     * sets the local db connection
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.conn = DBConnect.connection;

@@ -53,7 +53,10 @@ public class AppointmentsController implements Initializable {
     public static boolean editMode;
     public static String searchFilter;
 
-
+    /**
+     * launches the upsert appointment modal in create mode.
+     * @throws IOException
+     */
     public void newAppointment() throws IOException {
         editMode = false;
         UpsertAppointmentController upsertAppointmentController = new UpsertAppointmentController();
