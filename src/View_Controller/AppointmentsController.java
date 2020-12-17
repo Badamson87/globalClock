@@ -63,6 +63,10 @@ public class AppointmentsController implements Initializable {
         upsertAppointmentController.show("Create Appointment");
     }
 
+    /**
+     * Launches the upsert appointment modal in Edit mode
+     * @throws IOException
+     */
     public void editAppointment() throws IOException {
         if (appointmentTable.getSelectionModel().getSelectedItem() == null){
             MessageModal.display("No Appointment", "Please select an appointment to update");
@@ -74,6 +78,9 @@ public class AppointmentsController implements Initializable {
         upsertAppointmentController.show("Update Appointment");
     }
 
+    /**
+     * sets up the appointment table with cell values and table data
+     */
     private void initAppointmentTable() {
         appointmentIdCol.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getAppointment_ID()).asObject());
         customerIdCol.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getCustomer_ID()).asObject());
@@ -88,6 +95,10 @@ public class AppointmentsController implements Initializable {
         appointmentTable.setItems(appointments);
     }
 
+    /**
+     * Calls to get all appointment dependent on the where clause
+     * @throws SQLException
+     */
     public static void getAllAppointments() throws SQLException {
         appointments.clear();
         String whereClause = "";
@@ -100,7 +111,6 @@ public class AppointmentsController implements Initializable {
             // todo update where clause for 7 days
            System.out.println("week");
         }
-
         String query = "select * from appointments inner join customers on appointments.Customer_ID = customers.Customer_ID inner join contacts on appointments.Contact_ID = contacts.Contact_ID inner join users on appointments.User_ID = users.User_ID" + whereClause + ";";
         Statement st = conn.createStatement();
         ResultSet rs = st.executeQuery(query);
@@ -123,6 +133,10 @@ public class AppointmentsController implements Initializable {
         }
     }
 
+    /**
+     * calls to delete an appointment from the db
+     * @throws SQLException
+     */
     public void deleteAppointment() throws SQLException {
         if (appointmentTable.getSelectionModel().getSelectedItem() == null)
         {
@@ -141,17 +155,29 @@ public class AppointmentsController implements Initializable {
         }
     }
 
+    /**
+     * sets the initial toggle to no filter and adds the toggle choices
+     */
     private void initTimeToggle(){
         timeToggle = new ToggleGroup();
         noneToggle.setSelected(true);
         timeToggle.getToggles().addAll(noneToggle, monthToggle, weekToggle);
     }
 
+    /**
+     * updates the search filter for where clause and calls to get all appointments
+     * @throws SQLException
+     */
     public void toggleTime() throws SQLException {
         this.searchFilter = this.timeToggle.getSelectedToggle().toString();
         getAllAppointments();
     }
 
+    /**
+     * Inits the time toggle and sets the local db connection
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.initTimeToggle();
