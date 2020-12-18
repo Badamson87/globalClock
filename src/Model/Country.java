@@ -22,57 +22,114 @@ public class Country {
     private String Last_Update_By;
     private static ObservableList<Country> allCountries = FXCollections.observableArrayList();
 
+    /**
+     * creates a country instance with no parameters
+     */
     public Country(){
     }
 
+    /**
+     *
+     * @return country id
+     */
     public int getCountry_ID() {
         return Country_ID;
     }
 
+    /**
+     *
+     * @param country_ID set as country id
+     */
     public void setCountry_ID(int country_ID) {
         Country_ID = country_ID;
     }
 
+    /**
+     *
+     * @return country name
+     */
     public String getCountry() {
         return Country;
     }
 
+    /**
+     *
+     * @param country set as country name
+     */
     public void setCountry(String country) {
         Country = country;
     }
 
+    /**
+     *
+     * @return country created date
+     */
     public Date getCreate_Date() {
         return Create_Date;
     }
 
+    /**
+     *
+     * @param create_Date set as country created date
+     */
     public void setCreate_Date(Date create_Date) {
         Create_Date = create_Date;
     }
 
+    /**
+     *
+     * @return country created by
+     */
     public String getCreated_By() {
         return Created_By;
     }
 
+    /**
+     *
+     * @param created_By set as country created by
+     */
     public void setCreated_By(String created_By) {
         Created_By = created_By;
     }
 
+    /**
+     *
+     * @return as country last updated date
+     */
     public Date getLast_Update() {
         return Last_Update;
     }
 
+    /**
+     *
+     * @param last_Update set as country last updated date
+     */
     public void setLast_Update(Date last_Update) {
         Last_Update = last_Update;
     }
 
+    /**
+     *
+     * @return country last updated by
+     */
     public String getLast_Update_By() {
         return Last_Update_By;
     }
 
+    /**
+     *
+     * @param last_Update_By sets country last updated by
+     */
     public void setLast_Update_By(String last_Update_By) {
         Last_Update_By = last_Update_By;
     }
 
+    /**
+     * gets a country from the db with provided country id
+     * @param Id country id
+     * @return a country instance with provided id
+     * @throws SQLException
+     */
     public static Country getCountryById(int Id) throws SQLException {
         Connection con = DBConnect.connection;
         String query = "SELECT * FROM countries where Country_Id = '" + Id + "'";
@@ -91,6 +148,15 @@ public class Country {
             return newCountry;
     }
 
+    /**
+     * creates a country instance with provides parameters
+     * @param countryId set as country id
+     * @param country set as country name
+     * @param createDate set as country created date
+     * @param createBy set as country created by
+     * @param lastUpdate set as country last updated date
+     * @param lastUpdateBy set as country last updated by
+     */
     public Country(int countryId, String country, Date createDate, String createBy, Date lastUpdate, String lastUpdateBy) {
         this.Country_ID = countryId;
         this.Country = country;
@@ -101,19 +167,35 @@ public class Country {
         this.name = country;
     }
 
+    /**
+     *
+     * @return an observable list of all countries
+     */
     public static ObservableList<Country> getAllCountries() {
         return allCountries;
     }
 
+    /**
+     *
+     * @return country name as an override param for combo box
+     */
     @Override
     public String toString(){
         return this.getName();
     }
 
+    /**
+     *
+     * @return country name as name
+     */
     public String getName(){
         return this.name;
     }
 
+    /**
+     * calls db to get all countries and sets to to the allCountries observable list
+     * @throws SQLException
+     */
     public static void setAllCountries() throws SQLException {
         Connection con = DBConnect.connection;
         String query = "SELECT * FROM countries";

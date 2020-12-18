@@ -24,10 +24,25 @@ public class Customer {
     private int Country_ID;
     private String Country;
 
-
+    /**
+     * empty division constructor
+     */
     public Customer(){
     }
 
+    /**
+     *  creates a customer instance with params
+     * @param Customer_ID provides the customer id
+     * @param Customer_Name provides the customer name
+     * @param Address provides the customer address
+     * @param phone provides the customer phone
+     * @param Postal_Code provides the customer postal code
+     * @param Create_Date provides the customer created date
+     * @param Created_By provides the customer created by
+     * @param LastUpdate  provides the customer last updated date
+     * @param Last_Update_By provides the customer last updated by
+     * @param Division_ID provides the customer division id
+     */
     public Customer(int Customer_ID, String Customer_Name, String Address, String phone, String Postal_Code, Date Create_Date,
                     String Created_By, Date LastUpdate, String Last_Update_By, int Division_ID){
         this.Customer_ID = Customer_ID;
@@ -42,6 +57,23 @@ public class Customer {
         this.Division_ID = Division_ID;
         this.name = Customer_Name;
     }
+
+    /**
+     *  creates a instance of a custom with following params
+     * @param Customer_ID provides the customer id
+     * @param Customer_Name provides the customer name
+     * @param Address provides the customer address
+     * @param phone provides the customer phone
+     * @param Postal_Code provides the customer postal code
+     * @param Create_Date provides the customer created date
+     * @param Created_By provides the customer created by
+     * @param LastUpdate provides the customer last update date
+     * @param Last_Update_By provides the customer last updated by
+     * @param Division_ID  provides the customer division id
+     * @param division provides the customer division name
+     * @param Country_ID provides the customer country id
+     * @param Country provides the customer country name
+     */
     public Customer(int Customer_ID, String Customer_Name, String Address, String phone, String Postal_Code, Date Create_Date,
     String Created_By, Date LastUpdate, String Last_Update_By, int Division_ID, String division, int Country_ID, String Country){
         this.Customer_ID = Customer_ID;
@@ -60,6 +92,12 @@ public class Customer {
         this.name = Customer_Name;
     }
 
+    /**
+     *  db call to get a customer by customer id
+     * @param Id customer id
+     * @return
+     * @throws SQLException
+     */
     public static Customer getCustomerById(int Id) throws SQLException {
         Connection con = DBConnect.connection;
         String query = "SELECT * FROM customers where Customer_Id = '" + Id + "'";
@@ -83,47 +121,119 @@ public class Customer {
         return newCustomer;
     }
 
+    /**
+     *
+     * @return override to return the string name of a customer for combo box
+     */
     @Override
     public String toString(){
         return this.getName();
     }
 
+    /**
+     * works with override to return the name of a customer for combo box
+     * @return customer name as a string
+     */
     public String getName(){
         return this.name;
     }
 
+    /**
+     * return a customer id
+     * @return customer id
+     */
     public int getId() {
         return this.Customer_ID;
     }
+
+    /**
+     *
+     * @return customer name
+     */
     public String getCustomerName() {
         return this.Customer_Name;
     }
+
+    /**
+     *
+     * @return customer address
+     */
     public String getAddress() {
         return this.Address;
     }
+
+    /**
+     *
+     * @return customer phone
+     */
     public String getPhone() {
         return this.Phone;
     }
+
+    /**
+     *
+     * @return customer postal code
+     */
     public String getPostalCode() {
         return this.Postal_Code;
     }
+
+    /**
+     *
+     * @return customer created date
+     */
     public Date getCreateDate() {
         return this.Create_Date;
     }
+
+    /**
+     *
+     * @return customer created by
+     */
     public String getCreatedBy() {
         return this.Created_By;
     }
+
+    /**
+     *
+     * @return customer last updated date
+     */
     public Date getLastUpdate() {
         return this.Last_Update;
     }
+
+    /**
+     *
+     * @return customer last updated by
+     */
     public String getLastUpdateBy() {
         return this.Last_Update_By;
     }
+
+    /**
+     *
+     * @return customer division id
+     */
     public int getDivisionID() {
         return this.Division_ID;
     }
+
+    /**
+     *
+     * @return customer division name
+     */
     public String getDivision() { return this.Division;}
+
+    /**
+     *
+     * @return customer country id
+     */
     public int getCountry_ID() {return this.Country_ID;}
+
+    /**
+     *
+     * @return customer country name
+     */
     public String getCountry() {return this.Country;}
 
 
