@@ -3,3 +3,5 @@ Name: taco Location: America/Denver DateTime: 2020-12-18T07:16:11.752708100 Succ
 Name: test Location: America/Denver DateTime: 2020-12-18T07:34:55.113522100 Successful Log in: true
 Name: test Location: America/Denver DateTime: 2020-12-18T07:41:49.324278100 Successful Log in: true
 Name: test Location: America/Denver DateTime: 2020-12-18T07:43:55.113926900 Successful Log in: true
+Name: test Location: America/Denver DateTime: 2020-12-18T08:04:14.134761800 Successful Log in: true
+Name: test Location: America/Denver DateTime: 2020-12-18T08:07:33.117797600 Successful Log in: true

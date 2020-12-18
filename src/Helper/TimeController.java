@@ -51,16 +51,24 @@ public class TimeController {
     }
 
     public Date convertToUTC(LocalDate localDate) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyy/MM/dd HH:mm:ss");
-        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
-        Date utc = new Date(sdf.format(localDate));
-        return utc;
+        if (localDate != null) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyy/MM/dd HH:mm:ss");
+            sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+            Date utc = new Date(sdf.format(localDate));
+            return utc;
+        } else {
+            return null;
+        }
     }
 
     public Date convertToLocal(Date date){
-        String timeZone = Calendar.getInstance().getTimeZone().getID();
-        Date local = new Date(date.getTime() + TimeZone.getTimeZone(timeZone).getOffset(date.getTime()));
-        return local;
+        if (date != null) {
+            String timeZone = Calendar.getInstance().getTimeZone().getID();
+            Date local = new Date(date.getTime() + TimeZone.getTimeZone(timeZone).getOffset(date.getTime()));
+            return local;
+        } else {
+            return null;
+        }
     }
 
 }
