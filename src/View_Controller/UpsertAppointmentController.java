@@ -117,17 +117,20 @@ public class UpsertAppointmentController implements Initializable {
      * @return
      * @throws ParseException
      */
-    private boolean appointmentTimeCheck(Appointment appointment) throws ParseException { SimpleDateFormat date12Format = new SimpleDateFormat("hh:mm a");
+    private boolean appointmentTimeCheck(Appointment appointment) throws ParseException {
+        SimpleDateFormat date12Format = new SimpleDateFormat("hh:mm a");
         SimpleDateFormat date24Format = new SimpleDateFormat("HH:mm:ss");
         String start24 = date24Format.format(date12Format.parse(startTime.getSelectionModel().getSelectedItem()));
         // Format Start Time
         LocalDate startDate = start.getValue();;
         String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
         String startDateTimeString = startDate + " " + start24;
-        LocalDateTime proposedNewDateTime = LocalDateTime.parse(startDateTimeString, DateTimeFormatter.ofPattern(DATE_FORMAT));
+        System.out.println(startDateTimeString);
 
-        LocalDateTime savedStartDate = LocalDateTime.parse(appointment.getStart().replaceAll(" ", "T"));
-        LocalDateTime savedEndDate = LocalDateTime.parse(appointment.getEnd().replaceAll(" ", "T"));
+        LocalDateTime proposedNewDateTime = LocalDateTime.parse(startDateTimeString, DateTimeFormatter.ofPattern(DATE_FORMAT));
+        System.out.println("check");
+        LocalDateTime savedStartDate = LocalDateTime.parse(appointment.getStart().toString().replaceAll(" ", "T"));
+        LocalDateTime savedEndDate = LocalDateTime.parse(appointment.getEnd().toString().replaceAll(" ", "T"));
 
         if (savedStartDate.isBefore(proposedNewDateTime) && savedEndDate.isAfter(proposedNewDateTime)) {
             return true;
@@ -259,10 +262,10 @@ public class UpsertAppointmentController implements Initializable {
            description.setText(app.getDescription());
            customerComboBox.setValue(Customer.getCustomerById(app.getCustomer_ID()));
            contactComboBox.setValue(Contact.getContactById(app.getContact_ID()));
-           startTime.setValue(TimeController.splitDateTimeReturnTime(app.getStart()));
-           endTime.setValue(TimeController.splitDateTimeReturnTime(app.getEnd()));
-           start.setValue(TimeController.splitDateTimeReturnDate(app.getStart()));
-           end.setValue(TimeController.splitDateTimeReturnDate(app.getEnd()));
+           startTime.setValue(TimeController.splitDateTimeReturnTime(app.getStart().toString()));
+           endTime.setValue(TimeController.splitDateTimeReturnTime(app.getEnd().toString()));
+           start.setValue(TimeController.splitDateTimeReturnDate(app.getStart().toString()));
+           end.setValue(TimeController.splitDateTimeReturnDate(app.getEnd().toString()));
        }
     }
 

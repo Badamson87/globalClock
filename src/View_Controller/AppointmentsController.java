@@ -90,8 +90,8 @@ public class AppointmentsController implements Initializable {
         locationCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getLocation()));
         contactCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getContactName()));
         typeCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getType()));
-        startCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getStart()));
-        endCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEnd()));
+        startCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getStart().toString()));
+        endCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEnd().toString()));
         customerCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCustomerName()));
         appointmentTable.setItems(appointments);
     }
@@ -125,8 +125,8 @@ public class AppointmentsController implements Initializable {
             String location = rs.getString("Location");
             String contact = rs.getString("Contact_Name");
             String type = rs.getString("Type");
-            String start =  rs.getString("Start");
-            String end = rs.getString("End");
+            Date start =  rs.getDate("Start");
+            Date end = rs.getDate("End");
             String customer = rs.getString("Customer_Name");
             String userName = rs.getString("User_Name");
             Appointment newApp = new Appointment(id, title, description, location, contact, contactId, type, start, end, customer, userName, cusId);

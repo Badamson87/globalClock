@@ -1,6 +1,7 @@
 package View_Controller;
 
 import Helper.DBConnect;
+import Helper.TimeController;
 import Model.*;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -175,7 +176,7 @@ public class ReportsController implements Initializable {
      * @param appointment
      */
     public void incrementAppointment(AppointmentType appointmentType, Appointment appointment){
-        String start = appointment.getStart();
+        String start = appointment.getStart().toString();
         String month = start.substring(5, 7);
         switch(month) {
             case "01":
@@ -229,6 +230,7 @@ public class ReportsController implements Initializable {
             MessageModal.display("Unable to report", "Please select a contact");
             return;
         }
+        TimeController timeController = new TimeController();
         this.hideTables();
         this.contactTableLabel.setVisible(true);
         this.contactsTable.setVisible(true);
@@ -239,8 +241,8 @@ public class ReportsController implements Initializable {
         TypeCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getType()));
         TitleCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTitle()));
         DescriptionCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDescription()));
-        StartCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getStart()));
-        EndCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEnd()));
+        StartCol.setCellValueFactory(cellData -> new SimpleStringProperty(timeController.convertToLocal(cellData.getValue().getStart()).toString()));
+        EndCol.setCellValueFactory(cellData -> new SimpleStringProperty(timeController.convertToLocal(cellData.getValue().getEnd()).toString()));
         this.contactsTable.setItems(appointments);
     }
 
