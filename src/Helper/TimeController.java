@@ -1,8 +1,11 @@
 package Helper;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class TimeController {
 
@@ -45,6 +48,19 @@ public class TimeController {
     public static LocalDate splitDateTimeReturnDate(String dateTime){
         LocalDate localDate = LocalDate.parse(dateTime.substring(0, 10));
         return localDate;
+    }
+
+    public Date convertToUTC(LocalDate localDate) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyy/MM/dd HH:mm:ss");
+        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+        Date utc = new Date(sdf.format(localDate));
+        return utc;
+    }
+
+    public Date convertToLocal(Date date){
+        String timeZone = Calendar.getInstance().getTimeZone().getID();
+        Date local = new Date(date.getTime() + TimeZone.getTimeZone(timeZone).getOffset(date.getTime()));
+        return local;
     }
 
 }

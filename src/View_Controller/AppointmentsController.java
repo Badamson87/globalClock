@@ -1,6 +1,7 @@
 package View_Controller;
 
 import Helper.DBConnect;
+import Helper.TimeController;
 import Model.Appointment;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
@@ -124,7 +125,7 @@ public class AppointmentsController implements Initializable {
             String location = rs.getString("Location");
             String contact = rs.getString("Contact_Name");
             String type = rs.getString("Type");
-            String start = rs.getString("Start");
+            String start =  rs.getString("Start");
             String end = rs.getString("End");
             String customer = rs.getString("Customer_Name");
             String userName = rs.getString("User_Name");
