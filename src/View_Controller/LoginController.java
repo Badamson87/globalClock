@@ -84,7 +84,7 @@ public class LoginController  implements Initializable {
     private void recordLoginAttempt(String user, boolean successful) throws IOException {
         ZoneId zoneId = ZoneId.systemDefault();
         LocalDateTime ldc = LocalDateTime.now();
-        FileWriter fw = new FileWriter("loginRecord.txt", true);
+        FileWriter fw = new FileWriter("login_activity.txt", true);
         PrintWriter pw = new PrintWriter(fw);
         pw.println ("Name: " + user + " Location: " + zoneId + " DateTime: " + ldc + " Successful Log in: " + successful);
         pw.close();
