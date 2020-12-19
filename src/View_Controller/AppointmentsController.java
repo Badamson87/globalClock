@@ -145,12 +145,13 @@ public class AppointmentsController implements Initializable {
             return;
         }
         int appointmentId = appointmentTable.getSelectionModel().getSelectedItem().getAppointment_ID();
+        String type = appointmentTable.getSelectionModel().getSelectedItem().getType();
         String query = "DELETE FROM appointments WHERE Appointment_ID = " + appointmentId;
         Statement st = conn.createStatement();
         int res = st.executeUpdate(query);
         if (res == 1){
             getAllAppointments();
-            MessageModal.display("Success", "Appointment Deleted");
+            MessageModal.display("Success", "Appointment Delete ID: " + appointmentId + " Type: " + type);
         } else {
             MessageModal.display("Unable to delete appointment", "Something went wrong");
         }
