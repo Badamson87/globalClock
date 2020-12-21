@@ -241,8 +241,8 @@ public class ReportsController implements Initializable {
         TypeCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getType()));
         TitleCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTitle()));
         DescriptionCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDescription()));
-        StartCol.setCellValueFactory(cellData -> new SimpleStringProperty(timeController.convertToLocal(cellData.getValue().getStart()).toString()));
-        EndCol.setCellValueFactory(cellData -> new SimpleStringProperty(timeController.convertToLocal(cellData.getValue().getEnd()).toString()));
+        StartCol.setCellValueFactory(cellData -> new SimpleStringProperty(timeController.removeTFromTime(timeController.convertToLocal(cellData.getValue().getStart()))) );
+        EndCol.setCellValueFactory(cellData -> new SimpleStringProperty(timeController.removeTFromTime(timeController.convertToLocal(cellData.getValue().getEnd()))));
         this.contactsTable.setItems(appointments);
     }
 

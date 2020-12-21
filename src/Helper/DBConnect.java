@@ -1,8 +1,6 @@
 package Helper;
-
 import Model.Country;
 import Model.Division;
-
 import java.sql.*;
 
 public class DBConnect {
@@ -14,6 +12,12 @@ public class DBConnect {
     private static final String driver = "com.mysql.jdbc.Driver";
     public static Connection connection;
 
+    /**
+     *  Establish connection to database
+     * @return
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public static Connection establishConnection() throws ClassNotFoundException, SQLException {
         Class.forName(driver);
          connection = DriverManager.getConnection(DB_URL, username, password);

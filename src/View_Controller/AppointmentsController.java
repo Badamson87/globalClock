@@ -83,6 +83,7 @@ public class AppointmentsController implements Initializable {
      * sets up the appointment table with cell values and table data
      */
     private void initAppointmentTable() {
+        TimeController timeController = new TimeController();
         appointmentIdCol.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getAppointment_ID()).asObject());
         customerIdCol.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getCustomer_ID()).asObject());
         titleCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTitle()));
@@ -90,8 +91,8 @@ public class AppointmentsController implements Initializable {
         locationCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getLocation()));
         contactCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getContactName()));
         typeCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getType()));
-        startCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getStart().toString()));
-        endCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEnd().toString()));
+        startCol.setCellValueFactory(cellData -> new SimpleStringProperty(timeController.removeTFromTime(timeController.convertToLocal(cellData.getValue().getStart()))) );
+        endCol.setCellValueFactory(cellData -> new SimpleStringProperty(timeController.removeTFromTime(timeController.convertToLocal(cellData.getValue().getEnd()))));
         customerCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCustomerName()));
         appointmentTable.setItems(appointments);
     }
@@ -125,8 +126,8 @@ public class AppointmentsController implements Initializable {
             String location = rs.getString("Location");
             String contact = rs.getString("Contact_Name");
             String type = rs.getString("Type");
-            Date start =  rs.getDate("Start");
-            Date end = rs.getDate("End");
+            String start =  rs.getString("Start");
+            String end = rs.getString("End");
             String customer = rs.getString("Customer_Name");
             String userName = rs.getString("User_Name");
             Appointment newApp = new Appointment(id, title, description, location, contact, contactId, type, start, end, customer, userName, cusId);

@@ -16,8 +16,8 @@ public class Appointment {
     private String Created_By;
     private int Customer_ID;
     private String Description;
-    private Date End;
-    private Date Start;
+    private String End;
+    private String Start;
     private Date Last_Update;
     private String Last_Updated_By;
     private String Location;
@@ -45,7 +45,7 @@ public class Appointment {
      * @param end set as appointment end
      * @param cusID set as appointment customer id
      */
-    public Appointment(int Appointment_ID, String title, String description, String location, String type, Date start, Date end, int cusID ){
+    public Appointment(int Appointment_ID, String title, String description, String location, String type, String start, String end, int cusID ){
         this.Appointment_ID = Appointment_ID;
         this.Title = title;
         this.Description = description;
@@ -68,7 +68,7 @@ public class Appointment {
      * @param cusID set as appointment customer id
      * @param contID set as appointment contact id
      */
-    public Appointment(int Appointment_ID, String title, String description, String location, String type, Date start, Date end, int cusID, int contID ){
+    public Appointment(int Appointment_ID, String title, String description, String location, String type, String start, String end, int cusID, int contID ){
         this.Appointment_ID = Appointment_ID;
         this.Title = title;
         this.Description = description;
@@ -95,8 +95,8 @@ public class Appointment {
      * @param userName set as appointment user name
      * @param cusID set as appointment customer id
      */
-    public Appointment(int Appointment_ID, String title, String description, String location, String contactName, int contactId, String type, Date start, Date end, String customerName, String userName, int cusID ){
-     this.Appointment_ID = Appointment_ID;
+    public Appointment(int Appointment_ID, String title, String description, String location, String contactName, int contactId, String type, String start, String end, String customerName, String userName, int cusID ){
+        this.Appointment_ID = Appointment_ID;
      this.Title = title;
      this.Description = description;
      this.Location = location;
@@ -109,6 +109,7 @@ public class Appointment {
      this.UserName = userName;
      this.Customer_ID = cusID;
     }
+
 
     /**
      * create an appointment with the provided parameters
@@ -127,7 +128,7 @@ public class Appointment {
      * @param Type set as appointment type
      * @param User_ID set as appointment user id
      */
-    public Appointment(int Appointment_ID, int Contact_ID, Date Create_Date, String Created_By, int Customer_ID, String Description, Date End, Date Start, Date Last_Update, String Last_Updated_By, String Location, String Title, String Type, int User_ID ){
+    public Appointment(int Appointment_ID, int Contact_ID, Date Create_Date, String Created_By, int Customer_ID, String Description, String End, String Start, Date Last_Update, String Last_Updated_By, String Location, String Title, String Type, int User_ID ){
         this.Appointment_ID = Appointment_ID;
         this.Contact_ID = Contact_ID;
         this.Create_Date = Create_Date;
@@ -266,7 +267,7 @@ public class Appointment {
      *
      * @return appointment end
      */
-    public Date getEnd() {
+    public String getEnd() {
         return End;
     }
 
@@ -274,7 +275,7 @@ public class Appointment {
      *
      * @param end set as appointment end
      */
-    public void setEnd(Date end) {
+    public void setEnd(String end) {
         End = end;
     }
 
@@ -282,7 +283,7 @@ public class Appointment {
      *
      * @return start date as string
      */
-    public Date getStart() { return Start; }
+    public String getStart() { return Start; }
 
     /**
      *
@@ -400,8 +401,8 @@ public class Appointment {
             String description = rs.getString("Description");
             String location = rs.getString("Location");
             String type = rs.getString("Type");
-            Date start = rs.getDate("Start");
-            Date end = rs.getDate("End");
+            String start = rs.getString("Start");
+            String end = rs.getString("End");
             Appointment newApp = new Appointment(id, title, description, location, type, start, end, cusId);
             appointments.add(newApp);
         }
@@ -429,8 +430,8 @@ public class Appointment {
             String description = rs.getString("Description");
             String location = rs.getString("Location");
             String type = rs.getString("Type");
-            Date start = rs.getDate("Start");
-            Date end = rs.getDate("End");
+            String start = rs.getString("Start");
+            String end = rs.getString("End");
             Appointment newApp = new Appointment(id, title, description, location, type, start, end, cusId, contId);
             appointments.add(newApp);
         }
@@ -456,8 +457,8 @@ public class Appointment {
             String description = rs.getString("Description");
             String location = rs.getString("Location");
             String type = rs.getString("Type");
-            Date start = rs.getDate("Start");
-            Date end = rs.getDate("End");
+            String start = rs.getString("Start");
+            String end = rs.getString("End");
             Appointment newApp = new Appointment(id, title, description, location, type, start, end, cusId);
             appointments.add(newApp);
         }

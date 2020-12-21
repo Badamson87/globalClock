@@ -1,15 +1,21 @@
 package Helper;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
+import static java.time.ZoneId.systemDefault;
+import static java.time.ZoneOffset.UTC;
+
 public class TimeController {
 
-
+    /**
+     *
+     * @return An array of appointment time options
+     */
     public static String[] getTOptions(){
         String[] options = new String[15];
         options[0] = "8:00 AM";
@@ -30,44 +36,84 @@ public class TimeController {
         return options;
     }
 
-    public static String splitDateTimeReturnTime(String dateTime){
-       String time = dateTime.split(" ")[1];
-       int hour =  Integer.parseInt(time.substring(0,2));
-       if (hour > 12){
-           hour = hour - 12;
-           return String.valueOf(hour) + time.substring(2,5) + " PM";
-       } else if (hour == 12){
-           return time.substring(0, 5) + " PM";
-       } else if (hour > 9) {
-           return time.substring(0, 5) + " AM";
-       } else {
-           return time.substring(1, 5) + " AM";
-       }
+    /**
+     *  takes in a date time and returns the time to populate appointment combobox
+     * @param dateTime
+     * @return
+     */
+    public String splitDateTimeReturnTime(String dateTime) {
+        String local = convertToLocal(dateTime);
+        String test = local.substring(11, 12);
+        String retVal = "";
+        if (test.equals("0")) {
+            retVal = local.substring(12, 19);
+        } else {
+            retVal = local.substring(11, 19);
+        }
+        return retVal;
     }
 
-    public static LocalDate splitDateTimeReturnDate(String dateTime){
-        LocalDate localDate = LocalDate.parse(dateTime.substring(0, 10));
+    /**
+     * takes in a date time and returns the date
+     * @param dateTime
+     * @return
+     */
+    public LocalDate splitDateTimeReturnDate(String dateTime){
+        String local = this.convertToLocal(dateTime);
+        LocalDate localDate = LocalDate.parse(local.substring(6, 10) + "-" + local.substring(0, 5));
         return localDate;
     }
 
-    public Date convertToUTC(LocalDate localDate) {
-        if (localDate != null) {
+    /**
+     *
+     * @param localDatetime is converted to UTC time
+     * @return
+     */
+    public Date convertToUTC(LocalDateTime localDatetime) {
+        if (localDatetime != null) {
+            System.out.println(localDatetime);
+            String timeString = localDatetime.toString().replace("T", " ").substring(0, 18);
+            String x = LocalDateTime.parse(timeString, DateTimeFormatter.ofPattern( "uuuu-MM-dd HH:mm:ss:s")).atOffset(ZoneOffset.UTC).toString();
+            System.out.println(x);
+
             SimpleDateFormat sdf = new SimpleDateFormat("yyy/MM/dd HH:mm:ss");
             sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
-            Date utc = new Date(sdf.format(localDate));
+            Date utc = new Date(sdf.format(localDatetime));
+            System.out.println(utc);
             return utc;
         } else {
             return null;
         }
     }
 
-    public Date convertToLocal(Date date){
+    /**
+     *
+     * @param date is converted to local date time from utc.
+     * @return
+     */
+    public String convertToLocal(String date){
         if (date != null) {
-            String timeZone = Calendar.getInstance().getTimeZone().getID();
-            Date local = new Date(date.getTime() + TimeZone.getTimeZone(timeZone).getOffset(date.getTime()));
-            return local;
+            date = date.replaceAll("\\.0*$", "");
+            String dateFormat = "yyyy-MM-dd HH:mm:ss";
+            DateTimeFormatter formatAM = DateTimeFormatter.ofPattern("MM-dd-yyyy hh:mm a");
+            String zoneString = ZoneId.systemDefault().toString();
+
+            LocalDateTime ldt = LocalDateTime.parse(date, DateTimeFormatter.ofPattern(dateFormat));
+            ZonedDateTime utcZone = ldt.atZone(UTC);
+
+            LocalDateTime srtL = LocalDateTime.ofInstant(utcZone.toInstant(), ZoneId.of(zoneString));
+            return srtL.format(formatAM);
         } else {
             return null;
+        }
+    }
+
+    public String removeTFromTime(String date){
+        if (date != null){
+            return date.replace("T", " ");
+        }
+        else {
+        return  null;
         }
     }
 

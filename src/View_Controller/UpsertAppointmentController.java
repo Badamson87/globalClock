@@ -125,10 +125,8 @@ public class UpsertAppointmentController implements Initializable {
         LocalDate startDate = start.getValue();;
         String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
         String startDateTimeString = startDate + " " + start24;
-        System.out.println(startDateTimeString);
 
         LocalDateTime proposedNewDateTime = LocalDateTime.parse(startDateTimeString, DateTimeFormatter.ofPattern(DATE_FORMAT));
-        System.out.println("check");
         LocalDateTime savedStartDate = LocalDateTime.parse(appointment.getStart().toString().replaceAll(" ", "T"));
         LocalDateTime savedEndDate = LocalDateTime.parse(appointment.getEnd().toString().replaceAll(" ", "T"));
 
@@ -172,7 +170,6 @@ public class UpsertAppointmentController implements Initializable {
         // Sql Start
         String query = "INSERT INTO appointments (Title, Description, Location, Type, Start, End, Create_Date, Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID) "
                 + "VALUES ('" + newTitle + "', '" + newDescription + "', '" + newLocation + "', '" + newType + "', '" + startDateTime + "', '" + endDateTime + "', '" + newCreateDate + "', '" + newCreatedBy + "', '" + newUpdateDate + "', '" + newLastUpdatedBY + "', '" + newCustomerId + "', '" + newUserId + "', '" + newContactId + "')";
-        System.out.println(query);
         Statement st = conn.createStatement();
         int save = st.executeUpdate(query);
         if (save == 1){
@@ -210,12 +207,10 @@ public class UpsertAppointmentController implements Initializable {
         String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
         String startDateTimeString = startDate + " " + start24;
         LocalDateTime startDateTime = LocalDateTime.parse(startDateTimeString, DateTimeFormatter.ofPattern(DATE_FORMAT));
-        System.out.println(startDateTime);
         // Format End time
         LocalDate endDate = start.getValue();;
         String endDateTimeString = endDate + " " + end24;
         LocalDateTime endDateTime = LocalDateTime.parse(endDateTimeString, DateTimeFormatter.ofPattern(DATE_FORMAT));
-        System.out.println(endDateTime);
         // Sql Start
         String query = "UPDATE appointments set Title = '" + newTitle + "', Description = '" + newDescription + "', Location = '" + newLocation + "', Type = '" + newType + "',  Start = '" + startDateTime + "', End = '" + endDateTime + "', Last_Update = '" + newUpdateDate + "',  Last_Updated_By = '" + newLastUpdatedBY + "', Customer_ID = " + newCustomerId + ", User_ID = " + newUserId + ", Contact_ID = " + newContactId +
         " WHERE Appointment_ID  = " + newId;
@@ -253,6 +248,7 @@ public class UpsertAppointmentController implements Initializable {
      * @throws SQLException
      */
     public void setAppointment() throws SQLException {
+        TimeController timeController = new TimeController();
        Appointment app = AppointmentsController.selectedAppointment;
        if (app != null && AppointmentsController.editMode) {
            appointmentId.setText(String.valueOf(app.getAppointment_ID()));
@@ -262,10 +258,10 @@ public class UpsertAppointmentController implements Initializable {
            description.setText(app.getDescription());
            customerComboBox.setValue(Customer.getCustomerById(app.getCustomer_ID()));
            contactComboBox.setValue(Contact.getContactById(app.getContact_ID()));
-           startTime.setValue(TimeController.splitDateTimeReturnTime(app.getStart().toString()));
-           endTime.setValue(TimeController.splitDateTimeReturnTime(app.getEnd().toString()));
-           start.setValue(TimeController.splitDateTimeReturnDate(app.getStart().toString()));
-           end.setValue(TimeController.splitDateTimeReturnDate(app.getEnd().toString()));
+           startTime.setValue(timeController.splitDateTimeReturnTime(app.getStart().toString()));
+           endTime.setValue(timeController.splitDateTimeReturnTime(app.getEnd().toString()));
+           start.setValue(timeController.splitDateTimeReturnDate(app.getStart()));
+           end.setValue(timeController.splitDateTimeReturnDate(app.getEnd()));
        }
     }
 
@@ -383,7 +379,6 @@ public class UpsertAppointmentController implements Initializable {
         Callback<DatePicker, DateCell> dayCellFactory = this.setDatePickerOptions();
         start.setDayCellFactory(dayCellFactory);
         end.setDayCellFactory(dayCellFactory);
-
         try {
             this.getCustomerOptions();
             this.getContactOptions();
