@@ -69,18 +69,11 @@ public class TimeController {
      * @param localDatetime is converted to UTC time
      * @return
      */
-    public Date convertToUTC(LocalDateTime localDatetime) {
+    public String convertToUTC(LocalDateTime localDatetime) {
         if (localDatetime != null) {
-            System.out.println(localDatetime);
-            String timeString = localDatetime.toString().replace("T", " ").substring(0, 18);
-            String x = LocalDateTime.parse(timeString, DateTimeFormatter.ofPattern( "uuuu-MM-dd HH:mm:ss:s")).atOffset(ZoneOffset.UTC).toString();
-            System.out.println(x);
-
-            SimpleDateFormat sdf = new SimpleDateFormat("yyy/MM/dd HH:mm:ss");
-            sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
-            Date utc = new Date(sdf.format(localDatetime));
-            System.out.println(utc);
-            return utc;
+            ZonedDateTime ldtZoned = localDatetime.atZone(ZoneId.systemDefault());
+            ZonedDateTime utcZoned = ldtZoned.withZoneSameInstant(ZoneId.of("UTC"));
+        return utcZoned.toString().substring(0, 16);
         } else {
             return null;
         }

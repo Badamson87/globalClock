@@ -21,6 +21,7 @@ import javafx.util.Callback;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
@@ -142,6 +143,7 @@ public class UpsertAppointmentController implements Initializable {
      * @throws ParseException
      */
     private void saveNewAppointment() throws SQLException, ParseException {
+        TimeController timeController = new TimeController();
         String newTitle = title.getText();
         String newDescription = description.getText();
         String newLocation = location.getText();
@@ -151,25 +153,32 @@ public class UpsertAppointmentController implements Initializable {
         int newUserId = HomeController.loggedInUser.getUser_ID();
         String newCreatedBy = HomeController.loggedInUser.getUser_Name();
         String newLastUpdatedBY = HomeController.loggedInUser.getUser_Name();
-        Date newCreateDate = new Timestamp(System.currentTimeMillis());
-        Date newUpdateDate = new Timestamp(System.currentTimeMillis());
+        String newCreateDate = timeController.convertToUTC(LocalDateTime.now());
+        String newUpdateDate = timeController.convertToUTC(LocalDateTime.now());
+
         // Date Time Format setup
         SimpleDateFormat date12Format = new SimpleDateFormat("hh:mm a");
         SimpleDateFormat date24Format = new SimpleDateFormat("HH:mm:ss");
         String start24 = date24Format.format(date12Format.parse(startTime.getSelectionModel().getSelectedItem()));
         String end24 = date24Format.format(date12Format.parse(endTime.getSelectionModel().getSelectedItem()));
+
+        String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+
         // Format Start Time
         LocalDate startDate = start.getValue();;
-        String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
         String startDateTimeString = startDate + " " + start24;
         LocalDateTime startDateTime = LocalDateTime.parse(startDateTimeString, DateTimeFormatter.ofPattern(DATE_FORMAT));
+        String zonedStartDate = timeController.convertToUTC(startDateTime);
+
         // Format End time
-        LocalDate endDate = start.getValue();;
+        LocalDate endDate = end.getValue();;
         String endDateTimeString = endDate + " " + end24;
         LocalDateTime endDateTime = LocalDateTime.parse(endDateTimeString, DateTimeFormatter.ofPattern(DATE_FORMAT));
+        String zonedEndDate = timeController.convertToUTC(endDateTime);
+
         // Sql Start
         String query = "INSERT INTO appointments (Title, Description, Location, Type, Start, End, Create_Date, Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID) "
-                + "VALUES ('" + newTitle + "', '" + newDescription + "', '" + newLocation + "', '" + newType + "', '" + startDateTime + "', '" + endDateTime + "', '" + newCreateDate + "', '" + newCreatedBy + "', '" + newUpdateDate + "', '" + newLastUpdatedBY + "', '" + newCustomerId + "', '" + newUserId + "', '" + newContactId + "')";
+                + "VALUES ('" + newTitle + "', '" + newDescription + "', '" + newLocation + "', '" + newType + "', '" + zonedStartDate + "', '" + zonedEndDate + "', '" + newCreateDate + "', '" + newCreatedBy + "', '" + newUpdateDate + "', '" + newLastUpdatedBY + "', '" + newCustomerId + "', '" + newUserId + "', '" + newContactId + "')";
         Statement st = conn.createStatement();
         int save = st.executeUpdate(query);
         if (save == 1){
@@ -193,9 +202,7 @@ public class UpsertAppointmentController implements Initializable {
         int newCustomerId = customerComboBox.getSelectionModel().getSelectedItem().getId();
         int newContactId = contactComboBox.getSelectionModel().getSelectedItem().getContact_ID();
         int newUserId = HomeController.loggedInUser.getUser_ID();
-        String newCreatedBy = HomeController.loggedInUser.getUser_Name();
         String newLastUpdatedBY = HomeController.loggedInUser.getUser_Name();
-        Date newCreateDate = new Timestamp(System.currentTimeMillis());
         Date newUpdateDate = new Timestamp(System.currentTimeMillis());
         // Date Time Format setup
         SimpleDateFormat date12Format = new SimpleDateFormat("hh:mm a");
@@ -258,8 +265,8 @@ public class UpsertAppointmentController implements Initializable {
            description.setText(app.getDescription());
            customerComboBox.setValue(Customer.getCustomerById(app.getCustomer_ID()));
            contactComboBox.setValue(Contact.getContactById(app.getContact_ID()));
-           startTime.setValue(timeController.splitDateTimeReturnTime(app.getStart().toString()));
-           endTime.setValue(timeController.splitDateTimeReturnTime(app.getEnd().toString()));
+           startTime.setValue(timeController.splitDateTimeReturnTime(app.getStart()));
+           endTime.setValue(timeController.splitDateTimeReturnTime(app.getEnd()));
            start.setValue(timeController.splitDateTimeReturnDate(app.getStart()));
            end.setValue(timeController.splitDateTimeReturnDate(app.getEnd()));
        }
