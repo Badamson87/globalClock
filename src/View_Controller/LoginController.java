@@ -5,7 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-
+import java.util.Locale;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -26,6 +26,7 @@ public class LoginController  implements Initializable {
     @FXML TextField Password;
     private Connection conn;
     @FXML private Label zoneLabel;
+    @FXML private Label userName;
 
     /**
      * Checks that fields are not null, Attempts to login
@@ -99,6 +100,12 @@ public class LoginController  implements Initializable {
         loginButton.getScene().setRoot(FXMLLoader.load(getClass().getResource("home.fxml")));
     }
 
+    private void setLoginText() {
+        this.zoneLabel.setText(ZoneId.systemDefault().toString());
+        ResourceBundle rb = ResourceBundle.getBundle("Languages/Login", Locale.getDefault());
+        userName.setText(rb.getString("Name"));
+    }
+
     /**
      * sets the local db Connection
      * @param url
@@ -108,7 +115,7 @@ public class LoginController  implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
            this.conn = Helper.DBConnect.establishConnection();
-           this.zoneLabel.setText(ZoneId.systemDefault().toString());
+           this.setLoginText();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException throwables) {
