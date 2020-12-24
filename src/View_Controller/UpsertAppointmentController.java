@@ -21,7 +21,6 @@ import javafx.util.Callback;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
@@ -50,7 +49,6 @@ public class UpsertAppointmentController implements Initializable {
     @FXML private DatePicker end;
     private Connection conn;
     private ObservableList<Customer> Customers = FXCollections.observableArrayList();
-    private ObservableList<User> Users = FXCollections.observableArrayList();
     private ObservableList<Contact> contacts = FXCollections.observableArrayList();
 
     /**
@@ -58,14 +56,15 @@ public class UpsertAppointmentController implements Initializable {
      * @param title
      * @throws IOException
      */
-    public void show(String title) throws IOException {
+    public boolean show(String title) throws IOException {
         Stage window = new Stage();
         upsertWindow = window;
         Parent root = FXMLLoader.load(UpsertCustomerController.class.getResource("upsertAppointment.fxml"));
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle(title);
         window.setScene(new Scene(root, 700, 400));
-        window.show();
+        window.showAndWait();
+        return true;
     }
 
     /**
@@ -165,7 +164,7 @@ public class UpsertAppointmentController implements Initializable {
         String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
         // Format Start Time
-        LocalDate startDate = start.getValue();;
+        LocalDate startDate = start.getValue();
         String startDateTimeString = startDate + " " + start24;
         LocalDateTime startDateTime = LocalDateTime.parse(startDateTimeString, DateTimeFormatter.ofPattern(DATE_FORMAT));
         String zonedStartDate = timeController.convertToUTC(startDateTime);
@@ -335,7 +334,7 @@ public class UpsertAppointmentController implements Initializable {
      * Close the Appointment modal and calls to update the list of appointments.
      * @throws SQLException
      */
-    public void close() throws SQLException {
+    public void close() {
         appointmentId.clear();
         title.clear();
         description.clear();
@@ -345,7 +344,6 @@ public class UpsertAppointmentController implements Initializable {
         contactComboBox.getItems().removeAll();
         startTime.getItems().removeAll();
         endTime.getItems().removeAll();
-        AppointmentsController.getAllAppointments();
         upsertWindow.close();
     }
 

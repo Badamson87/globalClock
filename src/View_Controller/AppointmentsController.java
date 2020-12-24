@@ -52,23 +52,23 @@ public class AppointmentsController implements Initializable {
     @FXML
     public static Appointment selectedAppointment;
     public static boolean editMode;
-    public static String searchFilter;
 
     /**
      * launches the upsert appointment modal in create mode.
      * @throws IOException
      */
-    public void newAppointment() throws IOException {
+    public void newAppointment() throws IOException, SQLException {
         editMode = false;
         UpsertAppointmentController upsertAppointmentController = new UpsertAppointmentController();
         upsertAppointmentController.show("Create Appointment");
+        this.getAllAppointments();
     }
 
     /**
      * Launches the upsert appointment modal in Edit mode
      * @throws IOException
      */
-    public void editAppointment() throws IOException {
+    public void editAppointment() throws IOException, SQLException {
         if (appointmentTable.getSelectionModel().getSelectedItem() == null){
             MessageModal.display("No Appointment", "Please select an appointment to update");
             return;
@@ -77,6 +77,7 @@ public class AppointmentsController implements Initializable {
         selectedAppointment = appointmentTable.getSelectionModel().getSelectedItem();
         UpsertAppointmentController upsertAppointmentController = new UpsertAppointmentController();
         upsertAppointmentController.show("Update Appointment");
+        this.getAllAppointments();
     }
 
     /**
@@ -101,18 +102,9 @@ public class AppointmentsController implements Initializable {
      * Calls to get all appointment dependent on the where clause
      * @throws SQLException
      */
-    public static void getAllAppointments() throws SQLException {
+    public void getAllAppointments() throws SQLException {
         appointments.clear();
-        String whereClause = "";
-        System.out.println(searchFilter);
-        if (searchFilter != null && searchFilter.equals("Month")) {
-            // todo update where clause for 30 days
-            System.out.println("month");
-        }
-        if (searchFilter != null && searchFilter.equals("Week")) {
-            // todo update where clause for 7 days
-           System.out.println("week");
-        }
+        String whereClause = this.getWhereClause();
         String query = "select * from appointments inner join customers on appointments.Customer_ID = customers.Customer_ID inner join contacts on appointments.Contact_ID = contacts.Contact_ID inner join users on appointments.User_ID = users.User_ID" + whereClause + ";";
         Statement st = conn.createStatement();
         ResultSet rs = st.executeQuery(query);
@@ -133,6 +125,26 @@ public class AppointmentsController implements Initializable {
             Appointment newApp = new Appointment(id, title, description, location, contact, contactId, type, start, end, customer, userName, cusId);
             appointments.add(newApp);
         }
+    }
+
+    /**
+     *
+     * @return string of start and date time appointment where clause
+     */
+    private String getWhereClause(){
+        TimeController timeController = new TimeController();
+        if (this.monthToggle.isSelected()) {
+            String fromDate = timeController.convertToUTC(LocalDateTime.now());
+            String toDate = timeController.convertToUTC(LocalDateTime.now().plusDays(30));
+            return " where appointments.Start >= '" + fromDate + "' and appointments.Start <= '" +  toDate + "'";
+
+        }
+        if (this.weekToggle.isSelected()) {
+            String fromDate = timeController.convertToUTC(LocalDateTime.now());
+            String toDate = timeController.convertToUTC(LocalDateTime.now().plusDays(7));
+            return " where appointments.Start >= '" + fromDate + "' and appointments.Start <= '" +  toDate + "'";
+        }
+        return "";
     }
 
     /**
@@ -172,7 +184,6 @@ public class AppointmentsController implements Initializable {
      * @throws SQLException
      */
     public void toggleTime() throws SQLException {
-        this.searchFilter = this.timeToggle.getSelectedToggle().toString();
         getAllAppointments();
     }
 
