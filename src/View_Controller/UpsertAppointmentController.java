@@ -5,7 +5,6 @@ import Helper.TimeController;
 import Model.Appointment;
 import Model.Contact;
 import Model.Customer;
-import Model.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -17,13 +16,11 @@ import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
