@@ -25,6 +25,7 @@ public class LoginController  implements Initializable {
     @FXML TextField UserName;
     @FXML TextField Password;
     private Connection conn;
+    @FXML private Label zoneLabel;
 
     /**
      * Checks that fields are not null, Attempts to login
@@ -107,6 +108,7 @@ public class LoginController  implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
            this.conn = Helper.DBConnect.establishConnection();
+           this.zoneLabel.setText(ZoneId.systemDefault().toString());
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException throwables) {
