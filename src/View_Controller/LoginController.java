@@ -20,13 +20,15 @@ import java.util.Date;
 import java.util.ResourceBundle;
 
 public class LoginController  implements Initializable {
-    @FXML
-    Button loginButton;
+    @FXML Button loginButton;
     @FXML TextField UserName;
     @FXML TextField Password;
     private Connection conn;
     @FXML private Label zoneLabel;
     @FXML private Label userName;
+    @FXML private Label password;
+    @FXML private Label footerNote;
+    @FXML private Label title;
 
     /**
      * Checks that fields are not null, Attempts to login
@@ -54,7 +56,9 @@ public class LoginController  implements Initializable {
                     User newUser = new User(id, userName, password, createDate, createBy, lastUpdate, updateBy);
                     this.setUser(newUser);
                 } else {
-                    MessageModal.display("Unable to Login", "Authorization failed");
+                    //Locale.setDefault(new Locale("fr"));
+                    ResourceBundle rb = ResourceBundle.getBundle("Languages/Login", Locale.getDefault());
+                    MessageModal.display(rb.getString("UnabletoLogin"), rb.getString("AuthorizationFailed"));
                     this.recordLoginAttempt(un, false);
                 }
             } catch (IOException e) {
@@ -100,10 +104,18 @@ public class LoginController  implements Initializable {
         loginButton.getScene().setRoot(FXMLLoader.load(getClass().getResource("home.fxml")));
     }
 
+    /**
+     * Set labels and text based of local default zone
+     */
     private void setLoginText() {
+        // Locale.setDefault(new Locale("fr"));
         this.zoneLabel.setText(ZoneId.systemDefault().toString());
         ResourceBundle rb = ResourceBundle.getBundle("Languages/Login", Locale.getDefault());
         userName.setText(rb.getString("Name"));
+        password.setText(rb.getString("Password"));
+        loginButton.setText(rb.getString("Login"));
+        footerNote.setText(rb.getString("Note"));
+        title.setText(rb.getString("GlobalClock"));
     }
 
     /**
