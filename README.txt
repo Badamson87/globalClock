@@ -19,3 +19,7 @@ Directions: Run the program and login inorder to achieve access to the customer 
 Additional Report: My customer report is called "Country". It allows you to select a country and displayed the division within that country
     who have customers with appointments. It also displays the amount of each.
 
+Lambda function locations:  upsertAppointmentController line 99: -> checks appointments
+                            upsertAppointmentController line 316: -> Increments customer counter and adds customer options to combo box
+                            upsertCustomerController line 83: -> gets all divisions and sets them into combo box
+                            upsertCustomerController line 198: -> gets all customers and sets them to combo box

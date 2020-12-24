@@ -88,6 +88,7 @@ public class UpsertAppointmentController implements Initializable {
     }
 
     /**
+     * This is a lambda function.
      * Gather all appointment for selected customer and call to check for overlap
      * @return
      * @throws SQLException
@@ -312,6 +313,10 @@ public class UpsertAppointmentController implements Initializable {
             Customer newCus = new Customer(id, customerName, address, phone, zip, createDate, createBy, lastUpdate, lastUpdateBy, divisionId);
             this.Customers.add(newCus);
         }
+        /**
+         *
+         * This is a lambda function.
+         */
         AtomicInteger counter = new AtomicInteger();
         this.Customers.forEach((customer) -> {
             customerComboBox.getItems().add(counter.get(), customer);

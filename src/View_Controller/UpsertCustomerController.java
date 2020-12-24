@@ -73,6 +73,7 @@ public class UpsertCustomerController implements Initializable {
     }
 
     /**
+     * This is a lambda function.
      * Sets the division on a previously selected Customer
      */
     public void setDivisions() {
@@ -190,6 +191,7 @@ public class UpsertCustomerController implements Initializable {
     }
 
     /**
+     * This is a lambda function.
      * Sets existing country on a customer on case of update.
      */
     private void setCountryOptions(){
