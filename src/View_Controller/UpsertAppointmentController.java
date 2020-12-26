@@ -191,6 +191,7 @@ public class UpsertAppointmentController implements Initializable {
      * @throws SQLException
      */
     private void saveEditAppointment() throws ParseException, SQLException {
+        TimeController timeController = new TimeController();
         String newId = appointmentId.getText();
         String newTitle = title.getText();
         String newDescription = description.getText();
@@ -200,23 +201,30 @@ public class UpsertAppointmentController implements Initializable {
         int newContactId = contactComboBox.getSelectionModel().getSelectedItem().getContact_ID();
         int newUserId = HomeController.loggedInUser.getUser_ID();
         String newLastUpdatedBY = HomeController.loggedInUser.getUser_Name();
-        Date newUpdateDate = new Timestamp(System.currentTimeMillis());
+        String newUpdateDate = timeController.convertToUTC(LocalDateTime.now());
+
         // Date Time Format setup
         SimpleDateFormat date12Format = new SimpleDateFormat("hh:mm a");
         SimpleDateFormat date24Format = new SimpleDateFormat("HH:mm:ss");
         String start24 = date24Format.format(date12Format.parse(startTime.getSelectionModel().getSelectedItem()));
         String end24 = date24Format.format(date12Format.parse(endTime.getSelectionModel().getSelectedItem()));
+
+        String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+
         // Format Start Time
         LocalDate startDate = start.getValue();;
-        String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
         String startDateTimeString = startDate + " " + start24;
         LocalDateTime startDateTime = LocalDateTime.parse(startDateTimeString, DateTimeFormatter.ofPattern(DATE_FORMAT));
+        String zonedStartDate = timeController.convertToUTC(startDateTime);
+
         // Format End time
         LocalDate endDate = start.getValue();;
         String endDateTimeString = endDate + " " + end24;
         LocalDateTime endDateTime = LocalDateTime.parse(endDateTimeString, DateTimeFormatter.ofPattern(DATE_FORMAT));
+        String zonedEndDate = timeController.convertToUTC(endDateTime);
+
         // Sql Start
-        String query = "UPDATE appointments set Title = '" + newTitle + "', Description = '" + newDescription + "', Location = '" + newLocation + "', Type = '" + newType + "',  Start = '" + startDateTime + "', End = '" + endDateTime + "', Last_Update = '" + newUpdateDate + "',  Last_Updated_By = '" + newLastUpdatedBY + "', Customer_ID = " + newCustomerId + ", User_ID = " + newUserId + ", Contact_ID = " + newContactId +
+        String query = "UPDATE appointments set Title = '" + newTitle + "', Description = '" + newDescription + "', Location = '" + newLocation + "', Type = '" + newType + "',  Start = '" + zonedStartDate + "', End = '" + zonedEndDate + "', Last_Update = '" + newUpdateDate + "',  Last_Updated_By = '" + newLastUpdatedBY + "', Customer_ID = " + newCustomerId + ", User_ID = " + newUserId + ", Contact_ID = " + newContactId +
         " WHERE Appointment_ID  = " + newId;
         Statement st = conn.createStatement();
         int save = st.executeUpdate(query);
