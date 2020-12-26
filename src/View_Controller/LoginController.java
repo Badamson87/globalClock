@@ -37,7 +37,9 @@ public class LoginController  implements Initializable {
      */
     public void attemptLogin() throws IOException, SQLException {
         if (UserName.getText().equals("") || Password.getText().equals("")){
-            MessageModal.display("Unable to login", "Please enter user name and password");
+            //Locale.setDefault(new Locale("fr"));
+            ResourceBundle rb = ResourceBundle.getBundle("Languages/Login", Locale.getDefault());
+            MessageModal.display(rb.getString("UnabletoLogin"), rb.getString("EnterNameAndPassword"));
         } else {
             try {
                 String un = UserName.getText();
@@ -108,7 +110,7 @@ public class LoginController  implements Initializable {
      * Set labels and text based of local default zone
      */
     private void setLoginText() {
-        // Locale.setDefault(new Locale("fr"));
+        //Locale.setDefault(new Locale("fr"));
         this.zoneLabel.setText(ZoneId.systemDefault().toString());
         ResourceBundle rb = ResourceBundle.getBundle("Languages/Login", Locale.getDefault());
         userName.setText(rb.getString("Name"));
