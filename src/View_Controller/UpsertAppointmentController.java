@@ -150,17 +150,18 @@ public class UpsertAppointmentController implements Initializable {
         LocalDateTime savedStartDate = LocalDateTime.parse(appointment.getStart().replaceAll(" ", "T"));
         LocalDateTime savedEndDate = LocalDateTime.parse(appointment.getEnd().replaceAll(" ", "T"));
 
-
-
-
-        if (appointmentId.getText().equals(appointment.getAppointment_ID())){
-            return  false;
+        // check that there is an appointment id and its not the same appointment
+        if (!appointmentId.getText().isBlank()){
+            if (appointment.getAppointment_ID() ==  Integer.parseInt(appointmentId.getText())){
+                return  false;
+            }
         }
+        // check start case
         if (savedStartDate.equals(zonedStartDate.toLocalDateTime()) || savedStartDate.isBefore(zonedStartDate.toLocalDateTime()) && savedEndDate.isAfter(zonedStartDate.toLocalDateTime()))
         {
             return true;
         }
-
+        // check end case
         if (savedStartDate.isBefore(zonedEndDate.toLocalDateTime()) && savedEndDate.isAfter(zonedEndDate.toLocalDateTime()))
         {
             return true;
