@@ -56,7 +56,7 @@ public class AppointmentsController implements Initializable {
 
     /**
      * launches the upsert appointment modal in create mode.
-     * @throws IOException
+     * @throws IOException thrown exception
      */
     public void newAppointment() throws IOException, SQLException {
         editMode = false;
@@ -67,7 +67,7 @@ public class AppointmentsController implements Initializable {
 
     /**
      * Launches the upsert appointment modal in Edit mode
-     * @throws IOException
+     * @throws IOException thrown exception
      */
     public void editAppointment() throws IOException, SQLException {
         if (appointmentTable.getSelectionModel().getSelectedItem() == null){
@@ -101,7 +101,7 @@ public class AppointmentsController implements Initializable {
 
     /**
      * Calls to get all appointment dependent on the where clause
-     * @throws SQLException
+     * @throws SQLException thrown exception
      */
     public void getAllAppointments() throws SQLException {
         appointments.clear();
@@ -150,7 +150,7 @@ public class AppointmentsController implements Initializable {
 
     /**
      * calls to delete an appointment from the db
-     * @throws SQLException
+     * @throws SQLException  thrown exception during sql query
      */
     public void deleteAppointment() throws SQLException {
         if (appointmentTable.getSelectionModel().getSelectedItem() == null)
@@ -182,7 +182,7 @@ public class AppointmentsController implements Initializable {
 
     /**
      * updates the search filter for where clause and calls to get all appointments
-     * @throws SQLException
+     * @throws SQLException  thrown exception during sql query
      */
     public void toggleTime() throws SQLException {
         getAllAppointments();
@@ -190,8 +190,8 @@ public class AppointmentsController implements Initializable {
 
     /**
      * Inits the time toggle and sets the local db connection
-     * @param url
-     * @param resourceBundle
+     * @param url url
+     * @param resourceBundle used in language conversion
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

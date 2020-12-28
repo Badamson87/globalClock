@@ -45,8 +45,8 @@ public class CustomersController implements Initializable {
 
     /**
      * calls upsert customer modal in create mode
-     * @throws IOException
-     * @throws SQLException
+     * @throws IOException thrown exception
+     * @throws SQLException  thrown exception during sql query
      */
     public void newCustomer() throws IOException, SQLException {
         editMode = false;
@@ -56,7 +56,7 @@ public class CustomersController implements Initializable {
 
     /**
      * populates the customer table with all customers.
-     * @throws SQLException
+     * @throws SQLException thrown exception during sql query
      */
     public static void getAllCustomers() throws SQLException {
         customers.clear();
@@ -85,8 +85,8 @@ public class CustomersController implements Initializable {
 
     /**
      * calls customer upsert modal in edit mode.
-     * @throws IOException
-     * @throws SQLException
+     * @throws IOException thrown exception
+     * @throws SQLException thrown exception during sql query
      */
     public void editCustomer() throws IOException, SQLException {
         if (customerTable.getSelectionModel().getSelectedItem() == null){
@@ -101,7 +101,7 @@ public class CustomersController implements Initializable {
 
     /**
      * Checks that a customer is selected and has no appointments before calling to deleting a customer from the DB.
-     * @throws SQLException
+     * @throws SQLException thrown exception during sql query
      */
     public void checkDeleteCustomer() throws SQLException {
         if (customerTable.getSelectionModel().getSelectedItem() == null){
@@ -121,7 +121,7 @@ public class CustomersController implements Initializable {
     /**
      * Deletes a customer from the DB and shows a confirmation modal
      * @param customerId
-     * @throws SQLException
+     * @throws SQLException thrown exception during sql query
      */
     private void deleteCustomer(int customerId) throws SQLException {
         String query = "DELETE FROM customers WHERE Customer_ID = " + customerId;
@@ -153,8 +153,8 @@ public class CustomersController implements Initializable {
 
     /**
      * sets the local db connection
-     * @param url
-     * @param resourceBundle
+     * @param url url
+     * @param resourceBundle resource bundle
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

@@ -130,7 +130,7 @@ public class Country {
      * gets a country from the db with provided country id
      * @param Id country id
      * @return a country instance with provided id
-     * @throws SQLException
+     * @throws SQLException exception thrown during sql query
      */
     public static Country getCountryById(int Id) throws SQLException {
         Connection con = DBConnect.connection;
@@ -196,7 +196,7 @@ public class Country {
 
     /**
      * calls db to get all countries and sets to to the allCountries observable list
-     * @throws SQLException
+     * @throws SQLException exception thrown during sql query
      */
     public static void setAllCountries() throws SQLException {
         Connection con = DBConnect.connection;

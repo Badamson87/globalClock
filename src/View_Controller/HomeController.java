@@ -23,7 +23,7 @@ public class HomeController implements Initializable {
 
     /**
      * shows the customer Pane
-     * @throws IOException
+     * @throws IOException thrown exception
      */
     public void setCustomerPane() throws IOException {
         borderPane.setCenter(FXMLLoader.load(getClass().getResource("customers.fxml")));
@@ -31,7 +31,7 @@ public class HomeController implements Initializable {
 
     /**
      * shows the app pane
-     * @throws IOException
+     * @throws IOException thrown exception
      */
     public void setAppPane() throws IOException {
         borderPane.setCenter(FXMLLoader.load(getClass().getResource("appointments.fxml")));
@@ -39,7 +39,7 @@ public class HomeController implements Initializable {
 
     /**
      * shows the about pane
-     * @throws IOException
+     * @throws IOException thrown exception
      */
     public void setAboutPane() throws IOException {
         borderPane.setCenter(FXMLLoader.load(getClass().getResource("about.fxml")));
@@ -47,7 +47,7 @@ public class HomeController implements Initializable {
 
     /**
      * shows the report pane
-     * @throws IOException
+     * @throws IOException thrown exception
      */
     public void setReportPane() throws IOException {
         borderPane.setCenter(FXMLLoader.load(getClass().getResource("reports.fxml")));
@@ -57,8 +57,8 @@ public class HomeController implements Initializable {
 
     /**
      * calls to set the about pane on login
-     * @param url
-     * @param resourceBundle
+     * @param url url
+     * @param resourceBundle resource bundle
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

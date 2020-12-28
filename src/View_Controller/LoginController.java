@@ -36,8 +36,8 @@ public class LoginController  implements Initializable {
 
     /**
      * Checks that fields are not null, Attempts to login
-     * @throws IOException
-     * @throws SQLException
+     * @throws IOException thrown exception
+     * @throws SQLException thrown exception during sql query
      */
     public void attemptLogin() throws IOException, SQLException {
         if (UserName.getText().equals("") || Password.getText().equals("")){
@@ -104,7 +104,7 @@ public class LoginController  implements Initializable {
 
     /**
      * Navigates to the home screen on successful login
-     * @throws IOException
+     * @throws IOException thrown exception
      */
     private void navigateHome() throws IOException {
         loginButton.getScene().setRoot(FXMLLoader.load(getClass().getResource("home.fxml")));
@@ -126,8 +126,8 @@ public class LoginController  implements Initializable {
 
     /**
      * sets the local db Connection
-     * @param url
-     * @param resourceBundle
+     * @param url url
+     * @param resourceBundle resource bundle
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

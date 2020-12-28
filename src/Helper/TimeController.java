@@ -34,8 +34,8 @@ public class TimeController {
 
     /**
      *  takes in a date time and returns the time to populate appointment combobox
-     * @param dateTime
-     * @return
+     * @param dateTime is given as a date and split
+     * @return time as string
      */
     public String splitDateTimeReturnTime(String dateTime) {
         String local = convertToLocal(dateTime);
@@ -51,8 +51,8 @@ public class TimeController {
 
     /**
      * takes in a date time and returns the date
-     * @param dateTime
-     * @return
+     * @param dateTime is split
+     * @return the date from a date time
      */
     public LocalDate splitDateTimeReturnDate(String dateTime){
         String local = this.convertToLocal(dateTime);
@@ -63,7 +63,7 @@ public class TimeController {
     /**
      *
      * @param localDatetime is converted to UTC time
-     * @return
+     * @return utc converted for localDateTime
      */
     public String convertToUTC(LocalDateTime localDatetime) {
         if (localDatetime != null) {
@@ -78,7 +78,7 @@ public class TimeController {
     /**
      *
      * @param localDatetime is converted to UTC time and returned as time.
-     * @return
+     * @return utc time returned as a zoneddatetime
      */
     public ZonedDateTime convertToUTCReturnTime(LocalDateTime localDatetime) {
         if (localDatetime != null) {
@@ -92,23 +92,8 @@ public class TimeController {
 
     /**
      *
-     * @param localDatetime is converted to UTC time returned as date
-     * @return
-     */
-    public ZonedDateTime convertToUTCReturnDate(LocalDateTime localDatetime) {
-        if (localDatetime != null) {
-            ZonedDateTime ldtZoned = localDatetime.atZone(ZoneId.systemDefault());
-            ZonedDateTime utcZoned = ldtZoned.withZoneSameInstant(ZoneId.of("UTC"));
-            return utcZoned;
-        } else {
-            return null;
-        }
-    }
-
-    /**
-     *
      * @param date is converted to local date time from utc.
-     * @return
+     * @return string version of local date time
      */
     public String convertToLocal(String date){
         if (date != null) {
@@ -127,6 +112,11 @@ public class TimeController {
         }
     }
 
+    /**
+     *
+     * @param date handed in as a date
+     * @return if a date replace the T value with empty space
+     */
     public String removeTFromTime(String date){
         if (date != null){
             return date.replace("T", " ");

@@ -54,8 +54,9 @@ public class UpsertAppointmentController implements Initializable {
 
     /**
      * Shows the appointment modal, sets the title as update or create.
-     * @param title
-     * @throws IOException
+     * @param title title of display window
+     * @return returns to update displayed appointments
+     * @throws IOException thrown exception
      */
     public boolean show(String title) throws IOException {
         Stage window = new Stage();
@@ -70,8 +71,8 @@ public class UpsertAppointmentController implements Initializable {
 
     /**
      * Call to check field validity. Determines if save is an update or new Appointment
-     * @throws SQLException
-     * @throws ParseException
+     * @throws SQLException thrown exception during sql
+     * @throws ParseException thrown exception during parsing
      */
     public void save() throws SQLException, ParseException {
         if (fieldsCheck() == true){
@@ -293,7 +294,7 @@ public class UpsertAppointmentController implements Initializable {
 
     /**
      * Set and existing appointment on case of update
-     * @throws SQLException
+     * @throws SQLException thrown exception during sql exception
      */
     public void setAppointment() throws SQLException {
         TimeController timeController = new TimeController();
@@ -378,7 +379,7 @@ public class UpsertAppointmentController implements Initializable {
 
     /**
      * Close the Appointment modal and calls to update the list of appointments.
-     * @throws SQLException
+     * @throws SQLException thrown exception during sql exception
      */
     public void close() {
         appointmentId.clear();
@@ -420,8 +421,8 @@ public class UpsertAppointmentController implements Initializable {
 
     /**
      * Sets the local dbConnection. Initializes the set of and existing Appointment in the case of update
-     * @param url
-     * @param resourceBundle
+     * @param url url
+     * @param resourceBundle resource bundle
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

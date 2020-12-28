@@ -104,7 +104,7 @@ public class Contact {
      * querys the db and returns a contact with provided contact id
      * @param Id contact id
      * @return returns a contact with provided id
-     * @throws SQLException
+     * @throws SQLException exception thrown during sql query
      */
     public static Contact getContactById(int Id) throws SQLException {
         Connection con = DBConnect.connection;

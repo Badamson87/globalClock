@@ -99,8 +99,8 @@ public class Customer {
     /**
      *  db call to get a customer by customer id
      * @param Id customer id
-     * @return
-     * @throws SQLException
+     * @return returns a customer with customer id
+     * @throws SQLException exception thrown during sql query
      */
     public static Customer getCustomerById(int Id) throws SQLException {
         Connection con = DBConnect.connection;

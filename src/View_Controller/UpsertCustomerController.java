@@ -47,7 +47,7 @@ public class UpsertCustomerController implements Initializable {
     /**
      * Shows the modal of creation or edit of a customer
      * @param title designates between and update and create of new customer
-     * @throws IOException
+     * @throws IOException  thrown exception during sql query
      */
     public void show(String title) throws IOException {
         Stage window = new Stage();
@@ -61,7 +61,7 @@ public class UpsertCustomerController implements Initializable {
 
     /**
      * Close's the Customer update modal and calls to renew the list of customers.
-     * @throws SQLException
+     * @throws SQLException thrown exception during sql exception
      */
     public void close() throws SQLException {
         id.clear();
@@ -96,7 +96,7 @@ public class UpsertCustomerController implements Initializable {
 
     /**
      * Calls to check that all customer fields have a value, then calls to update or create new customer.
-     * @throws SQLException
+     * @throws SQLException thrown exception during sql exception
      */
     public void save() throws SQLException {
         if (fieldsCheck() == true){
@@ -208,8 +208,8 @@ public class UpsertCustomerController implements Initializable {
 
     /**
      * Get the dbConnection and starts the process of setting and existing customer on case of update.
-     * @param url
-     * @param resourceBundle
+     * @param url url
+     * @param resourceBundle resource bundle
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

@@ -196,7 +196,7 @@ public class Appointment {
 
     /**
      *
-     * @param contact_ID
+     * @param contact_ID set as contact id
      */
     public void setContact_ID(int contact_ID) {
         Contact_ID = contact_ID;
@@ -354,7 +354,7 @@ public class Appointment {
 
     /**
      *
-     * @return
+     * @return appointment type returned as string
      */
     public String getType() {
         return Type;
@@ -388,8 +388,8 @@ public class Appointment {
      * calls the db and returns all appointments with provided customer id
      * @param customerId customer id
      * @param conn db connection
-     * @return
-     * @throws SQLException
+     * @return an observable list of appointments filtered by customer id
+     * @throws SQLException exception thrown during sql query
      */
     public static ObservableList<Appointment> getAllAppointmentsByCustomerId(int customerId, Connection conn) throws SQLException {
         ObservableList<Appointment> appointments = FXCollections.observableArrayList();
@@ -416,8 +416,8 @@ public class Appointment {
      * calls db and returns all appointments with contact id of the provided contact id
      * @param contactId contact id
      * @param conn db connection
-     * @return
-     * @throws SQLException
+     * @return and observable list filtered by contact id
+     * @throws SQLException exception thrown during sql query
      */
     public static ObservableList<Appointment> getAllAppointmentsByContactID(int contactId, Connection conn) throws SQLException {
         ObservableList<Appointment> appointments = FXCollections.observableArrayList();
@@ -444,8 +444,8 @@ public class Appointment {
     /**
      * get all appointments using provided db connection
      * @param conn db connection
-     * @return
-     * @throws SQLException
+     * @return observable list of all appointments
+     * @throws SQLException exception thrown during sql query.
      */
     public static ObservableList<Appointment> getAllAppointments(Connection conn) throws SQLException {
         ObservableList<Appointment> appointments = FXCollections.observableArrayList();

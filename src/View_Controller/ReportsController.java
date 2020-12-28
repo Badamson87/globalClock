@@ -109,7 +109,7 @@ public class ReportsController implements Initializable {
 
     /**
      * set choices for contact options
-     * @throws SQLException
+     * @throws SQLException thrown exception during sql query
      */
     public void setContactOptions() throws SQLException {
         ObservableList<Contact> contacts = FXCollections.observableArrayList();
@@ -132,7 +132,7 @@ public class ReportsController implements Initializable {
 
     /**
      * shows appointment table and displays all appointments with their type
-     * @throws SQLException
+     * @throws SQLException thrown exception during sql query
      */
     public void submitAppointment() throws SQLException {
         this.hideTables();
@@ -172,11 +172,11 @@ public class ReportsController implements Initializable {
 
     /**
      * increments each appointment type by month
-     * @param appointmentType
-     * @param appointment
+     * @param appointmentType appointment type to be incremented
+     * @param appointment appointment to increment
      */
     public void incrementAppointment(AppointmentType appointmentType, Appointment appointment){
-        String start = appointment.getStart().toString();
+        String start = appointment.getStart();
         String month = start.substring(5, 7);
         switch(month) {
             case "01":
@@ -222,7 +222,7 @@ public class ReportsController implements Initializable {
 
     /**
      * shows contact table and gathers all appointments
-     * @throws SQLException
+     * @throws SQLException thrown exception during sql query
      */
     public void submitContact() throws SQLException {
         Contact selectedContact = this.contactComboBox.getSelectionModel().getSelectedItem();
@@ -248,7 +248,7 @@ public class ReportsController implements Initializable {
 
     /**
      * shows country table and queries for all appointments by country and customer
-     * @throws SQLException
+     * @throws SQLException thrown exception during sql query
      */
     public void submitCountry() throws SQLException {
         Country selectedCountry = this.countryComboBox.getSelectionModel().getSelectedItem();

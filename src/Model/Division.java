@@ -149,7 +149,7 @@ public class Division {
      *
      * @param Id provides a division id
      * @return returns a division with the id
-     * @throws SQLException
+     * @throws SQLException exception thrown during sql query
      */
     public static Division getDivisionById(int Id) throws SQLException {
         Connection con = DBConnect.connection;
@@ -172,7 +172,7 @@ public class Division {
 
     /**
      *  gets all divisions from db and loads them to allDivisions
-     * @throws SQLException
+     * @throws SQLException exception thrown during sql query
      */
     public static void setAllDivisions() throws SQLException {
         Connection con = DBConnect.connection;
@@ -200,8 +200,7 @@ public class Division {
     }
 
     /**
-     * allows combo boxes to return division name from set division
-     * @return
+     * @return allows combo boxes to return division name from set division
      */
     @Override
     public String toString(){

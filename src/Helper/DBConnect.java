@@ -18,7 +18,7 @@ public class DBConnect {
     /**
      *  Establish connection to database
      * @return a db connection is returned
-     * @throws ClassNotFoundException
+     * @throws ClassNotFoundException class not found
      * @throws SQLException thrown sql exception
      */
     public static Connection establishConnection() throws ClassNotFoundException, SQLException {
