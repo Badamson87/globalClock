@@ -57,6 +57,7 @@ public class AppointmentsController implements Initializable {
     /**
      * launches the upsert appointment modal in create mode.
      * @throws IOException thrown exception
+     * @throws SQLException thrown exception during sql exception
      */
     public void newAppointment() throws IOException, SQLException {
         editMode = false;
@@ -68,6 +69,7 @@ public class AppointmentsController implements Initializable {
     /**
      * Launches the upsert appointment modal in Edit mode
      * @throws IOException thrown exception
+     * @throws SQLException thrown exception during sql exception
      */
     public void editAppointment() throws IOException, SQLException {
         if (appointmentTable.getSelectionModel().getSelectedItem() == null){

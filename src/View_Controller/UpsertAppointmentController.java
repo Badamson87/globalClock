@@ -379,7 +379,6 @@ public class UpsertAppointmentController implements Initializable {
 
     /**
      * Close the Appointment modal and calls to update the list of appointments.
-     * @throws SQLException thrown exception during sql exception
      */
     public void close() {
         appointmentId.clear();
