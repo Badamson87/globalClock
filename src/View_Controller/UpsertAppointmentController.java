@@ -19,6 +19,7 @@ import javafx.util.Callback;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.io.IOException;
@@ -27,6 +28,7 @@ import java.sql.*;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
+import java.util.TimeZone;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -88,6 +90,15 @@ public class UpsertAppointmentController implements Initializable {
     }
 
     /**
+     *
+     * @return false if time false outside of normal operating business hours, else return true.
+     */
+    private boolean timeCheck() {
+
+        return false;
+    }
+
+    /**
      * This is a lambda function.
      * Gather all appointment for selected customer and call to check for overlap
      * @return
@@ -116,19 +127,42 @@ public class UpsertAppointmentController implements Initializable {
      * @throws ParseException
      */
     private boolean appointmentTimeCheck(Appointment appointment) throws ParseException {
+        TimeController timeController = new TimeController();
         SimpleDateFormat date12Format = new SimpleDateFormat("hh:mm a");
         SimpleDateFormat date24Format = new SimpleDateFormat("HH:mm:ss");
         String start24 = date24Format.format(date12Format.parse(startTime.getSelectionModel().getSelectedItem()));
-        // Format Start Time
-        LocalDate startDate = start.getValue();;
+        String end24 = date24Format.format(date12Format.parse(endTime.getSelectionModel().getSelectedItem()));
         String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+
+        // Format Start Time
+        LocalDate startDate = start.getValue();
         String startDateTimeString = startDate + " " + start24;
+        LocalDateTime startDateTime = LocalDateTime.parse(startDateTimeString, DateTimeFormatter.ofPattern(DATE_FORMAT));
+        ZonedDateTime zonedStartDate = timeController.convertToUTCReturnTime(startDateTime);
 
-        LocalDateTime proposedNewDateTime = LocalDateTime.parse(startDateTimeString, DateTimeFormatter.ofPattern(DATE_FORMAT));
-        LocalDateTime savedStartDate = LocalDateTime.parse(appointment.getStart().toString().replaceAll(" ", "T"));
-        LocalDateTime savedEndDate = LocalDateTime.parse(appointment.getEnd().toString().replaceAll(" ", "T"));
+        // Format End time
+        LocalDate endDate = end.getValue();;
+        String endDateTimeString = endDate + " " + end24;
+        LocalDateTime endDateTime = LocalDateTime.parse(endDateTimeString, DateTimeFormatter.ofPattern(DATE_FORMAT));
+        ZonedDateTime zonedEndDate = timeController.convertToUTCReturnTime(endDateTime);
 
-        if (savedStartDate.isBefore(proposedNewDateTime) && savedEndDate.isAfter(proposedNewDateTime)) {
+        // save times
+        LocalDateTime savedStartDate = LocalDateTime.parse(appointment.getStart().replaceAll(" ", "T"));
+        LocalDateTime savedEndDate = LocalDateTime.parse(appointment.getEnd().replaceAll(" ", "T"));
+
+
+
+
+        if (appointmentId.getText().equals(appointment.getAppointment_ID())){
+            return  false;
+        }
+        if (savedStartDate.equals(zonedStartDate.toLocalDateTime()) || savedStartDate.isBefore(zonedStartDate.toLocalDateTime()) && savedEndDate.isAfter(zonedStartDate.toLocalDateTime()))
+        {
+            return true;
+        }
+
+        if (savedStartDate.isBefore(zonedEndDate.toLocalDateTime()) && savedEndDate.isAfter(zonedEndDate.toLocalDateTime()))
+        {
             return true;
         }
         return false;
@@ -158,7 +192,6 @@ public class UpsertAppointmentController implements Initializable {
         SimpleDateFormat date24Format = new SimpleDateFormat("HH:mm:ss");
         String start24 = date24Format.format(date12Format.parse(startTime.getSelectionModel().getSelectedItem()));
         String end24 = date24Format.format(date12Format.parse(endTime.getSelectionModel().getSelectedItem()));
-
         String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
         // Format Start Time

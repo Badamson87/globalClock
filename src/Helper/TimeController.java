@@ -1,15 +1,7 @@
 package Helper;
-
-import java.text.SimpleDateFormat;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.TimeZone;
-
-import static java.time.ZoneId.systemDefault;
 import static java.time.ZoneOffset.UTC;
-
 public class TimeController {
 
     /**
@@ -81,6 +73,36 @@ public class TimeController {
 
     /**
      *
+     * @param localDatetime is converted to UTC time and returned as time.
+     * @return
+     */
+    public ZonedDateTime convertToUTCReturnTime(LocalDateTime localDatetime) {
+        if (localDatetime != null) {
+            ZonedDateTime ldtZoned = localDatetime.atZone(ZoneId.systemDefault());
+            ZonedDateTime utcZoned = ldtZoned.withZoneSameInstant(ZoneId.of("UTC"));
+            return utcZoned;
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     *
+     * @param localDatetime is converted to UTC time returned as date
+     * @return
+     */
+    public ZonedDateTime convertToUTCReturnDate(LocalDateTime localDatetime) {
+        if (localDatetime != null) {
+            ZonedDateTime ldtZoned = localDatetime.atZone(ZoneId.systemDefault());
+            ZonedDateTime utcZoned = ldtZoned.withZoneSameInstant(ZoneId.of("UTC"));
+            return utcZoned;
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     *
      * @param date is converted to local date time from utc.
      * @return
      */
@@ -92,8 +114,8 @@ public class TimeController {
             String zoneString = ZoneId.systemDefault().toString();
 
             LocalDateTime ldt = LocalDateTime.parse(date, DateTimeFormatter.ofPattern(dateFormat));
-            ZonedDateTime utcZone = ldt.atZone(UTC);
 
+            ZonedDateTime utcZone = ldt.atZone(UTC);
             LocalDateTime srtL = LocalDateTime.ofInstant(utcZone.toInstant(), ZoneId.of(zoneString));
             return srtL.format(formatAM);
         } else {
