@@ -6,6 +6,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+
+/**
+ * This Class starts the application and creates the application window
+ */
 public class Main extends Application {
     public  Stage window;
     @Override

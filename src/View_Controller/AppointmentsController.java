@@ -1,5 +1,4 @@
 package View_Controller;
-
 import Helper.DBConnect;
 import Helper.TimeController;
 import Model.Appointment;
@@ -9,13 +8,15 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
+/**
+ * This class focuses on the display and filter of appointments. It also starts the upsert and deletion process
+ */
 public class AppointmentsController implements Initializable {
     private static Connection conn;
     private static final ObservableList<Appointment> appointments = FXCollections.observableArrayList();

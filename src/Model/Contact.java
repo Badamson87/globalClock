@@ -7,6 +7,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+
+/**
+ * This class focuses on contacts. It is used throughout the project for the creation and display of contact options
+ */
 public class Contact {
     public String name;
     private int Contact_ID;

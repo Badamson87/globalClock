@@ -1,5 +1,9 @@
 package Model;
 
+
+/**
+ * This class focuses on appointment types. It is used in the reporting section
+ */
 public class AppointmentType {
     private String Type;
     private int Jan;

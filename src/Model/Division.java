@@ -10,6 +10,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
 
+
+/**
+ * This class focuses on first level division and the data modeling associated to them.
+ */
 public class Division {
     public String name;
     private int Division_ID;

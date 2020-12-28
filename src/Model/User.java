@@ -1,7 +1,9 @@
 package Model;
-
 import java.util.Date;
 
+/**
+ * This class focuses on users and the data modeling associated to them.
+ */
 public class User {
     private int User_ID;
     private String User_Name;

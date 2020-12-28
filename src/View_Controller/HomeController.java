@@ -11,6 +11,10 @@ import javafx.scene.layout.BorderPane;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+/**
+ * This class acts as a base screen and changes/switches shown pannels based on customer options.
+ */
 public class HomeController implements Initializable {
     @FXML
     BorderPane borderPane;

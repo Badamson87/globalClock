@@ -2,6 +2,10 @@ package Helper;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import static java.time.ZoneOffset.UTC;
+
+/**
+ * this class offers functionality based on time and time conversion for c-195
+ */
 public class TimeController {
 
     /**

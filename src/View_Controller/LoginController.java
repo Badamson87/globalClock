@@ -19,6 +19,10 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.ResourceBundle;
 
+
+/**
+ * This class initializes the db connection and provides login functionality to the user with authentication check.
+ */
 public class LoginController  implements Initializable {
     @FXML Button loginButton;
     @FXML TextField UserName;

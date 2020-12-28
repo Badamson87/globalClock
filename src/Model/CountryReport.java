@@ -1,5 +1,9 @@
 package Model;
 
+
+/**
+ * This class focuses on country reporting options. It is used for the reporting functionality
+ */
 public class CountryReport {
     /**
      *

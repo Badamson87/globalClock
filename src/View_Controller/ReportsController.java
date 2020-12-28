@@ -1,5 +1,4 @@
 package View_Controller;
-
 import Helper.DBConnect;
 import Helper.TimeController;
 import Model.*;
@@ -11,7 +10,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
-
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -21,6 +19,10 @@ import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
+
+/**
+ * This class focuses on reporting. it offers a reporting interface while also displaying needed reporting windows and tables
+ */
 public class ReportsController implements Initializable {
     @FXML
     ComboBox typeBox;
@@ -28,8 +30,6 @@ public class ReportsController implements Initializable {
     ComboBox<Contact> contactComboBox;
     @FXML
     ComboBox<Country> countryComboBox;
-    @FXML SplitPane splitPane;
-    @FXML AnchorPane rightPane;
     @FXML Button submitAppointment;
     @FXML Button submitContact;
     @FXML Button submitCountry;

@@ -8,6 +8,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
 
+
+/**
+ * This class focuses on customers. It is used in the modeling and construction of customers
+ */
 public class Customer {
     public String name;
     private int Customer_ID;

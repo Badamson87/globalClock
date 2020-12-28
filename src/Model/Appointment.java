@@ -9,6 +9,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
 
+/**
+ * This class focuses on appointments models and data.
+ */
 public class Appointment {
     private int Appointment_ID;
     private int Contact_ID;

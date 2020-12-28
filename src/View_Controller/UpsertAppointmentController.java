@@ -28,11 +28,13 @@ import java.sql.*;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
-import java.util.TimeZone;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
+/**
+ * This class focuses on the creation and editing of appointments.
+ */
 public class UpsertAppointmentController implements Initializable {
     private static Stage upsertWindow;
     @FXML private TextField appointmentId;

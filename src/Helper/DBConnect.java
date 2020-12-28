@@ -3,6 +3,9 @@ import Model.Country;
 import Model.Division;
 import java.sql.*;
 
+/**
+ * This class creates and distributes the database connection for c-195
+ */
 public class DBConnect {
 
     private static final String databaseName = "WJ05gTi";
@@ -14,9 +17,9 @@ public class DBConnect {
 
     /**
      *  Establish connection to database
-     * @return
+     * @return a db connection is returned
      * @throws ClassNotFoundException
-     * @throws SQLException
+     * @throws SQLException thrown sql exception
      */
     public static Connection establishConnection() throws ClassNotFoundException, SQLException {
         Class.forName(driver);

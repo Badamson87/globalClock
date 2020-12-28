@@ -1,10 +1,8 @@
 package View_Controller;
-
 import Helper.DBConnect;
 import Helper.TimeController;
 import Model.Appointment;
 import javafx.fxml.Initializable;
-
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -13,6 +11,10 @@ import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
+
+/**
+ * This class focuses on display of the about page. It also checks on login for upcoming schedule appointments
+ */
 public class AboutController implements Initializable {
     private static Connection conn;
 

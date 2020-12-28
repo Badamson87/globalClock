@@ -14,7 +14,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
@@ -22,6 +21,10 @@ import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicInteger;
 
+
+/**
+ * This class focuses on creation and editing of customers.
+ */
 public class UpsertCustomerController implements Initializable {
     private static Stage upsertWindow;
     @FXML

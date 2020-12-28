@@ -1,5 +1,4 @@
 package View_Controller;
-
 import Helper.DBConnect;
 import Model.Appointment;
 import Model.Customer;
@@ -10,12 +9,14 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
 
+/**
+ * This class focuses on the display of customers. It also starts the upsert and deletion process on a customer
+ */
 public class CustomersController implements Initializable {
     private static Connection conn;
     private static final ObservableList<Customer> customers = FXCollections.observableArrayList();

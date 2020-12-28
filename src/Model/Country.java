@@ -9,9 +9,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicReference;
 
+
+/**
+ * This class focuses on Countries. It is used throughout the project for the creation and display of countries
+ */
 public class Country {
     public String name;
     private int Country_ID;
