@@ -40,6 +40,8 @@ public class CustomersController implements Initializable {
     private TableColumn<Customer, Integer> Country_ID;
     @FXML
     private TableColumn<Customer, String> CountryCol;
+    @FXML
+    private TextField customerSearch;
     public static Customer selectedCustomer;
     public static boolean editMode;
 
@@ -149,6 +151,49 @@ public class CustomersController implements Initializable {
         Country_ID.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getCountry_ID()).asObject());
         CountryCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCountry()));
         customerTable.setItems(customers);
+    }
+
+    /**
+     * filters the observable list of customers
+     */
+    public void searchCustomers(){
+        ObservableList<Customer> filteredList = FXCollections.observableArrayList();
+        if(isNumeric(customerSearch.getText())){
+            String filterId = String.valueOf(customerSearch.getText());
+            for (Customer customer : customers)
+            {
+                String customerId = String.valueOf(customer.getId());
+              if (customerId.contains(filterId)) {
+                  filteredList.add(customer);
+              }
+            }
+        } else {
+            for (Customer customer : customers)
+            {
+                String customerName = customer.getCustomerName();
+                if (customerName.contains(customerSearch.getText())) {
+                    filteredList.add(customer);
+                }
+            }
+        }
+        customerTable.setItems(filteredList);
+    }
+
+    /**
+     *
+     * @param str is checked to be Numeric
+     * @return returns is numeric
+     */
+    private boolean isNumeric(String str) {
+        if (str == null || str.length() == 0) {
+            return false;
+        }
+        for (char c : str.toCharArray()) {
+            if (!Character.isDigit(c)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
