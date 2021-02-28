@@ -16,7 +16,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         window = primaryStage;
         Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
-        primaryStage.setTitle("Global Clock c-195");
+        primaryStage.setTitle("Global Clock");
         primaryStage.setScene(new Scene(root, 1200, 800));
         primaryStage.show();
     }
