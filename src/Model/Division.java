@@ -14,14 +14,9 @@ import java.util.Date;
 /**
  * This class focuses on first level division and the data modeling associated to them.
  */
-public class Division {
-    public String name;
+public class Division extends Location{
     private int Division_ID;
     private String Division;
-    private Date Create_Date;
-    private String Created_By;
-    private Date Last_Update;
-    private String Last_Updated_By;
     private int Country_ID;
     private static ObservableList<Division> allDivisions = FXCollections.observableArrayList();
 
@@ -103,22 +98,6 @@ public class Division {
      */
     public void setLast_Update(Date last_Update) {
         Last_Update = last_Update;
-    }
-
-    /**
-     *
-     * @return get last updated by as string
-     */
-    public String getLast_Updated_By() {
-        return Last_Updated_By;
-    }
-
-    /**
-     *
-     * @param last_Updated_By set last updated by
-     */
-    public void setLast_Updated_By(String last_Updated_By) {
-        Last_Updated_By = last_Updated_By;
     }
 
     /**
@@ -231,7 +210,7 @@ public class Division {
         this.Create_Date = create_Date;
         this.Created_By = created_By;
         this.Last_Update = last_Update;
-        this.Last_Updated_By = last_Updated_By;
+        this.Last_Update_By = last_Updated_By;
         this.Country_ID = country_ID;
         this.name = division;
     }

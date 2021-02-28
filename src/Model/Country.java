@@ -14,14 +14,9 @@ import java.util.Date;
 /**
  * This class focuses on Countries. It is used throughout the project for the creation and display of countries
  */
-public class Country {
-    public String name;
+public class Country extends Location {
     private int Country_ID;
     private String Country;
-    private Date Create_Date;
-    private String Created_By;
-    private Date Last_Update;
-    private String Last_Update_By;
     private static ObservableList<Country> allCountries = FXCollections.observableArrayList();
 
     /**
@@ -60,70 +55,6 @@ public class Country {
      */
     public void setCountry(String country) {
         Country = country;
-    }
-
-    /**
-     *
-     * @return country created date
-     */
-    public Date getCreate_Date() {
-        return Create_Date;
-    }
-
-    /**
-     *
-     * @param create_Date set as country created date
-     */
-    public void setCreate_Date(Date create_Date) {
-        Create_Date = create_Date;
-    }
-
-    /**
-     *
-     * @return country created by
-     */
-    public String getCreated_By() {
-        return Created_By;
-    }
-
-    /**
-     *
-     * @param created_By set as country created by
-     */
-    public void setCreated_By(String created_By) {
-        Created_By = created_By;
-    }
-
-    /**
-     *
-     * @return as country last updated date
-     */
-    public Date getLast_Update() {
-        return Last_Update;
-    }
-
-    /**
-     *
-     * @param last_Update set as country last updated date
-     */
-    public void setLast_Update(Date last_Update) {
-        Last_Update = last_Update;
-    }
-
-    /**
-     *
-     * @return country last updated by
-     */
-    public String getLast_Update_By() {
-        return Last_Update_By;
-    }
-
-    /**
-     *
-     * @param last_Update_By sets country last updated by
-     */
-    public void setLast_Update_By(String last_Update_By) {
-        Last_Update_By = last_Update_By;
     }
 
     /**
