@@ -28,6 +28,54 @@ public class Customer {
     private int Country_ID;
     private String Country;
 
+    public void setCustomer_Name(String customer_Name) {
+        Customer_Name = customer_Name;
+    }
+
+    public void setAddress(String address) {
+        Address = address;
+    }
+
+    public void setPostal_Code(String postal_Code) {
+        Postal_Code = postal_Code;
+    }
+
+    public void setPhone(String phone) {
+        Phone = phone;
+    }
+
+    public void setCreate_Date(Date create_Date) {
+        Create_Date = create_Date;
+    }
+
+    public void setCreated_By(String created_By) {
+        Created_By = created_By;
+    }
+
+    public void setLast_Update(Date last_Update) {
+        Last_Update = last_Update;
+    }
+
+    public void setLast_Update_By(String last_Update_By) {
+        Last_Update_By = last_Update_By;
+    }
+
+    public void setDivision_ID(int division_ID) {
+        Division_ID = division_ID;
+    }
+
+    public void setDivision(String division) {
+        Division = division;
+    }
+
+    public void setCountry_ID(int country_ID) {
+        Country_ID = country_ID;
+    }
+
+    public void setCountry(String country) {
+        Country = country;
+    }
+
     /**
      * empty division constructor
      */
