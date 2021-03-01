@@ -1,6 +1,10 @@
 package View_Controller;
 
 import Model.Customer;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Date;
@@ -25,6 +29,8 @@ class CustomersControllerTest {
     String zipUpdated = "postalCodeUpdated";
     String updatedByUpdated = "testUpdatedBYUpdated";
     Date updatedDateUpdated = new Date();;
+    ObservableList<Customer> customers = FXCollections.observableArrayList();
+
 
     @Test
     void newCustomer() {
@@ -61,4 +67,20 @@ class CustomersControllerTest {
 
     }
 
+    @Test
+    void searchCustomers() {
+       CustomersController customerController = new CustomersController();
+//       customerController.initialize();
+        
+
+    }
+
+    @BeforeEach
+    void setUp() {
+
+    }
+
+    @AfterEach
+    void tearDown() {
+    }
 }

@@ -157,27 +157,39 @@ public class CustomersController implements Initializable {
      * filters the observable list of customers
      */
     public void searchCustomers(){
+        if (isNumeric(customerSearch.getText())) {
+            customerTable.setItems(customersIntFilter(customerSearch.getText(), customers));
+        } else {
+            customerTable.setItems(customersStringFilter(customerSearch.getText(), customers));
+        }
+    }
+
+    public ObservableList<Customer> customersIntFilter(String search, ObservableList<Customer> customersToFilter){
         ObservableList<Customer> filteredList = FXCollections.observableArrayList();
-        if(isNumeric(customerSearch.getText())){
-            String filterId = String.valueOf(customerSearch.getText());
-            for (Customer customer : customers)
+            String filterId = String.valueOf(search);
+            for (Customer customer : customersToFilter)
             {
                 String customerId = String.valueOf(customer.getId());
-              if (customerId.contains(filterId)) {
-                  filteredList.add(customer);
-              }
-            }
-        } else {
-            for (Customer customer : customers)
-            {
-                String customerName = customer.getCustomerName();
-                if (customerName.contains(customerSearch.getText())) {
+                if (customerId.contains(filterId)) {
                     filteredList.add(customer);
                 }
             }
-        }
-        customerTable.setItems(filteredList);
+        return filteredList;
     }
+
+    public ObservableList<Customer> customersStringFilter(String search, ObservableList<Customer> customersToFilter){
+        ObservableList<Customer> filteredList = FXCollections.observableArrayList();
+            for (Customer customer : customers)
+            {
+                String customerName = customer.getCustomerName();
+                if (customerName.contains(search)) {
+                    filteredList.add(customer);
+                }
+            }
+        return filteredList;
+    }
+
+
 
     /**
      *
